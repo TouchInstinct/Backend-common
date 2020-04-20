@@ -1,21 +1,9 @@
 plugins {
+    id 'kotlin'
+    id 'kotlin-spring'
+    id 'kotlin-jpa'
+    id 'eclipse'
     id 'org.springframework.boot' apply false
-}
-
-version '1.0'
-
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-spring'
-apply plugin: 'kotlin-jpa'
-apply plugin: 'eclipse'
-apply plugin: 'io.spring.dependency-management'
-
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") {
-            bomProperty("kotlin.version", "${kotlinVersion}")
-        }
-    }
 }
 
 repositories {
