@@ -97,9 +97,11 @@ object StringUtils {
             }
         }
     }
+
 }
 
 fun String.removeNonPrintableCharacters(): String {
+
     return this
         .transliterateCyrillic()
         .replace("[\\p{Cntrl}&&[^\r\n\t]]".toRegex(), "")// erases all the ASCII control characters
@@ -116,6 +118,7 @@ fun String.transliterateCyrillic(): String {
             builder.append(char)
         }
     }
+
     return builder.toString()
 }
 

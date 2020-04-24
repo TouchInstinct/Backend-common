@@ -78,6 +78,7 @@ class MockRepository<R : CrudRepository<T, ID>, T : Any, ID>(
     }
 
     private fun findById(id: ID): Optional<T> {
+
         return Optional.ofNullable(entities.find { id(it) == id })
     }
 
@@ -94,6 +95,7 @@ class MockRepository<R : CrudRepository<T, ID>, T : Any, ID>(
     }
 
     private fun saveAll(objects: List<T>): List<T> {
+
         return objects.map { save(it) }
     }
 
@@ -138,6 +140,5 @@ class MockRepository<R : CrudRepository<T, ID>, T : Any, ID>(
         @Suppress("UNCHECKED_CAST")
         id as ID
     }
-
 
 }

@@ -8,6 +8,7 @@ import org.mockito.Mockito
 object MockitoUtils {
 
     fun <T> anyx(matcher: ((T) -> Boolean)? = null): T {
+
         @Suppress("UNCHECKED_CAST")
         return if (matcher == null) {
             ArgumentMatchers.any() ?: (null as T)
