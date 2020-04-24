@@ -111,6 +111,7 @@ fun String.removeNonPrintableCharacters(): String {
 
 fun String.transliterateCyrillic(): String {
     val builder = StringBuilder()
+
     for (char in this) {
         if (TRANSLITERATION_TABLE.containsKey(char)) {
             builder.append(TRANSLITERATION_TABLE[char])
