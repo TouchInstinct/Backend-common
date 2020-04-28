@@ -1,0 +1,5 @@
+rootProject.name = System.getProperty("rootProjectName")
+        ?: 'Backend-common'
+
+include 'utils'
+include 'test-utils'
