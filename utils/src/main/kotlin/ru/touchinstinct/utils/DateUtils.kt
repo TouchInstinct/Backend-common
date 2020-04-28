@@ -17,9 +17,6 @@ fun ZonedDateTime.isNotExpired(duration: Duration) = !this.isExpired(duration)
 
 fun ZonedDateTime.isNotExpired(currentDate: ZonedDateTime = ZonedDateTime.now()) = !this.isExpired(currentDate)
 
-fun minusYearsAndGetFirstDayOfYear(numberOfYears: Long): ZonedDateTime =
-    ZonedDateTime.now().minusYears(numberOfYears).withDayOfYear(1)
-
 fun ZonedDateTime.equals(arg: ZonedDateTime, maxDiff: Duration) =
     Duration.between(this, arg) <= maxDiff
 
