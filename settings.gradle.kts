@@ -23,3 +23,4 @@ pluginManagement {
 include("common")
 include("common-spring")
 include("common-spring-jpa")
+include("common-spring-web")
