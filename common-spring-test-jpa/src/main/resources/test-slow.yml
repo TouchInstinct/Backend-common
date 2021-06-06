@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test-db
+    username: postgres
+    password: qwerty
+    platform: postgresql
+    initialization-mode: always
+  jpa:
+    databasePlatform: org.hibernate.dialect.PostgreSQL95Dialect
+  liquibase:
+    enabled: true
+  test:
+    database:
+      replace: none
+
+

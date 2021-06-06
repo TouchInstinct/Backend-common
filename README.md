@@ -48,3 +48,7 @@
 ## common-spring-test
 
 Утилиты для тестирования в среде `spring-test`
+
+## common-spring-test-jpa
+
+Утилиты для тестирования репозиториев

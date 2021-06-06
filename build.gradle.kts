@@ -48,6 +48,13 @@ subprojects {
             dependency("ch.qos.logback:logback-classic:1.2.3")
             dependency("ch.qos.logback.contrib:logback-json-classic:0.1.5")
             dependency("ch.qos.logback.contrib:logback-jackson:0.1.5")
+
+            dependency("org.testcontainers:testcontainers:1.15.1")
+            dependency("org.testcontainers:postgresql:1.15.1")
+            dependency("org.testcontainers:junit-jupiter:1.15.1")
+            dependency("org.junit.jupiter:junit-jupiter-api:5.4.2")
+            dependency("org.junit.jupiter:junit-jupiter-params:5.4.2")
+            dependency("org.junit.jupiter:junit-jupiter-engine:5.4.2")
         }
 
     }
