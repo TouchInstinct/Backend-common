@@ -21,3 +21,4 @@ pluginManagement {
 }
 
 include("common")
+include("common-spring")
