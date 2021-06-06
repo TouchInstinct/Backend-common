@@ -44,3 +44,7 @@
 * `request.Utils` - различные `extensions` для работы с `HttpServletRequest`
 * `errors.*` - исключения и типы данных для `web`
 * `webclient.*` - классы для расширения webclient, включая логирование
+
+## common-spring-test
+
+Утилиты для тестирования в среде `spring-test`
