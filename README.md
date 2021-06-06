@@ -32,3 +32,9 @@
 ## common-spring
 
 Набор утилит, структур данных для `spring`, без привязки к доп. модулям, таким как `jpa` и `web`
+
+## common-spring-jpa
+
+* `models.*` - базовые `Entity`
+* `repositories` - утилиты и доп. интерфейсы для репозиториев
+* `EnableJpaAuditingExtra` - подключение `JpaAuditing` с поддержкой типа `ZoneDateTime`
