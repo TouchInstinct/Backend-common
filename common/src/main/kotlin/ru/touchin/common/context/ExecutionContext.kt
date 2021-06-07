@@ -10,7 +10,7 @@ class ExecutionContext<T>(val init: () -> T) {
     }
 
     fun reset(): T {
-        return init().also(::set)
+        return init().also(this::set)
     }
 
     fun get(): T? {
@@ -20,7 +20,7 @@ class ExecutionContext<T>(val init: () -> T) {
     fun updateContext(updater: (T) -> T): T? {
         return (get() ?: init())
             .let(updater)
-            .also(::set)
+            .also(this::set)
     }
 
 }

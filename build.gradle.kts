@@ -39,6 +39,7 @@ subprojects {
 
     println("Enabling Spring Boot Dependency Management in project ${project.name}...")
     apply(plugin = "io.spring.dependency-management")
+
     configure<DependencyManagementExtension> {
         imports {
             mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
@@ -49,7 +50,6 @@ subprojects {
             dependency("ch.qos.logback.contrib:logback-json-classic:0.1.5")
             dependency("ch.qos.logback.contrib:logback-jackson:0.1.5")
         }
-
     }
 
     dependencies {
@@ -58,7 +58,6 @@ subprojects {
         implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-
     }
 
     tasks.withType<KotlinCompile> {
