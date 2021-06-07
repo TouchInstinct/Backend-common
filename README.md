@@ -6,7 +6,7 @@
     [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
     to your project
 
-1.  Add these lines to your `settings.gradle.kts` these lines:
+1.  Add these lines to your `settings.gradle.kts`:
 
     ```kotlin
     includeBuild("Backend-common")
