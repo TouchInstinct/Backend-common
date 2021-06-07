@@ -21,9 +21,9 @@ class RepositoryTestConfiguration {
     // запуск и остановка контейнера по lifecycle-событиями компонента (1)
     @Bean(initMethod = "start", destroyMethod = "stop")
     fun jdbcDatabaseContainer(
-        @Value("\${tests.slow.db.container}") containerName: String,
+        @Value("\${tests.slow.db.imageName}") imageName: String,
     ): JdbcDatabaseContainer<*> {
-        return PostgreSQLContainer<Nothing>(containerName).apply {
+        return PostgreSQLContainer<Nothing>(imageName).apply {
             waitingFor(Wait.forListeningPort())
         }
     }

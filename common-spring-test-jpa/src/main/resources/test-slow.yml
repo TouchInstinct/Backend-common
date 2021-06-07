@@ -15,4 +15,4 @@ spring:
 tests:
   slow:
     db:
-      container: "postgres:12"
+      imageName: "postgres:12"
