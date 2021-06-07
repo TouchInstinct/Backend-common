@@ -59,4 +59,11 @@
 
 * layout
 * context
-* forma
+* format
+
+## logger-spring
+
+Встраивание системы логирования в `spring`
+
+* autologging
+* serializer
