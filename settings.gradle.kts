@@ -16,7 +16,6 @@ pluginManagement {
                     useVersion(it.second)
                 }
         }
-
     }
 }
 
