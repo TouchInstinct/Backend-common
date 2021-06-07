@@ -9,5 +9,5 @@ import ru.touchin.common.spring.test.annotations.SlowTest
 @ActiveProfiles("test", "test-slow")
 @SlowTest
 @DataJpaTest
-@Import(RepositoryTestConfig::class)
+@Import(RepositoryTestConfiguration::class)
 annotation class RepositoryTest
