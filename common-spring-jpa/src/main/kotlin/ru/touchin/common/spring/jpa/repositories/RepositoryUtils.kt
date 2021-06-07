@@ -11,4 +11,3 @@ object RepositoryUtils {
     const val SKIP_LOCKED_VALUE = "-2"
 
 }
-
