@@ -24,7 +24,6 @@ interface LogWebClient {
 
             parseValue(responseBody, clazz)
         }
-
     }
 
     private fun <T> parseValue(source: String?, clazz: Class<T>): T {
@@ -37,5 +36,3 @@ interface LogWebClient {
     }
 
 }
-
-
