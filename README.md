@@ -38,3 +38,9 @@
 * `models.*` - базовые `Entity`
 * `repositories` - утилиты и доп. интерфейсы для репозиториев
 * `EnableJpaAuditingExtra` - подключение `JpaAuditing` с поддержкой типа `ZoneDateTime`
+
+## common-spring-web
+
+* `request.Utils` - различные `extensions` для работы с `HttpServletRequest`
+* `errors.*` - исключения и типы данных для `web`
+* `webclient.*` - классы для расширения webclient, включая логирование
