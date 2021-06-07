@@ -59,4 +59,4 @@
 
 * layout
 * context
-* forma
+* format
