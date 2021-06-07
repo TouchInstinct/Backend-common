@@ -52,3 +52,11 @@
 ## common-spring-test-jpa
 
 Утилиты для тестирования репозиториев
+
+## logger
+
+Основные компоненты логирования:
+
+* layout
+* context
+* forma
