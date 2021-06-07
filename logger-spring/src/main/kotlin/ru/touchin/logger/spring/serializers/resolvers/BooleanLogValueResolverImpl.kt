@@ -11,14 +11,14 @@ import ru.touchin.logger.spring.serializers.resolvers.dto.ResolvedValue
 class BooleanLogValueResolverImpl : LogValueResolver<Boolean> {
 
     override operator fun invoke(value: Any): ResolvedValue<Boolean>? {
-        if (value is Boolean) {
-            return ResolvedValue(
-                value = value,
-                typeName = "boolean"
-            )
+        if (value !is Boolean) {
+            return null
         }
 
-        return null
+        return ResolvedValue(
+            value = value,
+            typeName = "boolean"
+        )
     }
 
 }

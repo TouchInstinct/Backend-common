@@ -12,13 +12,13 @@ import java.io.File
 class FileLogValueResolverImpl : LogValueResolver<String> {
 
     override operator fun invoke(value: Any): ResolvedValue<String>? {
-        if (value is File) {
-            return ResolvedValue(
-                value = value.toString(),
-            )
+        if (value !is File) {
+            return null
         }
 
-        return null
+        return ResolvedValue(
+            value = value.toString(),
+        )
     }
 
 }

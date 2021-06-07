@@ -12,14 +12,14 @@ import java.time.temporal.Temporal
 class DateLogValueResolverImpl : LogValueResolver<String> {
 
     override fun invoke(value: Any): ResolvedValue<String>? {
-        if (value is Temporal) {
-            return ResolvedValue(
-                value = value.toString(),
-                typeName = "date",
-            )
+        if (value !is Temporal) {
+            return null
         }
 
-        return null
+        return ResolvedValue(
+            value = value.toString(),
+            typeName = "date",
+        )
     }
 
 }

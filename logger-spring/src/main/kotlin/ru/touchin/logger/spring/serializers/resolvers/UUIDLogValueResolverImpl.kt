@@ -12,13 +12,13 @@ import java.util.*
 class UUIDLogValueResolverImpl : LogValueResolver<String> {
 
     override operator fun invoke(value: Any): ResolvedValue<String>? {
-        if (value is UUID) {
-            return ResolvedValue(
-                value = value.toString(),
-            )
+        if (value !is UUID) {
+            return null
         }
 
-        return null
+        return ResolvedValue(
+            value = value.toString(),
+        )
     }
 
 }

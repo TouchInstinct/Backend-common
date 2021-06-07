@@ -11,12 +11,12 @@ import ru.touchin.logger.spring.serializers.resolvers.dto.ResolvedValue
 class StringLogValueResolverImpl : LogValueResolver<String> {
 
     override fun invoke(value: Any): ResolvedValue<String>? {
-        if (value is String) {
-            return ResolvedValue(
-                value = value
-            )
+        if (value !is String) {
+            return null
         }
 
-        return null
+        return ResolvedValue(
+            value = value
+        )
     }
 }

@@ -25,7 +25,7 @@ class LogAspect(
     fun logInvocation(pjp: ProceedingJoinPoint, autoLoggingAnnotation: AutoLogging): Any? {
         val duration = LogDuration()
 
-        val actionResult = runCatching { pjp.proceed() }
+        val actionResult = runCatching(pjp::proceed)
 
         try {
             val method = pjp.method()
@@ -85,7 +85,8 @@ class LogAspect(
             return emptyList()
         }
 
-        val returnValue = result.getOrNull() ?: return emptyList()
+        val returnValue = result.getOrNull()
+            ?: return emptyList()
 
         return logValueFieldSerializer.invoke(
             LogValueField (

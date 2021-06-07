@@ -11,14 +11,14 @@ import ru.touchin.logger.spring.serializers.resolvers.dto.ResolvedValue
 class NumberLogValueResolverImpl : LogValueResolver<Number> {
 
     override operator fun invoke(value: Any): ResolvedValue<Number>? {
-        if (value is Number) {
-            return ResolvedValue(
-                value = value,
-                typeName = "number"
-            )
+        if (value !is Number) {
+            return null
         }
 
-        return null
+        return ResolvedValue(
+            value = value,
+            typeName = "number"
+        )
     }
 
 }

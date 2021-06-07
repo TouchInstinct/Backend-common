@@ -13,13 +13,13 @@ import java.net.URL
 class UrlLogValueResolverImpl : LogValueResolver<String> {
 
     override operator fun invoke(value: Any): ResolvedValue<String>? {
-        if (value is URL || value is URI) {
-            return ResolvedValue(
-                value = value.toString(),
-            )
+        if (value !is URL && value !is URI) {
+            return null
         }
 
-        return null
+        return ResolvedValue(
+            value = value.toString(),
+        )
     }
 
 }

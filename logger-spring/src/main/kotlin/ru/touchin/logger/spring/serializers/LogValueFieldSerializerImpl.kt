@@ -62,7 +62,7 @@ class LogValueFieldSerializerImpl(
     }
 
     override operator fun invoke(field: LogValueField): List<LogDataItem> {
-        return expand(field).mapNotNull(::serialize)
+        return expand(field).mapNotNull(this::serialize)
     }
 
     companion object {

@@ -11,11 +11,11 @@ import ru.touchin.logger.spring.serializers.resolvers.dto.ResolvedValue
 class FunctionLogValueResolverImpl : LogValueResolver<String> {
 
     override operator fun invoke(value: Any): ResolvedValue<String>? {
-        if (value is Function<*>) {
-            return ResolvedValue.SKIP_VALUE
+        if (value !is Function<*>) {
+            return null
         }
 
-        return null
+        return ResolvedValue.SKIP_VALUE
     }
 
 }
