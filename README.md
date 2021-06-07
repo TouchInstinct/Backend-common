@@ -60,3 +60,10 @@
 * layout
 * context
 * format
+
+## logger-spring
+
+Встраивание системы логирования в `spring`
+
+* autologging
+* serializer
