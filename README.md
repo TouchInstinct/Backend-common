@@ -67,3 +67,7 @@
 
 * autologging
 * serializer
+
+## logger-spring-web
+
+Interceptor для логирования запросов/ответов.
