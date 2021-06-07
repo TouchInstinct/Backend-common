@@ -39,6 +39,7 @@ subprojects {
 
     println("Enabling Spring Boot Dependency Management in project ${project.name}...")
     apply(plugin = "io.spring.dependency-management")
+
     configure<DependencyManagementExtension> {
         imports {
             mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
@@ -56,7 +57,6 @@ subprojects {
             dependency("org.junit.jupiter:junit-jupiter-params:5.4.2")
             dependency("org.junit.jupiter:junit-jupiter-engine:5.4.2")
         }
-
     }
 
     dependencies {
@@ -65,7 +65,6 @@ subprojects {
         implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-
     }
 
     tasks.withType<KotlinCompile> {

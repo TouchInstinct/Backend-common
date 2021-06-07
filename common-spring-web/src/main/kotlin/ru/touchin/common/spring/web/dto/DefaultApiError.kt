@@ -10,7 +10,6 @@ class DefaultApiError(
             errorCode = ApiError.FAILURE_CODE,
             errorMessage = errorMessage
         )
-
     }
 
 }
