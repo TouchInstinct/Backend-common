@@ -56,6 +56,9 @@ subprojects {
             dependency("org.junit.jupiter:junit-jupiter-api:5.4.2")
             dependency("org.junit.jupiter:junit-jupiter-params:5.4.2")
             dependency("org.junit.jupiter:junit-jupiter-engine:5.4.2")
+
+            dependency("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+            dependency("org.mockito:mockito-inline:2.13.0")
         }
     }
 
