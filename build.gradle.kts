@@ -64,6 +64,8 @@ subprojects {
 
             dependency("javax.measure:unit-api:2.1.2")
             dependency("tech.units:indriya:2.1.2")
+
+            dependency("org.locationtech.spatial4j:spatial4j:0.8")
         }
     }
 
