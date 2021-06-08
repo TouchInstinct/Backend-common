@@ -6,7 +6,7 @@ import org.locationtech.spatial4j.context.SpatialContext
 import org.locationtech.spatial4j.distance.DistanceUtils
 import org.locationtech.spatial4j.shape.Point
 import org.springframework.stereotype.Component
-import ru.touchin.common.geo.GeoHelper
+import ru.touchin.common.geo.GeoCalculator
 import ru.touchin.common.geo.dto.Boundary
 import ru.touchin.common.geo.dto.Location
 import ru.touchin.common.measure.MeasureUtils.toKilometers
@@ -17,7 +17,7 @@ import javax.measure.Quantity
 import javax.measure.quantity.Length
 
 @Component
-class Spatial4JGeoHelperImpl : GeoHelper {
+class Spatial4JGeoCalculatorImpl : GeoCalculator {
 
     override fun getBoundary(location: Location, radius: Quantity<Length>): Boundary {
         val circle = SpatialContext.GEO.shapeFactory.circle(
