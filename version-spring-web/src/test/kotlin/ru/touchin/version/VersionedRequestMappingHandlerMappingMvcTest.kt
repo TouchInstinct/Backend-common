@@ -17,9 +17,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.touchin.version.annotations.VersionedRestController
+import ru.touchin.version.annotations.VersionedApi
 
-@VersionedRestController
+@VersionedApi
+@RestController
 @RequestMapping("/app")
 class VersionController {
 

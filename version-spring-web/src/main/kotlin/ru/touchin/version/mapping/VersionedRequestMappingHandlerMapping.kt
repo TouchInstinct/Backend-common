@@ -3,7 +3,7 @@ package ru.touchin.version.mapping
 import org.springframework.core.annotation.AnnotatedElementUtils
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-import ru.touchin.version.annotations.VersionedApi
+import ru.touchin.version.annotations.Versioned
 import java.lang.reflect.Method
 
 class VersionedRequestMappingHandlerMapping : RequestMappingHandlerMapping() {
@@ -12,7 +12,7 @@ class VersionedRequestMappingHandlerMapping : RequestMappingHandlerMapping() {
         val mappingResult = super.getMappingForMethod(method, handlerType)
             ?: return null
 
-        val versionedAnnotation = AnnotatedElementUtils.findMergedAnnotation(handlerType, VersionedApi::class.java)
+        val versionedAnnotation = AnnotatedElementUtils.findMergedAnnotation(handlerType, Versioned::class.java)
             ?: return mappingResult
 
         val versionPath = resolveEmbeddedValuesInPatterns(
