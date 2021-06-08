@@ -87,3 +87,11 @@ Interceptor для логирования запросов/ответов.
 ## response-wrapper-spring-web
 
 Добавляет обертку для успешного ответа
+
+## common-measure
+
+Утилиты для работы с `measure`
+
+## common-measure-spring
+
+Возможность задавать `measure` через `properties`

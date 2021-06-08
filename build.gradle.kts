@@ -61,6 +61,9 @@ subprojects {
             dependency("org.mockito:mockito-inline:2.13.0")
 
             dependency("com.github.zafarkhaja:java-semver:0.9.0")
+
+            dependency("javax.measure:unit-api:2.1.2")
+            dependency("tech.units:indriya:2.1.2")
         }
     }
 
