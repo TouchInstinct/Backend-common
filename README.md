@@ -102,4 +102,4 @@ Interceptor для логирования запросов/ответов.
 
 ## common-geo-spatial4j-spring
 
-Реализация интерфейса `GeoHelper` с помощью библиотеки `spatial4j`
+Реализация интерфейса `GeoCalculator` с помощью библиотеки `spatial4j`
