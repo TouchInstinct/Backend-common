@@ -75,3 +75,7 @@ Interceptor для логирования запросов/ответов.
 ## exception-handler-spring-web
 
 Перехватывает ошибки сервера, определяет код ошибки и возвращает их в правильный `response`
+
+## exception-handler-logger-spring-web
+
+Добавляет логирование в обработку ошибок
