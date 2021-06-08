@@ -95,3 +95,11 @@ Interceptor для логирования запросов/ответов.
 ## common-measure-spring
 
 Возможность задавать `measure` через `properties`
+
+## common-geo
+
+Интерфейс для работы с гео-данными
+
+## common-geo-spatial4j-spring
+
+Реализация интерфейса `GeoHelper` с помощью библиотеки `spatial4j`
