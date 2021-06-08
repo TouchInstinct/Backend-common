@@ -5,4 +5,4 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ComponentScan("ru.touchin.common.geo")
-class GeoHelperConfiguration
+class GeoConfiguration
