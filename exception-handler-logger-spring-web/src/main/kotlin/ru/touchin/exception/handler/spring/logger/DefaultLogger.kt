@@ -8,7 +8,7 @@ import ru.touchin.logger.factory.LogBuilderFactory
 class DefaultLogger(
     private val logExceptionResolverResults: List<LogExceptionResolverResult<LogData>>,
     private val logBuilderFactory: LogBuilderFactory<LogData>,
-    ) : Logger {
+) : Logger {
 
     override fun log(clazz: Class<*>, exceptionResolverResult: ExceptionResolverResult) {
         logBuilderFactory.create(this::class.java)
