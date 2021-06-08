@@ -8,17 +8,17 @@ import org.springframework.http.server.ServerHttpRequest
 import org.springframework.http.server.ServerHttpResponse
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice
-import ru.touchin.wrapper.annotations.NoWrapResponse
-import ru.touchin.wrapper.annotations.WrapResponse
+import ru.touchin.wrapper.annotations.NoResponseWrap
+import ru.touchin.wrapper.annotations.ResponseWrap
 import ru.touchin.wrapper.components.ResponseBodyWrapper
 
-@RestControllerAdvice(annotations = [WrapResponse::class])
+@RestControllerAdvice(annotations = [ResponseWrap::class])
 class WrapResponseAdvice(
     private val responseWrapper: ResponseBodyWrapper
 ): ResponseBodyAdvice<Any> {
 
     override fun supports(returnType: MethodParameter, converterType: Class<out HttpMessageConverter<*>>): Boolean {
-        return !returnType.hasMethodAnnotation(NoWrapResponse::class.java)
+        return !returnType.hasMethodAnnotation(NoResponseWrap::class.java)
     }
 
     /***

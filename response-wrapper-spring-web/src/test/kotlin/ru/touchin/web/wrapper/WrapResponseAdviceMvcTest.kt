@@ -15,11 +15,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.touchin.wrapper.annotations.NoWrapResponse
-import ru.touchin.wrapper.annotations.WrapResponse
+import ru.touchin.wrapper.annotations.NoResponseWrap
+import ru.touchin.wrapper.annotations.ResponseWrap
 
 @RestController
-@WrapResponse
+@ResponseWrap
 @RequestMapping("/wrapper")
 class WrapperController {
 
@@ -28,7 +28,7 @@ class WrapperController {
         return mapOf("wrap" to "yes")
     }
 
-    @NoWrapResponse
+    @NoResponseWrap
     @GetMapping("/no-wrap")
     fun noWrap(): Map<String, String> {
         return mapOf("wrap" to "no")
