@@ -8,7 +8,7 @@ import org.mockito.internal.matchers.apachecommons.ReflectionEquals
 import org.springframework.beans.factory.annotation.Autowired
 import ru.touchin.common.spring.test.jpa.repository.RepositoryTest
 import ru.touchin.settings.exceptions.SettingNotFoundException
-import ru.touchin.settings.models.SystemSettingModel
+import ru.touchin.settings.models.SystemSettingEntity
 import javax.persistence.EntityManager
 
 @RepositoryTest
@@ -23,7 +23,7 @@ internal class SystemSettingRepositoryTest {
     @Test
     @DisplayName("Настройки должны сохраняться в базе")
     fun shouldBeSaved() {
-        val setting = SystemSettingModel()
+        val setting = SystemSettingEntity()
             .apply {
                 key = "max.threads"
                 value = "5"

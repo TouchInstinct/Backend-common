@@ -6,4 +6,4 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "system_settings", schema = SCHEMA)
-class SystemSettingModel : AbstractSettingModel()
+class SystemSettingEntity : AbstractSettingEntity()

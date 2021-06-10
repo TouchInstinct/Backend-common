@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import ru.touchin.settings.annotations.SettingMapper
 import ru.touchin.settings.dto.SystemSetting
-import ru.touchin.settings.models.SystemSettingModel
+import ru.touchin.settings.models.SystemSettingEntity
 import ru.touchin.settings.repositories.SystemSettingsRepository
 import java.util.*
 import javax.annotation.PostConstruct
@@ -43,8 +43,8 @@ internal class SystemSettingsServiceImplSerializationTest {
 
 
     private fun check(systemSetting: SystemSetting<*>, serializedValue: String) {
-        doReturn(Optional.empty<SystemSettingModel>()).`when`(systemSettingsRepository).findById(any())
-        doAnswer { it.getArgument(0) as SystemSettingModel }.`when`(systemSettingsRepository).save(any())
+        doReturn(Optional.empty<SystemSettingEntity>()).`when`(systemSettingsRepository).findById(any())
+        doAnswer { it.getArgument(0) as SystemSettingEntity }.`when`(systemSettingsRepository).save(any())
 
         systemSettingsService.save(systemSetting)
 

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 import ru.touchin.settings.annotations.SettingMapper
 import ru.touchin.settings.dto.SystemSetting
 import ru.touchin.settings.exceptions.CannotParseSettingValueException
-import ru.touchin.settings.models.SystemSettingModel
+import ru.touchin.settings.models.SystemSettingEntity
 import ru.touchin.settings.repositories.SystemSettingsRepository
 import ru.touchin.settings.repositories.findByIdOrThrow
 
@@ -23,7 +23,7 @@ class SystemSettingsServiceImpl(
     @Transactional
     override fun <T> save(setting: SystemSetting<T>): SystemSetting<T> {
         val settingModel = systemSettingsRepository.findByIdOrNull(setting.key)
-            ?: SystemSettingModel().apply {
+            ?: SystemSettingEntity().apply {
                 key = setting.key
             }
 
@@ -34,7 +34,7 @@ class SystemSettingsServiceImpl(
         return setting
     }
 
-    private fun <T> createSetting(model: SystemSettingModel, clazz: Class<T>): SystemSetting<T> {
+    private fun <T> createSetting(model: SystemSettingEntity, clazz: Class<T>): SystemSetting<T> {
         val value = kotlin
             .runCatching {
                 settingsObjectMapper.readValue(model.value, clazz)

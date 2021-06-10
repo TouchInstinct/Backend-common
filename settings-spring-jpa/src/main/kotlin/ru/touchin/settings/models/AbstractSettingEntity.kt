@@ -5,7 +5,7 @@ import javax.persistence.Id
 import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
-open class AbstractSettingModel: AuditableEntity() {
+open class AbstractSettingEntity: AuditableEntity() {
 
     @Id
     lateinit var key: String

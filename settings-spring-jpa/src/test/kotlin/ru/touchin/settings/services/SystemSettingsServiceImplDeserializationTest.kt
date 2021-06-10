@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import ru.touchin.settings.annotations.SettingMapper
 import ru.touchin.settings.dto.SystemSetting
-import ru.touchin.settings.models.SystemSettingModel
+import ru.touchin.settings.models.SystemSettingEntity
 import ru.touchin.settings.repositories.SystemSettingsRepository
 import java.util.*
 import javax.annotation.PostConstruct
@@ -50,7 +50,7 @@ internal class SystemSettingsServiceImplDeserializationTest {
         assertTrue(ReflectionEquals(e).matches(a))
     }) {
         doReturn(
-            Optional.of(SystemSettingModel().apply {
+            Optional.of(SystemSettingEntity().apply {
                 key = systemSetting.key
                 value = serializedValue
             })
