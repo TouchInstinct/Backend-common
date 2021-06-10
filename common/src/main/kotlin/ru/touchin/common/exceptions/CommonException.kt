@@ -1,3 +1,6 @@
 package ru.touchin.common.exceptions
 
-open class CommonException(description: String?) : RuntimeException(description.orEmpty())
+open class CommonException(
+    description: String?,
+    exception: Throwable? = null
+) : RuntimeException(description.orEmpty(), exception)
