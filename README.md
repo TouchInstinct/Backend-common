@@ -37,6 +37,9 @@
 
 * `models.*` - базовые `Entity`
 * `repositories` - утилиты и доп. интерфейсы для репозиториев
+* `liquibase.LiquibaseStart` - для подключения этого компонента необходимо объявить `liquibase.LiquibaseParams`.
+  Указать путь к файлу с миграцией и схему, для которой эта миграция будет применяться. С помощью `LiquibaseStart`
+  можно применить кастомную миграцию не конфликтуя с основной.
 * `EnableJpaAuditingExtra` - подключение `JpaAuditing` с поддержкой типа `ZoneDateTime`
 
 ## common-spring-web
