@@ -106,3 +106,7 @@ Interceptor для логирования запросов/ответов.
 ## common-geo-spatial4j-spring
 
 Реализация интерфейса `GeoCalculator` с помощью библиотеки `spatial4j`
+
+## settings-spring-jpa
+
+Модуль для хранения настроек

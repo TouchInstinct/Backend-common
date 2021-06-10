@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table__system_settings
+      author:  touchin
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: system_settings
+      changes:
+        - createTable:
+            tableName: system_settings
+            columns:
+              - column:
+                  name: key
+                  type: VARCHAR(128)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: PK_SYSTEM_SETTINGS
+              - column:
+                    name: value
+                    type: VARCHAR(1024)
+                    constraints:
+                        nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValueDate: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: updated_by
+                  type: VARCHAR(255)
