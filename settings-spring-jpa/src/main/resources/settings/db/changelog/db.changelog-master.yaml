@@ -20,7 +20,7 @@ databaseChangeLog:
                     primaryKeyName: PK_SYSTEM_SETTINGS
               - column:
                     name: value
-                    type: VARCHAR(1024)
+                    type: NVARCHAR(1024)
                     constraints:
                         nullable: false
               - column:
