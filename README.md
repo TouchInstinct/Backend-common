@@ -48,6 +48,18 @@
 * `errors.*` - исключения и типы данных для `web`
 * `webclient.*` - классы для расширения webclient, включая логирование
 
+## common-spring-security
+
+* `configurations.DefaultSecurityConfiguration` - дефолтная реализация WebSecurity,
+ определяет для каких request path надо ограничить доступ.
+ Использует `url.interceptors.UrlExpressionRegistryInterceptor` для принятия решения.
+* `auditor.AuditorResolver` - служит для преобразования `principal` в строку, используется с `JpaAuditing`
+
+## common-spring-security-jpa
+
+* `auditor.SecurityAuditorAware` - резолвит имя пользователя для полей `@CreatedBy`, `@LastModifiedBy`.
+ Требуется явно создать бин `AuditorAware<String>` в проекте.
+
 ## common-spring-test
 
 Утилиты для тестирования в среде `spring-test`
