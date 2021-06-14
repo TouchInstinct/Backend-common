@@ -20,13 +20,13 @@ import ru.touchin.common.random.SecureRandomStringGenerator
 import java.time.ZonedDateTime
 
 @Service
-class RefreshTokenServiceImpl(
+class RefreshTokenCoreServiceImpl(
     private val refreshTokenProperties: RefreshTokenProperties,
     private val refreshTokenRepository: RefreshTokenRepository,
     private val userRepository: UserRepository,
     private val deviceRepository: DeviceRepository,
     private val scopeRepository: ScopeRepository,
-) : RefreshTokenService {
+) : RefreshTokenCoreService {
 
     @Transactional(readOnly = true)
     override fun get(value: String): RefreshToken {

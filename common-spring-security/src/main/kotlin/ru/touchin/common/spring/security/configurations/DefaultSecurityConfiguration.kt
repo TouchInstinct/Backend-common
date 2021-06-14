@@ -5,26 +5,21 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import ru.touchin.common.spring.security.url.interceptors.UrlExpressionRegistryInterceptor
+import ru.touchin.common.spring.security.http.configurators.HttpSecurityConfigurator
 
 @Configuration
-@ComponentScan("ru.touchin.common.spring.security.url.interceptors")
+@ComponentScan(
+    "ru.touchin.common.spring.security.url.interceptors",
+    "ru.touchin.common.spring.security.http.configurators",
+)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class DefaultSecurityConfiguration(
-    private val urlExpressionRegistryInterceptors: List<UrlExpressionRegistryInterceptor>,
+    private val httpSecurityConfigurators: List<HttpSecurityConfigurator>,
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
-        http
-            .cors().disable()
-            .csrf().disable()
-            .httpBasic().disable()
-            .authorizeRequests { urlExpressionRegistry ->
-                urlExpressionRegistryInterceptors.forEach {
-                    it.invoke(urlExpressionRegistry)
-                }
-
-                urlExpressionRegistry.anyRequest().authenticated()
+            httpSecurityConfigurators.forEach {
+                it.configure(http)
             }
     }
 
