@@ -122,3 +122,29 @@ Interceptor для логирования запросов/ответов.
 ## settings-spring-jpa
 
 Модуль для хранения настроек
+
+## auth-core
+
+Модуль авторизации
+
+## auth-jwt-core
+
+Добавляет поддержку jwt-токенов (создание/хранение). Для работы этого модуля требуется прописать в пропертях:
+
+``` yaml
+token.access:
+  issuer: ${app.issuer}
+  timeToLive: PT15M # 15 minutes
+  signatureAlgorithm: RS256
+  keyPair:
+    public: |
+      -----BEGIN PUBLIC KEY-----
+      -----END PUBLIC KEY-----
+    private: |
+      -----BEGIN PRIVATE KEY-----
+      -----END PRIVATE KEY-----
+token.refresh:
+  length: 20
+  prefix: RT-
+  timeToLive: PT2H # 2 hours
+```

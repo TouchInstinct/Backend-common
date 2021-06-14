@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202105201901__create_table__refresh_token_scopes
+      author: touchin
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: refresh_token_scopes
+      changes:
+        - createTable:
+            tableName: refresh_token_scopes
+            columns:
+              - column:
+                  name: refresh_token_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    references: refresh_tokens(id)
+                    foreignKeyName: fk_refresh_token_scopes_refresh_token_id
+              - column:
+                  name: scope_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    references: scopes(name)
+                    foreignKeyName: fk_refresh_token_scopes_scope_name
+        - addPrimaryKey:
+            tableName: refresh_token_scopes
+            columnNames: refresh_token_id, scope_name
+            constraintName: pk_refresh_token_scopes

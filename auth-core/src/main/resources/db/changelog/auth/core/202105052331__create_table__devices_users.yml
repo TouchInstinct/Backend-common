@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202105052331__create_table__devices_users
+      author: touchin
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: devices_users
+      changes:
+        - createTable:
+            tableName: devices_users
+            columns:
+              - column:
+                  name: device_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    references: devices(id)
+                    foreignKeyName: fk_devices_users_device_id
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    references: users(id)
+                    foreignKeyName: fk_devices_users_user_id
+        - addPrimaryKey:
+            tableName: devices_users
+            columnNames: device_id, user_id
+            constraintName: pk_devices_users

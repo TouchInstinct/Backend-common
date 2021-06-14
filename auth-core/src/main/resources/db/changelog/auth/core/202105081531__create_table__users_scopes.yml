@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202105081531__create_table__users_scopes
+      author: touchin
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: users_scopes
+      changes:
+        - createTable:
+            tableName: users_scopes
+            columns:
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    references: users(id)
+                    foreignKeyName: fk_users_scopes_user_id
+              - column:
+                  name: scope_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    references: scopes(name)
+                    foreignKeyName: fk_users_scopes_scope_name
+        - addPrimaryKey:
+            tableName: users_scopes
+            columnNames: user_id, scope_name
+            constraintName: pk_users_scopes

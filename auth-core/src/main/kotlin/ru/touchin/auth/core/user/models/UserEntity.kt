@@ -1,0 +1,37 @@
+package ru.touchin.auth.core.user.models
+
+import ru.touchin.auth.core.device.models.DeviceEntity
+import ru.touchin.auth.core.scope.models.ScopeEntity
+import ru.touchin.common.spring.jpa.models.AuditableUuidIdEntity
+import java.time.ZonedDateTime
+import javax.persistence.Entity
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.ManyToMany
+import javax.persistence.Table
+
+@Entity
+@Table(name = "users")
+class UserEntity: AuditableUuidIdEntity() {
+
+    var anonymous: Boolean = true
+
+    var confirmedAt: ZonedDateTime? = null
+
+    @ManyToMany
+    @JoinTable(
+        name = "devices_users",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "device_id")]
+    )
+    lateinit var devices: Set<DeviceEntity>
+
+    @ManyToMany
+    @JoinTable(
+        name = "users_scopes",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "scope_name")]
+    )
+    lateinit var scopes: Set<ScopeEntity>
+
+}

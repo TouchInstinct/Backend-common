@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202105081431__create_table__scope_groups
+      author: touchin
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: scope_groups
+      changes:
+        - createTable:
+            tableName: scope_groups
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_scope_groups
+              - column:
+                  name: group_name
+                  type: VARCHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: scope_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    references: scopes(name)
+                    foreignKeyName: fk_scope_groups_scopes_scope_name
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueDate: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+        - insert:
+            tableName: scope_groups
+            columns:
+              - column:
+                  name: id
+                  value: "0f08f4af-0e59-4914-b25f-291889572152"
+              - column:
+                  name: group_name
+                  value: "DefaultUser"
+              - column:
+                  name: scope_name
+                  value: "app:api"
