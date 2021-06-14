@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202105201851__create_table__refresh_tokens
+      author: touchin
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: refresh_tokens
+      changes:
+        - createTable:
+            tableName: refresh_tokens
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_refresh_tokens
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    references: users(id)
+                    foreignKeyName: fk_refresh_tokens_user_id
+              - column:
+                  name: device_id
+                  type: UUID
+                  constraints:
+                    nullable: true
+                    references: devices(id)
+                    foreignKeyName: fk_refresh_tokens_device_id
+              - column:
+                  name: value
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: expires_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueDate: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+        - createIndex:
+            indexName: idx_refresh_tokens_user_id
+            tableName: refresh_tokens
+            columns:
+              - column:
+                  name: user_id

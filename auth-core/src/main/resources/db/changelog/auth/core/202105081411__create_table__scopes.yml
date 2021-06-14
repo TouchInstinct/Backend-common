@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202105081411__create_table__scopes
+      author: touchin
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: scopes
+      changes:
+        - createTable:
+            tableName: scopes
+            columns:
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_scopes
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueDate: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+        - insert:
+            tableName: scopes
+            columns:
+              - column:
+                  name: name
+                  value: "app:api"

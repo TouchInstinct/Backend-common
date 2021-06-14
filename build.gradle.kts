@@ -66,6 +66,8 @@ subprojects {
             dependency("tech.units:indriya:2.1.2")
 
             dependency("org.locationtech.spatial4j:spatial4j:0.8")
+
+            dependency("com.auth0:java-jwt:3.10.3")
         }
     }
 

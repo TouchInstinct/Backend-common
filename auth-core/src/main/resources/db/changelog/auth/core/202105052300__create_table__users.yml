@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202105052300__create_table__users
+      author: touchin
+      preConditions:
+        onFail: MARK_RAN
+        not:
+            tableExists:
+              tableName: users
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+              - column:
+                  name: anonymous
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+              - column:
+                  name: confirmed_at
+                  type: TIMESTAMP
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: updated_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueDate: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
