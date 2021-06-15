@@ -12,7 +12,4 @@ import ru.touchin.settings.configurations.SettingsDatabaseConfiguration
 @TestConfiguration
 @ComponentScan
 @Import(SettingsDatabaseConfiguration::class)
-class SettingsSlowTestConfiguration {
-
-
-}
+class SettingsSlowTestConfiguration

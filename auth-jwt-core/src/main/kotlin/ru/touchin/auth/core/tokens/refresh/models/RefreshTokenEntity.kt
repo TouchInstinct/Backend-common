@@ -1,5 +1,8 @@
+@file:Suppress("unused")
+
 package ru.touchin.auth.core.tokens.refresh.models
 
+import ru.touchin.auth.core.configurations.AuthCoreDatabaseConfiguration.Companion.SCHEMA
 import ru.touchin.auth.core.device.models.DeviceEntity
 import ru.touchin.auth.core.scope.models.ScopeEntity
 import ru.touchin.auth.core.tokens.refresh.exceptions.RefreshTokenExpiredException
@@ -15,7 +18,7 @@ import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "refresh_tokens")
+@Table(name = "refresh_tokens", schema = SCHEMA)
 class RefreshTokenEntity : AuditableUuidIdEntity() {
 
     lateinit var value: String

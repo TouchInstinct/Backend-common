@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeset:
+      id: 1
+      author: touchin
+      comment: initial change log
+  - includeAll:
+      relativeToChangelogFile: true
+      path: core

@@ -148,3 +148,14 @@ token.refresh:
   prefix: RT-
   timeToLive: PT2H # 2 hours
 ```
+
+Генерация ключей:
+
+```bash
+openssl genrsa -out private.pem 4096
+openssl rsa -in private.pem -pubout -out public.pem
+openssl pkcs8 -topk8 -inform PEM -outform DER -in private.pem  -nocrypt > pkcs8_key
+
+cat pkcs8_key | base64
+cat public.pem
+```

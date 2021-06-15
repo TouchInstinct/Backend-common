@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @ComponentScan("ru.touchin.auth.core")
-@ConfigurationPropertiesScan
+@ConfigurationPropertiesScan("ru.touchin.auth.core")
 class AuthCoreConfiguration {
 
     @Bean

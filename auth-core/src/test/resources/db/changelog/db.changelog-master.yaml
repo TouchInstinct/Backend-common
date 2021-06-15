@@ -2,5 +2,3 @@ databaseChangeLog:
   - changeset:
       id: 1
       author: test
-  - includeAll:
-      path: classpath*:/db/changelog/auth/core

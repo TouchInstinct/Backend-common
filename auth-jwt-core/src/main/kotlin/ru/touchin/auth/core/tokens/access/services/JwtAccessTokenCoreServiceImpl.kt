@@ -13,10 +13,10 @@ import java.time.ZoneId
 import java.util.*
 
 @Service
-class JwtAccessTokenServiceImpl(
+class JwtAccessTokenCoreServiceImpl(
     private val accessTokenProperties: AccessTokenProperties,
     private val accessTokenSigningAlgorithm: Algorithm
-) : AccessTokenService {
+) : AccessTokenCoreService {
 
     private fun sign(builder: JWTCreator.Builder) = builder.sign(accessTokenSigningAlgorithm)
 

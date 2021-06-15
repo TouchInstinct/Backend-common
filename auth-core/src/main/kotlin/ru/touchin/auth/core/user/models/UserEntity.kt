@@ -1,5 +1,6 @@
 package ru.touchin.auth.core.user.models
 
+import ru.touchin.auth.core.configurations.AuthCoreDatabaseConfiguration.Companion.SCHEMA
 import ru.touchin.auth.core.device.models.DeviceEntity
 import ru.touchin.auth.core.scope.models.ScopeEntity
 import ru.touchin.common.spring.jpa.models.AuditableUuidIdEntity
@@ -11,7 +12,7 @@ import javax.persistence.ManyToMany
 import javax.persistence.Table
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = SCHEMA)
 class UserEntity: AuditableUuidIdEntity() {
 
     var anonymous: Boolean = true
@@ -21,6 +22,7 @@ class UserEntity: AuditableUuidIdEntity() {
     @ManyToMany
     @JoinTable(
         name = "devices_users",
+        schema = SCHEMA,
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "device_id")]
     )
@@ -29,6 +31,7 @@ class UserEntity: AuditableUuidIdEntity() {
     @ManyToMany
     @JoinTable(
         name = "users_scopes",
+        schema = SCHEMA,
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "scope_name")]
     )
