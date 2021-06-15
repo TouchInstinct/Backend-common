@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package ru.touchin.settings
 
 import org.springframework.boot.SpringBootConfiguration

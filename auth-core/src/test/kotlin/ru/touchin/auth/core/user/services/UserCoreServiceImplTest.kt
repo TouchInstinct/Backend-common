@@ -16,12 +16,10 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.test.context.ActiveProfiles
 import ru.touchin.auth.core.device.converters.DeviceConverter.toDto
+import ru.touchin.auth.core.device.dto.enums.DevicePlatform
 import ru.touchin.auth.core.device.exceptions.DeviceAlreadyLinkedException
 import ru.touchin.auth.core.device.models.DeviceEntity
-import ru.touchin.auth.core.device.dto.enums.DevicePlatform
 import ru.touchin.auth.core.device.repository.DeviceRepository
-import ru.touchin.auth.core.policy.dto.RegistrationPolicy
-import ru.touchin.auth.core.policy.services.PolicyService
 import ru.touchin.auth.core.scope.dto.Scope
 import ru.touchin.auth.core.scope.models.ScopeEntity
 import ru.touchin.auth.core.scope.repositories.ScopeRepository

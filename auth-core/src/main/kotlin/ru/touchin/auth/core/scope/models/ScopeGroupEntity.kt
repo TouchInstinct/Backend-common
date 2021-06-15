@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package ru.touchin.auth.core.scope.models
 
 import ru.touchin.auth.core.configurations.AuthCoreDatabaseConfiguration.Companion.SCHEMA

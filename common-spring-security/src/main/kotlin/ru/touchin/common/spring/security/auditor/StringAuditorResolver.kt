@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package ru.touchin.common.spring.security.auditor
 
 import org.springframework.core.annotation.Order

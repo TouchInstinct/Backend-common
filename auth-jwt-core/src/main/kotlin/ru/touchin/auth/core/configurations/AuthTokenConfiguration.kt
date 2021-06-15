@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package ru.touchin.auth.core.configurations
 
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
