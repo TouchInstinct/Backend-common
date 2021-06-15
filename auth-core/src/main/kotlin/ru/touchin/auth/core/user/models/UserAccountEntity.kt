@@ -1,5 +1,6 @@
 package ru.touchin.auth.core.user.models
 
+import ru.touchin.auth.core.configurations.AuthCoreDatabaseConfiguration.Companion.SCHEMA
 import ru.touchin.auth.core.user.dto.enums.IdentifierType
 import ru.touchin.common.spring.jpa.models.AuditableUuidIdEntity
 import java.time.ZonedDateTime
@@ -11,7 +12,7 @@ import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "user_accounts")
+@Table(name = "user_accounts", schema = SCHEMA)
 class UserAccountEntity: AuditableUuidIdEntity() {
 
     lateinit var username: String
