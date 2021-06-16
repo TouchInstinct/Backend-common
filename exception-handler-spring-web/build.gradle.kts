@@ -5,6 +5,7 @@ plugins {
 }
 
 dependencies {
+    api(project(":common"))
     api(project(":common-spring-web"))
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
