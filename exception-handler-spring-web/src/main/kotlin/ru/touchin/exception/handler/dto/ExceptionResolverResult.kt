@@ -26,6 +26,17 @@ data class ExceptionResolverResult(
                 exception = exception
             )
         }
+
+        fun createNotFoundError(exception: Exception?): ExceptionResolverResult {
+            return ExceptionResolverResult(
+                apiError = DefaultApiError(
+                    errorCode = ApiError.NOT_FOUND_CODE,
+                    errorMessage = exception?.message
+                ),
+                status = HttpStatus.NOT_FOUND,
+                exception = exception
+            )
+        }
     }
 
 }

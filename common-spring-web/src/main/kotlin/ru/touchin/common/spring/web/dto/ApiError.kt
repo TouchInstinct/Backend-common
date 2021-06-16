@@ -8,6 +8,7 @@ interface ApiError {
     companion object {
         const val SUCCESS_CODE = 0
         const val FAILURE_CODE = -1
+        const val NOT_FOUND_CODE = -2
     }
 
 }
