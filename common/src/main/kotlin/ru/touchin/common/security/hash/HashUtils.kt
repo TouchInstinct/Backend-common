@@ -9,7 +9,7 @@ object HashUtils {
         MD5
     }
 
-    fun String.calcHash(algorithmName: HashAlgorithm): ByteArray {
+    fun String.calculateHash(algorithmName: HashAlgorithm): ByteArray {
         return MessageDigest.getInstance(algorithmName.name)
             .digest(this.toByteArray(UTF_8))
     }
