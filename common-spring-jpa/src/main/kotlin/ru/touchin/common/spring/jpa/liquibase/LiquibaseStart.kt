@@ -7,7 +7,8 @@ import liquibase.Liquibase
 import liquibase.database.Database
 import liquibase.database.DatabaseFactory
 import liquibase.database.jvm.JdbcConnection
-import liquibase.resource.ClassLoaderResourceAccessor
+import liquibase.integration.spring.SpringResourceAccessor
+import org.springframework.core.io.DefaultResourceLoader
 import org.springframework.stereotype.Component
 import ru.touchin.common.spring.annotations.RunOnceOnStartup
 import javax.sql.DataSource
@@ -25,7 +26,9 @@ class LiquibaseStart(
                 .findCorrectDatabaseImplementation(JdbcConnection(connection))
                 .apply { defaultSchemaName = liquibaseParams.schema }
 
-            val liquibase = Liquibase(liquibaseParams.changeLogPath, ClassLoaderResourceAccessor(), database)
+            val resourceAccessor = SpringResourceAccessor(DefaultResourceLoader())
+
+            val liquibase = Liquibase(liquibaseParams.changeLogPath, resourceAccessor, database)
 
             liquibase.update(Contexts())
         }
