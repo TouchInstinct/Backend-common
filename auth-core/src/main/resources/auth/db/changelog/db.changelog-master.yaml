@@ -4,5 +4,4 @@ databaseChangeLog:
       author: touchin
       comment: initial change log
   - includeAll:
-      relativeToChangelogFile: true
-      path: core
+      path: classpath*:/auth/db/changelog/core
