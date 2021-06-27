@@ -3,10 +3,10 @@ databaseChangeLog:
       id: 202105052300__create_table__users
       author: touchin
       preConditions:
-        onFail: MARK_RAN
-        not:
-            tableExists:
-              tableName: users
+        - onFail: MARK_RAN
+          not:
+              tableExists:
+                tableName: users
       changes:
         - createTable:
             tableName: users

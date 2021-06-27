@@ -3,10 +3,10 @@ databaseChangeLog:
       id: 202105081531__create_table__users_scopes
       author: touchin
       preConditions:
-        onFail: MARK_RAN
-        not:
-          tableExists:
-            tableName: users_scopes
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: users_scopes
       changes:
         - createTable:
             tableName: users_scopes
