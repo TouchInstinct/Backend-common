@@ -26,11 +26,11 @@ class SecurityAuditorAware(
 
                 Optional.ofNullable(result)
             }
-            .or { Optional.of(UNKNOWN_USER) }
+            .or { Optional.of(API_USER) }
     }
 
     companion object {
-        const val UNKNOWN_USER = "unknownUser"
+        const val API_USER = "api"
     }
 
 }

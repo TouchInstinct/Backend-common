@@ -3,10 +3,10 @@ databaseChangeLog:
       id: 202105201901__create_table__refresh_token_scopes
       author: touchin
       preConditions:
-        onFail: MARK_RAN
-        not:
-          tableExists:
-            tableName: refresh_token_scopes
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: refresh_token_scopes
       changes:
         - createTable:
             tableName: refresh_token_scopes

@@ -3,10 +3,10 @@ databaseChangeLog:
       id: 202105011900__create_table__devices
       author: touchin
       preConditions:
-        onFail: MARK_RAN
-        not:
-            tableExists:
-              tableName: devices
+        - onFail: MARK_RAN
+          not:
+              tableExists:
+                tableName: devices
       changes:
         - createTable:
             tableName: devices

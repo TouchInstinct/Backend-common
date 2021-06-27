@@ -36,6 +36,7 @@ class RefreshTokenEntity : AuditableUuidIdEntity() {
     @ManyToMany
     @JoinTable(
         name = "refresh_token_scopes",
+        schema = SCHEMA,
         joinColumns = [JoinColumn(name = "refresh_token_id")],
         inverseJoinColumns = [JoinColumn(name = "scope_name")]
     )

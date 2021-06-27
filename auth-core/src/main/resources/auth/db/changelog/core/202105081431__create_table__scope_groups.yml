@@ -3,10 +3,10 @@ databaseChangeLog:
       id: 202105081431__create_table__scope_groups
       author: touchin
       preConditions:
-        onFail: MARK_RAN
-        not:
-          tableExists:
-            tableName: scope_groups
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: scope_groups
       changes:
         - createTable:
             tableName: scope_groups
