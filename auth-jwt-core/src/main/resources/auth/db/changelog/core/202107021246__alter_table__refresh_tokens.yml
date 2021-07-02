@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202107021246__alter_table__refresh_tokens
+      author: touchin
+      preConditions:
+        - onFail: MARK_RAN
+          tableExists:
+            tableName: refresh_tokens
+      changes:
+        - addColumn:
+            tableName: refresh_tokens
+            columns:
+              - column:
+                  name: used_at
+                  type: TIMESTAMP WITH TIME ZONE

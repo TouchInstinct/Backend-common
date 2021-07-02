@@ -52,6 +52,18 @@ class RefreshTokenCoreServiceImpl(
             .toDto()
     }
 
+    @Transactional
+    override fun setUsed(value: String): RefreshToken {
+        val refreshToken = refreshTokenRepository.findByValueOrThrow(value)
+            .validate()
+            .apply {
+                usedAt = ZonedDateTime.now()
+            }
+
+        return refreshTokenRepository.save(refreshToken)
+            .toDto()
+    }
+
     private fun getExpirationDate(): ZonedDateTime {
         return ZonedDateTime.now().plus(refreshTokenProperties.timeToLive)
     }
@@ -69,6 +81,7 @@ class RefreshTokenCoreServiceImpl(
             return RefreshToken(
                 value = value,
                 expiresAt = expiresAt,
+                usedAt = usedAt,
                 user = user.toDto(device)
             )
         }
