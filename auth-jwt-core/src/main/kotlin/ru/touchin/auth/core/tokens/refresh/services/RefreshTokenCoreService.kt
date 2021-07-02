@@ -7,6 +7,6 @@ interface RefreshTokenCoreService {
 
     fun get(value: String): RefreshToken
     fun create(token: NewRefreshToken): RefreshToken
-    fun setUsed(value: String): RefreshToken
+    fun refresh(value: String): RefreshToken
 
 }
