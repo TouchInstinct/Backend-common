@@ -11,5 +11,5 @@ databaseChangeLog:
             tableName: refresh_tokens
             columns:
               - column:
-                  name: refreshed_at
+                  name: used_at
                   type: TIMESTAMP WITH TIME ZONE

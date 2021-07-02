@@ -25,7 +25,7 @@ class RefreshTokenEntity : AuditableUuidIdEntity() {
 
     lateinit var expiresAt: ZonedDateTime
 
-    var refreshedAt: ZonedDateTime? = null
+    var usedAt: ZonedDateTime? = null
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -45,7 +45,7 @@ class RefreshTokenEntity : AuditableUuidIdEntity() {
     lateinit var scopes: Set<ScopeEntity>
 
     fun validate(): RefreshTokenEntity = this.apply {
-        if (expiresAt.isExpired() || refreshedAt != null) {
+        if (expiresAt.isExpired() || usedAt != null) {
             throw RefreshTokenExpiredException(value)
         }
     }

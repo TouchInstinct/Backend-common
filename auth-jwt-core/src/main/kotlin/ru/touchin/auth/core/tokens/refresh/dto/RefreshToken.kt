@@ -6,6 +6,6 @@ import java.time.ZonedDateTime
 data class RefreshToken(
     val value: String,
     val expiresAt: ZonedDateTime,
-    val refreshedAt: ZonedDateTime?,
+    val usedAt: ZonedDateTime?,
     val user: User,
 )

@@ -53,11 +53,11 @@ class RefreshTokenCoreServiceImpl(
     }
 
     @Transactional
-    override fun setRefreshed(value: String): RefreshToken {
+    override fun setUsed(value: String): RefreshToken {
         val refreshToken = refreshTokenRepository.findByValueOrThrow(value)
             .validate()
             .apply {
-                refreshedAt = ZonedDateTime.now()
+                usedAt = ZonedDateTime.now()
             }
 
         return refreshTokenRepository.save(refreshToken)
@@ -81,7 +81,7 @@ class RefreshTokenCoreServiceImpl(
             return RefreshToken(
                 value = value,
                 expiresAt = expiresAt,
-                refreshedAt = refreshedAt,
+                usedAt = usedAt,
                 user = user.toDto(device)
             )
         }
