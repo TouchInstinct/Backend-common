@@ -119,7 +119,7 @@ class UserCoreServiceImpl(
     }
 
     @Transactional(readOnly = true)
-    override fun getOrNull(id: UUID): UserAccount? {
+    override fun getUserAccountOrNull(id: UUID): UserAccount? {
         return userAccountRepository.findByIdOrNull(id)
             ?.toDto()
     }

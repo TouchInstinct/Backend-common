@@ -13,7 +13,7 @@ interface UserCoreService {
     fun create(newAnonymousUser: NewAnonymousUser): User
     fun create(newUser: NewUser): User
     fun get(username: String, identifierType: IdentifierType): User
-    fun getOrNull(id: UUID): UserAccount?
+    fun getUserAccountOrNull(id: UUID): UserAccount?
     fun getOrNull(username: String, identifierType: IdentifierType): User?
     fun login(userLogin: UserLogin): User
 
