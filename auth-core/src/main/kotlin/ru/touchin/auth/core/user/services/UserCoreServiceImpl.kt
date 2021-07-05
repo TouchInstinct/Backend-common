@@ -1,6 +1,8 @@
 @file:Suppress("unused")
+
 package ru.touchin.auth.core.user.services
 
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -11,8 +13,10 @@ import ru.touchin.auth.core.device.repository.DeviceRepository
 import ru.touchin.auth.core.device.repository.findByIdWithLockOrThrow
 import ru.touchin.auth.core.scope.models.ScopeGroupEntity
 import ru.touchin.auth.core.scope.repositories.ScopeRepository
+import ru.touchin.auth.core.user.converters.UserAccountConverter.toDto
 import ru.touchin.auth.core.user.converters.UserConverter.toDto
 import ru.touchin.auth.core.user.dto.User
+import ru.touchin.auth.core.user.dto.UserAccount
 import ru.touchin.auth.core.user.dto.enums.IdentifierType
 import ru.touchin.auth.core.user.exceptions.UserAccountNotFoundException
 import ru.touchin.auth.core.user.exceptions.UserAlreadyRegisteredException
@@ -25,6 +29,7 @@ import ru.touchin.auth.core.user.repositories.findByUsernameOrThrow
 import ru.touchin.auth.core.user.services.dto.NewAnonymousUser
 import ru.touchin.auth.core.user.services.dto.NewUser
 import ru.touchin.auth.core.user.services.dto.UserLogin
+import java.util.UUID
 
 @Service
 class UserCoreServiceImpl(
@@ -111,6 +116,12 @@ class UserCoreServiceImpl(
     override fun get(username: String, identifierType: IdentifierType): User {
         return getOrNull(username, identifierType)
             ?: throw UserAccountNotFoundException(username)
+    }
+
+    @Transactional(readOnly = true)
+    override fun getOrNull(id: UUID): UserAccount? {
+        return userAccountRepository.findByIdOrNull(id)
+            ?.toDto()
     }
 
     @Transactional(readOnly = true)
