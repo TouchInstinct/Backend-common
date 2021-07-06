@@ -18,9 +18,21 @@ interface UserAccountRepository: JpaRepository<UserAccountEntity, UUID> {
     """)
     fun findByUsername(username: String, identifierType: IdentifierType): UserAccountEntity?
 
+    @Query("""
+        SELECT ua
+        FROM UserAccountEntity ua
+        WHERE ua.user.id = :userId AND identifierType = :identifierType 
+    """)
+    fun findByUserId(userId: UUID, identifierType: IdentifierType): UserAccountEntity?
+
 }
 
 fun UserAccountRepository.findByUsernameOrThrow(username: String, identifierType: IdentifierType): UserAccountEntity {
     return findByUsername(username, identifierType)
         ?: throw UserAccountNotFoundException(username)
+}
+
+fun UserAccountRepository.findByUserIdOrThrow(userId: UUID, identifierType: IdentifierType): UserAccountEntity {
+    return findByUserId(userId, identifierType)
+        ?: throw UserAccountNotFoundException(userId.toString())
 }
