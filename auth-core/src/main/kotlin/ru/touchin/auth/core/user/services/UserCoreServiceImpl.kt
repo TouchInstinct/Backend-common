@@ -25,7 +25,9 @@ import ru.touchin.auth.core.user.models.UserAccountEntity
 import ru.touchin.auth.core.user.models.UserEntity
 import ru.touchin.auth.core.user.repositories.UserAccountRepository
 import ru.touchin.auth.core.user.repositories.UserRepository
+import ru.touchin.auth.core.user.repositories.findByUserIdOrThrow
 import ru.touchin.auth.core.user.repositories.findByUsernameOrThrow
+import ru.touchin.auth.core.user.services.dto.GetUserAccount
 import ru.touchin.auth.core.user.services.dto.NewAnonymousUser
 import ru.touchin.auth.core.user.services.dto.NewUser
 import ru.touchin.auth.core.user.services.dto.UserLogin
@@ -119,9 +121,9 @@ class UserCoreServiceImpl(
     }
 
     @Transactional(readOnly = true)
-    override fun getUserAccountOrNull(id: UUID): UserAccount? {
-        return userAccountRepository.findByIdOrNull(id)
-            ?.toDto()
+    override fun getUserAccount(userAccount: GetUserAccount): UserAccount {
+        return userAccountRepository.findByUserIdOrThrow(userAccount.userId, userAccount.identifierType)
+            .toDto()
     }
 
     @Transactional(readOnly = true)

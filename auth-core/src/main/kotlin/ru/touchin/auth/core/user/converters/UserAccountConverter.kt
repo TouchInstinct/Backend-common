@@ -7,6 +7,7 @@ object UserAccountConverter {
 
     fun UserAccountEntity.toDto(): UserAccount {
         return UserAccount(
+            id = id!!,
             username = username,
             identifierType = identifierType
         )
