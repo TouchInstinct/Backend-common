@@ -32,6 +32,7 @@ import ru.touchin.auth.core.user.services.dto.NewAnonymousUser
 import ru.touchin.auth.core.user.services.dto.NewUser
 import ru.touchin.auth.core.user.services.dto.UserLogin
 import ru.touchin.auth.core.user.services.dto.UserLogout
+import ru.touchin.auth.core.user.services.dto.UserUpdatePassword
 
 @Service
 class UserCoreServiceImpl(
@@ -125,6 +126,21 @@ class UserCoreServiceImpl(
                 devices = hashSetOf()
             }
             .also(userRepository::save)
+    }
+
+    @Transactional
+    override fun updatePassword(update: UserUpdatePassword) {
+        val userAccount = userAccountRepository.findByIdOrThrow(update.userAccountId)
+
+        if (userAccount.password != null) {
+            if (!passwordEncoder.matches(update.oldPassword, userAccount.password!!)) {
+                throw WrongPasswordException("userAccountId=${update.userAccountId}")
+            }
+        }
+
+        userAccount.apply {
+            password = update.newPassword?.let(passwordEncoder::encode)
+        }.also(userAccountRepository::save)
     }
 
     @Transactional(readOnly = true)
