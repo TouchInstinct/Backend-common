@@ -2,7 +2,6 @@
 
 package ru.touchin.auth.core.user.services
 
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -25,13 +24,14 @@ import ru.touchin.auth.core.user.models.UserAccountEntity
 import ru.touchin.auth.core.user.models.UserEntity
 import ru.touchin.auth.core.user.repositories.UserAccountRepository
 import ru.touchin.auth.core.user.repositories.UserRepository
+import ru.touchin.auth.core.user.repositories.findByIdOrThrow
 import ru.touchin.auth.core.user.repositories.findByUserIdOrThrow
 import ru.touchin.auth.core.user.repositories.findByUsernameOrThrow
 import ru.touchin.auth.core.user.services.dto.GetUserAccount
 import ru.touchin.auth.core.user.services.dto.NewAnonymousUser
 import ru.touchin.auth.core.user.services.dto.NewUser
 import ru.touchin.auth.core.user.services.dto.UserLogin
-import java.util.UUID
+import ru.touchin.auth.core.user.services.dto.UserLogout
 
 @Service
 class UserCoreServiceImpl(
@@ -112,6 +112,19 @@ class UserCoreServiceImpl(
             .also(userRepository::save)
 
         return user.toDto(device.toDto())
+    }
+
+    @Transactional
+    override fun logout(userLogout: UserLogout) {
+        val device = deviceRepository.findByIdWithLockOrThrow(userLogout.deviceId)
+
+        resetDeviceUsers(device)
+
+        userRepository.findByIdOrThrow(userLogout.userId)
+            .apply {
+                devices = hashSetOf()
+            }
+            .also(userRepository::save)
     }
 
     @Transactional(readOnly = true)
