@@ -11,8 +11,8 @@ import ru.touchin.exception.handler.dto.ExceptionResolverResult
 class NotFoundExceptionResolver : ExceptionResolver {
 
     override fun invoke(exception: Exception): ExceptionResolverResult? {
-        if (exception !is CommonNotFoundException) {
-            ExceptionResolverResult.createNotFoundError(exception)
+        if (exception is CommonNotFoundException) {
+            return ExceptionResolverResult.createNotFoundError(exception)
         }
 
         return null
