@@ -108,7 +108,7 @@ class UserCoreServiceImpl(
 
         val user = userAccount.user
             .apply {
-                devices = hashSetOf(device)
+                devices = devices + device
             }
             .also(userRepository::save)
 
@@ -123,7 +123,7 @@ class UserCoreServiceImpl(
 
         userRepository.findByIdOrThrow(userLogout.userId)
             .apply {
-                devices = hashSetOf()
+                devices = devices - device
             }
             .also(userRepository::save)
     }
