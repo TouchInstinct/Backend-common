@@ -25,6 +25,20 @@ class DeviceEntity: AuditableUuidIdEntity() {
     )
     lateinit var users: Set<UserEntity>
 
+    override fun equals(other: Any?): Boolean {
+        if (other == null || this.javaClass != other.javaClass) {
+            return false
+        }
+
+        other as DeviceEntity
+
+        return this.id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return this.id.hashCode()
+    }
+
     companion object {
         fun create(platform: DevicePlatform): DeviceEntity {
             return DeviceEntity().apply {

@@ -4,6 +4,7 @@ package ru.touchin.auth.core.user.repositories
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.findByIdOrNull
 import ru.touchin.auth.core.user.dto.enums.IdentifierType
 import ru.touchin.auth.core.user.exceptions.UserAccountNotFoundException
 import ru.touchin.auth.core.user.models.UserAccountEntity
@@ -25,6 +26,11 @@ interface UserAccountRepository: JpaRepository<UserAccountEntity, UUID> {
     """)
     fun findByUserId(userId: UUID, identifierType: IdentifierType): UserAccountEntity?
 
+}
+
+fun UserAccountRepository.findByIdOrThrow(userAccountId: UUID): UserAccountEntity {
+    return findByIdOrNull(userAccountId)
+        ?: throw UserAccountNotFoundException(userAccountId.toString())
 }
 
 fun UserAccountRepository.findByUsernameOrThrow(username: String, identifierType: IdentifierType): UserAccountEntity {

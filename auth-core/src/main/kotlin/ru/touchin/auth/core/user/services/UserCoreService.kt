@@ -7,7 +7,8 @@ import ru.touchin.auth.core.user.services.dto.GetUserAccount
 import ru.touchin.auth.core.user.services.dto.NewAnonymousUser
 import ru.touchin.auth.core.user.services.dto.NewUser
 import ru.touchin.auth.core.user.services.dto.UserLogin
-import java.util.UUID
+import ru.touchin.auth.core.user.services.dto.UserLogout
+import ru.touchin.auth.core.user.services.dto.UserUpdatePassword
 
 interface UserCoreService {
 
@@ -17,5 +18,7 @@ interface UserCoreService {
     fun getUserAccount(userAccount: GetUserAccount): UserAccount
     fun getOrNull(username: String, identifierType: IdentifierType): User?
     fun login(userLogin: UserLogin): User
+    fun logout(userLogout: UserLogout)
+    fun updatePassword(update: UserUpdatePassword)
 
 }

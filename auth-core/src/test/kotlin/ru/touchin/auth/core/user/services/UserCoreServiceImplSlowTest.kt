@@ -2,6 +2,7 @@ package ru.touchin.auth.core.user.services
 
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
@@ -24,6 +25,8 @@ import ru.touchin.auth.core.user.repositories.findByIdOrThrow
 import ru.touchin.auth.core.user.services.dto.NewAnonymousUser
 import ru.touchin.auth.core.user.services.dto.NewUser
 import ru.touchin.auth.core.user.services.dto.UserLogin
+import ru.touchin.auth.core.user.services.dto.UserLogout
+import ru.touchin.auth.core.user.services.dto.UserUpdatePassword
 import ru.touchin.common.spring.test.jpa.repository.RepositoryTest
 import java.lang.IllegalArgumentException
 import java.util.*
@@ -179,7 +182,7 @@ internal class UserCoreServiceImplSlowTest {
     fun loginShouldBeOk() {
         val device = createDevice()
 
-        val regUser = createNewUser(deviceId = device.id, password = "qwerty", username = "employee" )
+        val regUser = createNewUser(deviceId = device.id, password = "qwerty", username = "employee")
 
         val logingUser = userCoreService.login(
             UserLogin(
@@ -280,6 +283,103 @@ internal class UserCoreServiceImplSlowTest {
 
         assertEquals(1, actualDeviceE2.users.size)
         assertEquals(loginUserE2.id, actualDeviceE2.users.first().id!!)
+    }
+
+    @Test
+    @DisplayName("При логауте пользователь отлинковывается от устройства")
+    fun usersShouldBeUnbindedAfterLogout() {
+        val device = createDevice()
+
+        createNewUser(deviceId = device.id, password = "qwerty", username = "employee1")
+        val regUserE2 = createNewUser(deviceId = device.id, password = "qwerty", username = "employee2")
+
+        val actualDeviceE2 = deviceRepository.findByIdOrThrow(deviceId = device.id)
+
+        assertEquals(1, actualDeviceE2.users.size)
+        assertEquals(regUserE2.id, actualDeviceE2.users.first().id!!)
+
+        userCoreService.logout(
+            UserLogout(
+                deviceId = device.id,
+                userId = regUserE2.id
+            )
+        ).also {
+            entityManager.flush()
+            entityManager.clear()
+        }
+
+        val actualDevice = deviceRepository.findByIdOrThrow(deviceId = device.id)
+
+        assertTrue(actualDevice.users.isEmpty())
+    }
+
+    @Test
+    @DisplayName("Пользователь может залогиниться на нескольких устройствах")
+    fun usersShouldOkTwoDevicesLogin() {
+        val deviceD1 = createDevice()
+        val deviceD2 = createDevice()
+
+        val regUser = createNewUser(deviceId = deviceD1.id, password = "qwerty", username = "employee")
+
+        userCoreService.login(
+            UserLogin(
+                deviceId = deviceD2.id,
+                username = "employee",
+                password = "qwerty",
+                identifierType = IdentifierType.Email,
+            )
+        ).also {
+            entityManager.flush()
+            entityManager.clear()
+        }
+
+        val actualUser = userRepository.findByIdOrThrow(regUser.id)
+
+        assertEquals(2, actualUser.devices.size)
+
+        userCoreService.logout(
+            UserLogout(
+                deviceId = deviceD1.id,
+                userId = regUser.id
+            )
+        ).also {
+            entityManager.flush()
+            entityManager.clear()
+        }
+
+        val actualUser2 = userRepository.findByIdOrThrow(regUser.id)
+
+        assertEquals(1, actualUser2.devices.size)
+        assertEquals(deviceD2.id, actualUser2.devices.first().id!!)
+    }
+
+    @Test
+    @DisplayName("Пользователь может сменить пароль")
+    fun userCanChangePassword() {
+        val device = createDevice()
+
+        val regUser = createNewUser(deviceId = device.id, password = "qwerty", username = "employee1")
+
+        val userAccount = userAccountRepository.findByUserId(regUser.id, IdentifierType.Email)
+
+        assertNotNull(userAccount)
+
+        userCoreService.updatePassword(
+            UserUpdatePassword(
+                userAccountId = userAccount?.id!!,
+                oldPassword = "qwerty",
+                newPassword = "QWERTY1234"
+            )
+        ).also {
+            entityManager.flush()
+            entityManager.clear()
+        }
+
+        val actualUserAccount = userAccountRepository.findByUsername("employee1", IdentifierType.Email)
+
+        assertNotNull(actualUserAccount)
+        assertFalse(passwordEncoder.matches(userAccount.password!!, actualUserAccount?.password!!))
+        assertTrue(passwordEncoder.matches("QWERTY1234", actualUserAccount.password!!))
     }
 
 }
