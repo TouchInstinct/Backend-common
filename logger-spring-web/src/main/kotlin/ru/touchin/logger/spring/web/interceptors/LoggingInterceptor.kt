@@ -33,11 +33,15 @@ class LoggingInterceptor(
         val uri = request.requestURI.let(::URI)
 
         LoggerExecutionContext.current.updateContext { context ->
-            context.plus(DefaultContextFields.id.name to UUID.randomUUID().toString())
-            context.plus(DefaultContextFields.host.name to uri.host)
-            context.plus(DefaultContextFields.path.name to uri.path)
-            context.plus(DefaultContextFields.httpMethod.name to request.method)
-            context.plus(DefaultContextFields.ipAddress.name to request.publicIp)
+            context.plus(
+                mapOf(
+                    DefaultContextFields.id.name to UUID.randomUUID().toString(),
+                    DefaultContextFields.host.name to uri.host,
+                    DefaultContextFields.path.name to uri.path,
+                    DefaultContextFields.httpMethod.name to request.method,
+                    DefaultContextFields.ipAddress.name to request.publicIp,
+                )
+            )
         }
 
         logBuilderFactory.create(this::class.java)
