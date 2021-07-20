@@ -16,7 +16,10 @@ import ru.touchin.auth.core.tokens.refresh.services.dto.NewRefreshToken
 import ru.touchin.auth.core.user.converters.UserConverter.toDto
 import ru.touchin.auth.core.user.repositories.UserRepository
 import ru.touchin.auth.core.user.repositories.findByIdOrThrow
+import ru.touchin.common.byte.ByteUtils.toHex
 import ru.touchin.common.random.SecureRandomStringGenerator
+import ru.touchin.common.security.hash.HashUtils
+import ru.touchin.common.security.hash.HashUtils.calculateHash
 import java.time.ZonedDateTime
 
 @Service
@@ -82,6 +85,8 @@ class RefreshTokenCoreServiceImpl(
         return refreshTokenProperties.let {
             it.prefix + SecureRandomStringGenerator.generate(it.length)
         }
+            .calculateHash(HashUtils.HashAlgorithm.MD5)
+            .toHex()
     }
 
     companion object {
