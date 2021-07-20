@@ -33,8 +33,10 @@ class RefreshTokenCoreServiceImpl(
 
     @Transactional(readOnly = true)
     override fun get(value: String): RefreshToken {
-        return refreshTokenRepository.findByValueOrThrow(value)
-            .toDto()
+        val valueHash = getTokenHash(value)
+
+        return refreshTokenRepository.findByValueOrThrow(valueHash)
+            .toDto(value)
     }
 
     @Transactional
@@ -42,22 +44,25 @@ class RefreshTokenCoreServiceImpl(
         val user = userRepository.findByIdOrThrow(token.userId)
         val device = token.deviceId?.let(deviceRepository::findByIdOrNull)
         val scopes = scopeRepository.findAllById(token.scopes.map(Scope::name))
+        val value = generateTokenValue()
 
         val model = RefreshTokenEntity().apply {
             expiresAt = getExpirationDate()
-            value = generateTokenValue()
+            this.value = getTokenHash(value)
             this.user = user
             this.device = device
             this.scopes = scopes.toSet()
         }
 
         return refreshTokenRepository.save(model)
-            .toDto()
+            .toDto(value)
     }
 
     @Transactional
     override fun refresh(value: String): RefreshToken {
-        val oldToken = refreshTokenRepository.findByValueOrThrow(value)
+        val valueHash = getTokenHash(value)
+
+        val oldToken = refreshTokenRepository.findByValueOrThrow(valueHash)
             .validate()
             .apply {
                 usedAt = ZonedDateTime.now()
@@ -65,8 +70,10 @@ class RefreshTokenCoreServiceImpl(
 
         refreshTokenRepository.save(oldToken)
 
+        val newValue = generateTokenValue()
+
         val model = RefreshTokenEntity().apply {
-            this.value = generateTokenValue()
+            this.value = getTokenHash(newValue)
             expiresAt = getExpirationDate()
             user = oldToken.user
             device = oldToken.device
@@ -74,7 +81,7 @@ class RefreshTokenCoreServiceImpl(
         }
 
         return refreshTokenRepository.save(model)
-            .toDto()
+            .toDto(newValue)
     }
 
     private fun getExpirationDate(): ZonedDateTime {
@@ -85,17 +92,20 @@ class RefreshTokenCoreServiceImpl(
         return refreshTokenProperties.let {
             it.prefix + SecureRandomStringGenerator.generate(it.length)
         }
-            .calculateHash(HashUtils.HashAlgorithm.MD5)
+    }
+
+    private fun getTokenHash(value: String): String {
+        return value.calculateHash(HashUtils.HashAlgorithm.MD5)
             .toHex()
     }
 
     companion object {
 
-        fun RefreshTokenEntity.toDto(): RefreshToken {
+        fun RefreshTokenEntity.toDto(rawValue: String): RefreshToken {
             val device = device?.toDto()
 
             return RefreshToken(
-                value = value,
+                value = rawValue,
                 expiresAt = expiresAt,
                 usedAt = usedAt,
                 user = user.toDto(device)
