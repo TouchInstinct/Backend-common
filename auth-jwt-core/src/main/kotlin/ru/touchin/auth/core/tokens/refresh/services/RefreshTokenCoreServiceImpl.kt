@@ -95,7 +95,7 @@ class RefreshTokenCoreServiceImpl(
     }
 
     private fun getTokenHash(value: String): String {
-        return value.calculateHash(HashUtils.HashAlgorithm.MD5)
+        return value.calculateHash(HashUtils.HashAlgorithm.SHA256)
             .toHex()
     }
 
