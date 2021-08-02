@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.stereotype.Component
-import ru.touchin.auth.core.tokens.access.properties.AccessTokenProperties
+import ru.touchin.auth.security.jwt.properties.AccessTokenPublicProperties
 import ru.touchin.common.spring.Ordered
 import ru.touchin.common.spring.security.http.configurators.HttpSecurityConfigurator
 import java.security.interfaces.RSAPublicKey
@@ -16,7 +16,7 @@ import java.security.interfaces.RSAPublicKey
 class JwtHttpSecurityConfigurator(
     @Qualifier("accessTokenPublicKey")
     private val accessTokenPublicKey: RSAPublicKey,
-    private val accessTokenProperties: AccessTokenProperties
+    private val accessTokenProperties: AccessTokenPublicProperties
 ) : HttpSecurityConfigurator {
 
     override fun configure(http: HttpSecurity) {

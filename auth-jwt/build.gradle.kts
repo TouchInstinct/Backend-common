@@ -4,8 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":auth-jwt-core"))
-
+    implementation(project(":common"))
     implementation(project(":common-spring-security"))
 
     implementation("org.springframework.security:spring-security-oauth2-jose")
