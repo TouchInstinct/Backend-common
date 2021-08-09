@@ -11,6 +11,7 @@ data class ExceptionResolverResult(
 ) {
 
     companion object {
+
         fun createInternalError(errorMessage: String?): ExceptionResolverResult {
             return ExceptionResolverResult(
                 apiError = DefaultApiError.createFailure(errorMessage),
@@ -37,6 +38,15 @@ data class ExceptionResolverResult(
                 exception = exception
             )
         }
+
+        fun createAccessDeniedError(exception: Exception?): ExceptionResolverResult {
+            return ExceptionResolverResult(
+                apiError = DefaultApiError.createFailure(exception?.message),
+                status = HttpStatus.FORBIDDEN,
+                exception = exception,
+            )
+        }
+
     }
 
 }
