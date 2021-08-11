@@ -8,8 +8,6 @@ object ByteUtils {
         }
     }
 
-
-
     fun decodeHex(hex: String): ByteArray {
         check(hex.length % 2 == 0) { "Must have an even length" }
 
