@@ -24,4 +24,6 @@ object SecureRandomStringGenerator {
         }
     }
 
+    fun generateRandomBytes(size: Int) = ByteArray(size).also(SecureRandom()::nextBytes)
+
 }
