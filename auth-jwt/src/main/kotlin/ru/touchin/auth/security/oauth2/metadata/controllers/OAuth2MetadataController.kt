@@ -1,4 +1,4 @@
-package ru.touchin.auth.security.metadata.controllers
+package ru.touchin.auth.security.oauth2.metadata.controllers
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.web.bind.annotation.GetMapping
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.util.DefaultUriBuilderFactory
 import ru.touchin.auth.security.jwt.properties.AccessTokenPublicProperties
-import ru.touchin.auth.security.metadata.properties.MetadataProperties
-import ru.touchin.auth.security.metadata.response.MetadataResponse
+import ru.touchin.auth.security.oauth2.metadata.properties.OAuth2MetadataProperties
+import ru.touchin.auth.security.oauth2.metadata.response.OAuth2MetadataResponse
 import java.net.URI
 
 /**
@@ -15,22 +15,22 @@ import java.net.URI
  */
 @RestController
 @RequestMapping("/.well-known/oauth-authorization-server")
-@ConditionalOnProperty(prefix = "features", name = ["metadata"], havingValue = "true")
-class MetadataController(
-    private val metadataProperties: MetadataProperties,
+@ConditionalOnProperty(prefix = "features", name = ["oauth2-metadata"], havingValue = "true")
+class OAuth2MetadataController(
+    private val oauth2MetadataProperties: OAuth2MetadataProperties,
     private val accessTokenPublicProperties: AccessTokenPublicProperties,
 ) {
 
     @GetMapping
-    fun metadata(): MetadataResponse {
+    fun metadata(): OAuth2MetadataResponse {
         val issuer = accessTokenPublicProperties.issuer.let(URI::create)
 
-        return MetadataResponse(
+        return OAuth2MetadataResponse(
             issuer = issuer,
-            tokenEndpoint = metadataProperties.tokenEndpoint?.let(issuer::withPath),
+            tokenEndpoint = oauth2MetadataProperties.tokenEndpoint?.let(issuer::withPath),
             authorizationEndpoint = issuer,
             jwksUri = issuer.withPath("/.well-known/jwks.json"),
-            responseTypesSupported = metadataProperties.responseTypesSupported,
+            responseTypesSupported = oauth2MetadataProperties.responseTypesSupported,
         )
     }
 

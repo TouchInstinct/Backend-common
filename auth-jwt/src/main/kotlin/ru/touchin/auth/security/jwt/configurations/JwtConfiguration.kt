@@ -13,11 +13,11 @@ import java.security.spec.X509EncodedKeySpec
     "ru.touchin.auth.security.jwt.http.configurators",
     "ru.touchin.auth.security.jwt.properties",
     "ru.touchin.auth.security.jwks",
-    "ru.touchin.auth.security.metadata",
+    "ru.touchin.auth.security.oauth2.metadata",
 )
 @ConfigurationPropertiesScan(
     "ru.touchin.auth.security.jwt.properties",
-    "ru.touchin.auth.security.metadata.properties",
+    "ru.touchin.auth.security.oauth2.metadata.properties",
 )
 class JwtConfiguration {
 

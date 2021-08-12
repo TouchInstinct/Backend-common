@@ -1,4 +1,4 @@
-package ru.touchin.auth.security.metadata.response
+package ru.touchin.auth.security.oauth2.metadata.response
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -7,7 +7,7 @@ import java.net.URI
 /**
  * @see <a href="https://tools.ietf.org/html/rfc8414#section-3.2">Authorization Server Metadata Response</a>
  */
-data class MetadataResponse(
+data class OAuth2MetadataResponse(
     val issuer: URI,
     @JsonProperty("token_endpoint")
     @JsonInclude(JsonInclude.Include.NON_NULL)
