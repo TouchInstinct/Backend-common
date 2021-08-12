@@ -12,8 +12,13 @@ import java.security.spec.X509EncodedKeySpec
 @ComponentScan(
     "ru.touchin.auth.security.jwt.http.configurators",
     "ru.touchin.auth.security.jwt.properties",
+    "ru.touchin.auth.security.jwks",
+    "ru.touchin.auth.security.metadata",
 )
-@ConfigurationPropertiesScan("ru.touchin.auth.security.jwt.properties")
+@ConfigurationPropertiesScan(
+    "ru.touchin.auth.security.jwt.properties",
+    "ru.touchin.auth.security.metadata.properties",
+)
 class JwtConfiguration {
 
     @Bean("accessTokenPublicKey")
