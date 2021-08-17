@@ -8,7 +8,6 @@ import ru.touchin.auth.security.jwks.services.JwksService
 
 @RestController
 @RequestMapping("/.well-known/jwks.json")
-@ConditionalOnProperty(prefix = "features", name = ["jwks"], havingValue = "true")
 class JwksController(private val jwksService: JwksService) {
 
     @GetMapping

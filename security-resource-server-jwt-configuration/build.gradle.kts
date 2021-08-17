@@ -7,8 +7,8 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":common-spring-security"))
 
+    implementation(project(":security-jwt-common"))
+
     implementation("org.springframework.security:spring-security-oauth2-jose")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-
-    api("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
