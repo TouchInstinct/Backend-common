@@ -1,11 +1,10 @@
 package ru.touchin.auth.security.oauth2.metadata.controllers
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.util.DefaultUriBuilderFactory
-import ru.touchin.auth.security.jwt.properties.AccessTokenPublicProperties
+import ru.touchin.auth.core.tokens.access.properties.AccessTokenProperties
 import ru.touchin.auth.security.oauth2.metadata.properties.OAuth2MetadataProperties
 import ru.touchin.auth.security.oauth2.metadata.response.OAuth2MetadataResponse
 import java.net.URI
@@ -15,15 +14,14 @@ import java.net.URI
  */
 @RestController
 @RequestMapping("/.well-known/oauth-authorization-server")
-@ConditionalOnProperty(prefix = "features", name = ["oauth2-metadata"], havingValue = "true")
 class OAuth2MetadataController(
+    private val accessTokenProperties: AccessTokenProperties,
     private val oauth2MetadataProperties: OAuth2MetadataProperties,
-    private val accessTokenPublicProperties: AccessTokenPublicProperties,
 ) {
 
     @GetMapping
     fun metadata(): OAuth2MetadataResponse {
-        val issuer = accessTokenPublicProperties.issuer.let(URI::create)
+        val issuer = accessTokenProperties.issuer.let(URI::create)
 
         return OAuth2MetadataResponse(
             issuer = issuer,
