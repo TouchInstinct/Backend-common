@@ -129,11 +129,11 @@ Interceptor для логирования запросов/ответов.
 
 Модуль для хранения настроек
 
-## auth-core
+## security-authorization-server-core
 
 Модуль авторизации
 
-## auth-jwt-core
+## security-authorization-server-jwt-core
 
 Добавляет поддержку jwt-токенов (создание/хранение). Для работы этого модуля требуется прописать в пропертях:
 
@@ -165,3 +165,33 @@ openssl pkcs8 -topk8 -inform PEM -in private.pem -out private_key.pem -nocrypt
 cat private_key.pem
 cat public.pem
 ```
+
+## security-authorization-server-oauth2-metadata
+
+OAuth2 metadata support.
+
+## security-jwt-common
+
+JWT related utilities.
+
+## security-resource-server-default-configuration
+
+Default configuration for the Spring OAuth2 resource server with JWT auth.
+
+## security-resource-server-custom-configuration
+
+Custom configuration for the Spring OAuth2 resource server with JWT auth. Requires the following properties:
+
+``` yaml
+token.access:
+  issuer: ${app.issuer}
+  signatureAlgorithm: RS256
+  keyPair:
+    public: |
+      -----BEGIN PUBLIC KEY-----
+      -----END PUBLIC KEY-----
+```
+
+## security-resource-server-test-configuration
+
+Disables Spring OAuth2 resource server for testing.
