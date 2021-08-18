@@ -24,7 +24,7 @@ class CaptchaWebClient(
         return getWebClientBuilder(captchaProperties.uri.toString()).build()
     }
 
-    fun siteverify(response: String): CaptchaSiteVerifyResponse {
+    fun siteVerify(response: String): CaptchaSiteVerifyResponse {
         return getWebClient().post()
             .uri {
                 it.path(SITE_VERIFY_PATH)

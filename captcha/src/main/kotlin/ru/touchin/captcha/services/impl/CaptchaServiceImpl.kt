@@ -18,7 +18,7 @@ class CaptchaServiceImpl(
     @LogValue
     @AutoLogging(tags = ["CAPTCHA", "CAPTCHA_VERIFICATION"])
     override fun verify(response: String): CaptchaVerificationResult {
-        val siteVerifyResponse = captchaWebClient.siteverify(response)
+        val siteVerifyResponse = captchaWebClient.siteVerify(response)
 
         if (siteVerifyResponse.action !in captchaProperties.actions) {
             throw CaptchaUnknownActionException(siteVerifyResponse.action)
