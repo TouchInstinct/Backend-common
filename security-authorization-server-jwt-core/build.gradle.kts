@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
     implementation(project(":security-authorization-server-core"))
-    implementation(project(":security-resource-server-jwt-configuration"))
+    implementation(project(":security-resource-server-custom-jwt-configuration"))
     implementation(project(":security-jwt-common"))
 
     implementation("com.auth0:java-jwt")
