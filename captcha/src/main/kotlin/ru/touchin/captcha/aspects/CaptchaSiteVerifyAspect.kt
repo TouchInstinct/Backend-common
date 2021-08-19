@@ -12,7 +12,7 @@ import ru.touchin.captcha.services.CaptchaService
 
 @Aspect
 @Component
-@ConditionalOnProperty(prefix = "captcha", name = ["enabled"], havingValue = "true")
+@ConditionalOnProperty(prefix = "captcha", name = ["enabled"], havingValue = "true", matchIfMissing = true)
 class CaptchaSiteVerifyAspect(private val captchaService: CaptchaService) {
 
     @Throws(Throwable::class)
