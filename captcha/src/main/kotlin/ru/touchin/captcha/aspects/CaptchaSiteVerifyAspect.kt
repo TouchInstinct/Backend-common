@@ -23,7 +23,7 @@ class CaptchaSiteVerifyAspect(private val captchaService: CaptchaService) {
             as? ServletRequestAttributes
             ?: throw IllegalStateException("unable to get current request attributes")
 
-        val captchaResponse = currentRequestAttributes.request.getHeader(CAPTCHA_HEADER_NAME)
+        val captchaResponse = currentRequestAttributes.request.getHeader(CAPTCHA_RESPONSE_HEADER_NAME)
             ?: throw CaptchaResponseMissingException()
 
         captchaService.verify(captchaResponse)
@@ -33,7 +33,7 @@ class CaptchaSiteVerifyAspect(private val captchaService: CaptchaService) {
 
     companion object {
 
-        private const val CAPTCHA_HEADER_NAME = "X-Captcha-Response"
+        private const val CAPTCHA_RESPONSE_HEADER_NAME = "X-Captcha-Response"
 
     }
 
