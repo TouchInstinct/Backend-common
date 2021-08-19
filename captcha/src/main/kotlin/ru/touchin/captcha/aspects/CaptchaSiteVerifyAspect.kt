@@ -9,7 +9,6 @@ import org.springframework.web.context.request.ServletRequestAttributes
 import ru.touchin.captcha.annotations.Captcha
 import ru.touchin.captcha.exceptions.CaptchaResponseMissingException
 import ru.touchin.captcha.services.CaptchaService
-import java.lang.IllegalStateException
 
 @Aspect
 @Component
