@@ -2,6 +2,7 @@ package ru.touchin.logger.serializers.impl
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
@@ -25,6 +26,7 @@ internal class LogValueFieldResolverImplTest {
     private lateinit var logValueFieldSerializer: LogValueFieldSerializer
 
     private val objectMapper = ObjectMapper()
+        .registerModule(JavaTimeModule())
         .setSerializationInclusion(JsonInclude.Include.NON_NULL)
 
     @Suppress("unused")

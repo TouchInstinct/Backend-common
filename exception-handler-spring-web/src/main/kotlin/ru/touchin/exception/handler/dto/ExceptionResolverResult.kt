@@ -39,14 +39,6 @@ data class ExceptionResolverResult(
             )
         }
 
-        fun createAccessDeniedError(exception: Exception?): ExceptionResolverResult {
-            return ExceptionResolverResult(
-                apiError = DefaultApiError.createFailure(exception?.message),
-                status = HttpStatus.FORBIDDEN,
-                exception = exception,
-            )
-        }
-
     }
 
 }

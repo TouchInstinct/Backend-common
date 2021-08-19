@@ -9,6 +9,8 @@ dependencies {
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation(project(":common-spring"))
