@@ -2,6 +2,7 @@ package ru.touchin.captcha.aspects
 
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Component
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
@@ -12,6 +13,7 @@ import java.lang.IllegalStateException
 
 @Aspect
 @Component
+@ConditionalOnProperty(prefix = "captcha", name = ["enabled"], havingValue = "true")
 class CaptchaSiteVerifyAspect(private val captchaService: CaptchaService) {
 
     @Throws(Throwable::class)
