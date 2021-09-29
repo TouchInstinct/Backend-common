@@ -2,6 +2,7 @@
 
 package ru.touchin.auth.core.user.services
 
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -33,6 +34,7 @@ import ru.touchin.auth.core.user.services.dto.NewUser
 import ru.touchin.auth.core.user.services.dto.UserLogin
 import ru.touchin.auth.core.user.services.dto.UserLogout
 import ru.touchin.auth.core.user.services.dto.UserUpdatePassword
+import java.util.UUID
 
 @Service
 class UserCoreServiceImpl(
@@ -66,6 +68,11 @@ class UserCoreServiceImpl(
         userAccountRepository.findByUsername(newUser.username, newUser.identifierType)
             ?.run { throw UserAlreadyRegisteredException(newUser.username) }
 
+        if (newUser.userId != null) {
+            userRepository.findByIdOrNull(newUser.userId)
+                ?.run { throw UserAlreadyRegisteredException(newUser.username) }
+        }
+
         val device = deviceRepository.findByIdWithLockOrThrow(newUser.deviceId)
 
         resetDeviceUsers(device)
@@ -74,11 +81,12 @@ class UserCoreServiceImpl(
 
         val user = UserEntity()
             .apply {
+                id = newUser.userId ?: UUID.randomUUID()
                 anonymous = false
                 devices = hashSetOf(device)
                 scopes = defaultScopes.toSet()
             }
-            .also(userRepository::save)
+            .also(userRepository::saveAndFlush)
 
         UserAccountEntity()
             .apply {

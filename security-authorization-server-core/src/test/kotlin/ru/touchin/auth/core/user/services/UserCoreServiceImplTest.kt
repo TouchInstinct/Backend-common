@@ -141,6 +141,7 @@ internal class UserCoreServiceImplTest {
     fun shouldNotBeAnonymousFlags() {
         userCoreService.create(
             NewUser(
+                userId = null,
                 deviceId = deviceWithoutUser.id!!,
                 username = "user",
                 password = null,
@@ -165,6 +166,7 @@ internal class UserCoreServiceImplTest {
 
         val actualUser = userCoreService.create(
             NewUser(
+                userId = null,
                 deviceId = deviceWithoutUser.id!!,
                 username = "admin",
                 password = "foo",

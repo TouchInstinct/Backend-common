@@ -65,6 +65,7 @@ internal class UserCoreServiceImplSlowTest {
 
     private fun createNewUser(deviceId: UUID, password: String? = null, username: String = "manager"): User {
         val newUser = NewUser(
+            userId = null,
             deviceId = deviceId,
             username = username,
             password = password,
@@ -157,6 +158,7 @@ internal class UserCoreServiceImplSlowTest {
         val device = createDevice()
 
         val newUser = NewUser(
+            userId = null,
             deviceId = device.id,
             username = "+71232322023",
             password = "qwerty",

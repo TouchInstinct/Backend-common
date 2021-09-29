@@ -4,6 +4,7 @@ import ru.touchin.auth.core.user.dto.enums.IdentifierType
 import java.util.*
 
 data class NewUser(
+    val userId: UUID?,
     val deviceId: UUID,
     val identifierType: IdentifierType,
     val username: String,
