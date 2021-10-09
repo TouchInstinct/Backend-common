@@ -3,7 +3,10 @@ package ru.touchin.logger.log
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.databind.node.ObjectNode
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import ru.touchin.logger.dto.LogError
 import ru.touchin.logger.dto.LogError.Companion.stackTraceAsString
 import ru.touchin.logger.dto.LogError.Companion.toLogError
@@ -11,7 +14,10 @@ import ru.touchin.logger.dto.LogError.Companion.toLogError
 open class JsonLogImpl(clazz: Class<*>) : AbstractLog(clazz) {
 
     companion object {
-        val objectMapper: ObjectMapper = ObjectMapper()
+        val objectMapper: ObjectMapper = JsonMapper.builder()
+            .addModule(JavaTimeModule())
+            .build()
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             .setSerializationInclusion(JsonInclude.Include.NON_NULL)
     }
 
