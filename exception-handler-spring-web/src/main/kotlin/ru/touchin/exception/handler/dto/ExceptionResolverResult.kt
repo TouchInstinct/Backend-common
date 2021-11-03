@@ -39,6 +39,17 @@ data class ExceptionResolverResult(
             )
         }
 
+        fun createBadRequestError(exception: Exception?): ExceptionResolverResult {
+            return ExceptionResolverResult(
+                apiError = DefaultApiError(
+                    errorCode = ApiError.BAD_REQUEST_CODE,
+                    errorMessage = exception?.message
+                ),
+                status = HttpStatus.BAD_REQUEST,
+                exception = exception
+            )
+        }
+
     }
 
 }
