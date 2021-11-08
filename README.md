@@ -195,3 +195,7 @@ token.access:
 ## security-resource-server-test-configuration
 
 Disables Spring OAuth2 resource server for testing.
+
+## s3-storage
+
+Amazon S3 support.
