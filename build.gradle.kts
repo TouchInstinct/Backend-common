@@ -70,6 +70,8 @@ subprojects {
             dependency("org.locationtech.spatial4j:spatial4j:0.8")
 
             dependency("com.auth0:java-jwt:3.10.3")
+
+            dependency("software.amazon.awssdk:s3:2.10.11")
         }
     }
 
