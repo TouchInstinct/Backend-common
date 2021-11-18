@@ -199,3 +199,10 @@ Disables Spring OAuth2 resource server for testing.
 ## s3-storage
 
 Amazon S3 support.
+
+# spring-workers-agent
+
+Framework for clustered scheduling based on Quartz and Spring Data.
+Stores all data in a database (Postgres by default).
+
+Used as manageable alternative for Spring's `@Scheduled`.

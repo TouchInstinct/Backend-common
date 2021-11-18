@@ -1,0 +1,38 @@
+package ru.touchin.spring.workers.manager.agent.annotation_config
+
+import org.springframework.stereotype.Component
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
+import ru.touchin.spring.workers.manager.agent.annotation_config.trigger_factory.AnnotationConfigTriggerFactory
+import ru.touchin.spring.workers.manager.agent.triggers.InitialTriggerDescriptorsProvider
+import ru.touchin.spring.workers.manager.core.models.TriggerDescriptor
+import ru.touchin.spring.workers.manager.core.models.Worker
+
+@Component
+class AnnotationConfigInitialTriggerDescriptorsProvider(
+    private val triggersCollector: AnnotationConfigCollectingBeanPostProcessor,
+    private val triggerFactories: List<AnnotationConfigTriggerFactory>
+) : InitialTriggerDescriptorsProvider {
+
+    val jobName2Triggers: MultiValueMap<String, TriggerDescriptor> = LinkedMultiValueMap()
+
+    override fun applicableFor(worker: Worker): Boolean {
+        val actionMethod = triggersCollector.jobName2Method[worker.workerName]
+            ?: return false
+
+        val triggers = triggerFactories.flatMap { it.create(worker, actionMethod) }
+
+        if (triggers.isEmpty()) {
+            return false
+        }
+
+        jobName2Triggers.addAll(worker.workerName, triggers)
+
+        return true
+    }
+
+    override fun createInitialTriggerDescriptors(worker: Worker): List<TriggerDescriptor> {
+        return jobName2Triggers[worker.workerName].orEmpty()
+    }
+
+}
