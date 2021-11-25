@@ -3,7 +3,7 @@ package ru.touchin.spring.workers.manager.agent.annotation_config
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.stereotype.Component
 import ru.touchin.spring.workers.manager.agent.annotation_config.job_factory.AnnotationConfigJobFactory
-import ru.touchin.spring.workers.manager.agent.base.BaseJob
+import ru.touchin.spring.workers.manager.agent.common.base.BaseJob
 import java.lang.reflect.Method
 
 /**

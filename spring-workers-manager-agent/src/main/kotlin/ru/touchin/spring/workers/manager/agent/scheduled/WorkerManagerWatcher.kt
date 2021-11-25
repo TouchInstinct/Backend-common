@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import ru.touchin.spring.workers.manager.agent.quartz.RunnableJob
 import ru.touchin.spring.workers.manager.agent.registry.JobDefinitionsRegistry
-import ru.touchin.spring.workers.manager.agent.services.SchedulerService
+import ru.touchin.spring.workers.manager.agent.scheduled.services.SchedulerService
 import ru.touchin.spring.workers.manager.agent.registry.TriggersRegistry
-import ru.touchin.spring.workers.manager.core.services.TriggerDescriptorCoreService
+import ru.touchin.spring.workers.manager.core.trigger.services.TriggerDescriptorCoreService
 
 /**
  * Class is proceeding regular synchronisation trigger descriptors from db and quartz scheduled triggers
@@ -49,13 +49,13 @@ class WorkerManagerWatcher(
 
         val actualTriggerDescriptors = jobDefinitionsRegistry.jobs
             .flatMap { (jobName, _) -> triggerDescriptorCoreService.getByWorkerName(jobName) }
-            .filter { !it.isDisabled() }
+            .filter { it.disabledAt == null }
 
-        val deletedTriggerDescriptors = currentTriggerDescriptors - actualTriggerDescriptors
+        val deletedTriggerDescriptors = currentTriggerDescriptors - actualTriggerDescriptors.toSet()
         scheduleTriggerService.unscheduleTriggers(deletedTriggerDescriptors)
         triggersRegistry.remove(deletedTriggerDescriptors)
 
-        val newTriggerDescriptors = actualTriggerDescriptors - currentTriggerDescriptors
+        val newTriggerDescriptors = actualTriggerDescriptors - currentTriggerDescriptors.toSet()
         scheduleTriggerService.scheduleTriggers(newTriggerDescriptors)
     }
 

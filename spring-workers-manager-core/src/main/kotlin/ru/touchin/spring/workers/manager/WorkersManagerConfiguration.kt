@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import ru.touchin.common.spring.jpa.EnableJpaAuditingExtra
 
 /**
  * Configuration which brings to context all the components, required to support workers manager module via annotations.
@@ -31,7 +32,7 @@ class WorkersManagerConfiguration {
      */
     @Configuration
     @ConditionalOnMissingBean(name=["jpaAuditingHandler"])
-    @EnableJpaAuditing
+    @EnableJpaAuditingExtra
     class JpaAuditingNonConflictingDeclaration
 
 }

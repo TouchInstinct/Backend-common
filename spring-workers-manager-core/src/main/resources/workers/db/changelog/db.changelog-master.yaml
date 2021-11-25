@@ -58,7 +58,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: VARCHAR(250)
+                  type: UUID
                   constraints:
                     nullable: false
                     primaryKey: true
@@ -114,7 +114,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: VARCHAR(250)
+                  type: UUID
                   constraints:
                     nullable: false
                     primaryKey: true

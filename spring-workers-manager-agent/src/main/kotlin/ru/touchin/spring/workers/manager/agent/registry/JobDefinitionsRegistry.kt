@@ -4,10 +4,10 @@ import org.quartz.JobDetail
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.util.LinkedMultiValueMap
-import ru.touchin.spring.workers.manager.agent.executors.WorkerActionExecutor
+import ru.touchin.spring.workers.manager.agent.worker.executors.WorkerActionExecutor
 import ru.touchin.spring.workers.manager.agent.quartz.RunnableJob
-import ru.touchin.spring.workers.manager.agent.base.BaseJob
-import ru.touchin.spring.workers.manager.agent.utils.Glob
+import ru.touchin.spring.workers.manager.agent.common.base.BaseJob
+import ru.touchin.spring.workers.manager.agent.common.utils.Glob
 
 @Component
 class JobDefinitionsRegistry(
@@ -24,7 +24,10 @@ class JobDefinitionsRegistry(
     final val jobNames: Set<String>
 
     init {
-        val allJobs = providers.flatMap { it.getJobs() }
+        val allJobs = providers.flatMap {
+            val job =it.getJobs()
+        job
+        }
 
         val name2jobsList = LinkedMultiValueMap<String, BaseJob>()
 

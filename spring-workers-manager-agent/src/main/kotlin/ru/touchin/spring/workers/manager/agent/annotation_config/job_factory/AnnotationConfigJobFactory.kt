@@ -1,6 +1,6 @@
 package ru.touchin.spring.workers.manager.agent.annotation_config.job_factory
 
-import ru.touchin.spring.workers.manager.agent.base.BaseJob
+import ru.touchin.spring.workers.manager.agent.common.base.BaseJob
 import java.lang.reflect.Method
 
 /**

@@ -3,14 +3,14 @@ package ru.touchin.spring.workers.manager.agent.annotation_config.trigger_factor
 import org.springframework.context.EmbeddedValueResolverAware
 import org.springframework.stereotype.Component
 import org.springframework.util.StringValueResolver
-import ru.touchin.spring.workers.manager.agent.annotation_config.DefaultTrigger
-import ru.touchin.spring.workers.manager.core.models.TriggerDescriptor
-import ru.touchin.spring.workers.manager.core.models.Worker
-import ru.touchin.spring.workers.manager.core.models.enums.TriggerType
+import ru.touchin.spring.workers.manager.agent.annotation_config.InitTrigger
+import ru.touchin.spring.workers.manager.core.trigger.enums.TriggerType
+import ru.touchin.spring.workers.manager.core.trigger.services.dto.CreateTriggerDescriptor
+import ru.touchin.spring.workers.manager.core.worker.dto.Worker
 import java.lang.reflect.Method
 
 /**
- * Creates triggers for methods annotated with [ru.touchin.spring.workers.manager.agent.annotation_config.DefaultTrigger] annotation
+ * Creates triggers for methods annotated with [ru.touchin.spring.workers.manager.agent.annotation_config.InitTrigger] annotation
  */
 @Component
 class TriggerAnnotationConfigTriggerFactory
@@ -23,23 +23,25 @@ class TriggerAnnotationConfigTriggerFactory
         valueResolver = resolver
     }
 
-    override fun create(worker: Worker, actionMethod: Method): List<TriggerDescriptor> {
-        val triggerAnnotation = actionMethod.getAnnotation(DefaultTrigger::class.java)
+    override fun create(worker: Worker, actionMethod: Method): List<CreateTriggerDescriptor> {
+        val triggerAnnotation = actionMethod.getAnnotation(InitTrigger::class.java)
             ?: return emptyList()
 
-        val trigger = TriggerDescriptor().also {
-            it.worker = worker
+        val resolvedType = valueResolver.resolveStringValue(triggerAnnotation.type)
+        val triggerType = TriggerType.find(resolvedType)
+            ?: throw IllegalArgumentException("Trigger type for name $resolvedType dies not exist")
 
-            val resolvedType = valueResolver.resolveStringValue(triggerAnnotation.type)
+        val expression = valueResolver.resolveStringValue(triggerAnnotation.expression)
+            ?: throw NullPointerException("Trigger for worker '${worker.name}' has null expression")
 
-            it.type = TriggerType.find(resolvedType)
-                ?: throw IllegalArgumentException("Trigger type for name $resolvedType dies not exist")
-
-            it.expression = valueResolver.resolveStringValue(triggerAnnotation.expression)
-                ?: throw NullPointerException("Trigger for worker '${worker.workerName}' has null expression")
-
-            it.triggerName = "${it.type.name}_${it.expression.replace(" ", "_")}"
-        }
+        val trigger = CreateTriggerDescriptor(
+            name = "${triggerType.name}_${expression.replace(" ", "_")}",
+            type = triggerType,
+            workerName = worker.name,
+            expression = valueResolver.resolveStringValue(triggerAnnotation.expression)
+                ?: throw NullPointerException("Trigger for worker '${worker.name}' has null expression"),
+            disabledAt = null,
+        )
 
         return listOf(trigger)
     }

@@ -2,7 +2,7 @@ package ru.touchin.spring.workers.manager.agent.registry
 
 import org.quartz.Trigger
 import org.springframework.stereotype.Component
-import ru.touchin.spring.workers.manager.core.models.TriggerDescriptor
+import ru.touchin.spring.workers.manager.core.trigger.dto.TriggerDescriptor
 import java.util.concurrent.ConcurrentHashMap
 
 @Component

@@ -2,15 +2,14 @@ package ru.touchin.spring.workers.manager.agent.annotation_config.job_factory
 
 import org.springframework.stereotype.Component
 import ru.touchin.spring.workers.manager.agent.annotation_config.ScheduledAction
-import ru.touchin.spring.workers.manager.agent.base.BaseJob
+import ru.touchin.spring.workers.manager.agent.common.base.BaseJob
 import java.lang.reflect.Method
 
 /**
  * Creates job instances for every annotated action method.
  */
 @Component
-class ScheduledActionAnnotationConfigJobFactory
-    : AnnotationConfigJobFactory {
+class ScheduledActionAnnotationConfigJobFactory : AnnotationConfigJobFactory {
 
     override fun create(bean: Any, actionMethod: Method): List<BaseJob> {
         val job = createJobForBean(bean, actionMethod)

@@ -1,7 +1,7 @@
 package ru.touchin.spring.workers.manager.agent.annotation_config
 
 import org.springframework.stereotype.Component
-import ru.touchin.spring.workers.manager.agent.base.BaseJob
+import ru.touchin.spring.workers.manager.agent.common.base.BaseJob
 import ru.touchin.spring.workers.manager.agent.registry.JobProvider
 
 @Component

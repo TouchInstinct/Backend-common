@@ -5,6 +5,10 @@ plugins {
 }
 
 dependencies {
+    api(project(":common"))
+
+    implementation(project(":common-spring-jpa"))
+
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("org.liquibase:liquibase-core")

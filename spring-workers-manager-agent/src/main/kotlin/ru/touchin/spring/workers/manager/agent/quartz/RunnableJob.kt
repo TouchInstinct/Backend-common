@@ -9,6 +9,7 @@ import org.quartz.JobExecutionException
 typealias JobFunction = (JobExecutionContext) -> Unit
 
 class RunnableJob : Job {
+
     override fun execute(context: JobExecutionContext) {
         try {
             @Suppress("UNCHECKED_CAST")
@@ -21,6 +22,7 @@ class RunnableJob : Job {
     }
 
     companion object {
+
         private const val ACTION = "ACTION"
 
         fun initJobBuilder(action: JobFunction): JobBuilder {
@@ -28,5 +30,7 @@ class RunnableJob : Job {
                 .newJob(RunnableJob::class.java)
                 .usingJobData(JobDataMap(mapOf(ACTION to action)))
         }
+
     }
+
 }

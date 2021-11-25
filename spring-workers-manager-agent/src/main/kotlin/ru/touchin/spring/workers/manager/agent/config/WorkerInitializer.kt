@@ -2,15 +2,17 @@ package ru.touchin.spring.workers.manager.agent.config
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import ru.touchin.spring.workers.manager.agent.services.TriggerDescriptorService
-import ru.touchin.spring.workers.manager.agent.services.WorkerService
+import ru.touchin.spring.workers.manager.agent.trigger.services.TriggerDescriptorService
 import ru.touchin.spring.workers.manager.agent.registry.JobDefinitionsRegistry
+import ru.touchin.spring.workers.manager.core.worker.services.WorkerCoreService
+import ru.touchin.spring.workers.manager.core.worker.services.WorkersStateService
 
 @Component
 class WorkerInitializer(
     private val triggerDescriptorAgentService: TriggerDescriptorService,
     private val jobDefinitionsRegistry: JobDefinitionsRegistry,
-    private val workerService: WorkerService
+    private val workerCoreService: WorkerCoreService,
+    private val workerStateService: WorkersStateService,
 ) {
 
     @Transactional
@@ -23,13 +25,13 @@ class WorkerInitializer(
     }
 
     private fun getOrCreateWorkerWithTriggers(name: String) {
-        workerService.getWithLock(name)
-            ?.let(workerService::unsetStopped)
+        workerCoreService.getWithLock(name)
+            ?.let { workerStateService.start(it.name) }
             ?: createWorkerWithTriggers(name)
     }
 
     private fun createWorkerWithTriggers(name: String) {
-        val worker = workerService.create(name)
+        val worker = workerCoreService.create(name)
 
         triggerDescriptorAgentService.createDefaultTriggerDescriptors(worker)
     }
