@@ -49,7 +49,7 @@ class WorkerManagerWatcher(
 
         val actualTriggerDescriptors = jobDefinitionsRegistry.jobs
             .flatMap { (jobName, _) -> triggerDescriptorCoreService.getByWorkerName(jobName) }
-            .filter { it.disabledAt == null }
+            .filter { !it.isDisabled() }
 
         val deletedTriggerDescriptors = currentTriggerDescriptors - actualTriggerDescriptors.toSet()
         scheduleTriggerService.unscheduleTriggers(deletedTriggerDescriptors)

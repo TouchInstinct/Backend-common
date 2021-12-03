@@ -14,6 +14,10 @@ data class TriggerDescriptor(
     val deletedAt: ZonedDateTime?,
 ) {
 
+    fun isDeleted() = deletedAt != null
+
+    fun isDisabled() = disabledAt != null
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is TriggerDescriptor) return false

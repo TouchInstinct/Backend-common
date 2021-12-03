@@ -16,8 +16,4 @@ data class Worker(
 
     fun isDisabled() = disabledAt != null
 
-//    fun getEnabledTriggerDescriptors() = triggerDescriptors.filter { it.disabledAt == null && it.deletedAt == null }
-//
-//    fun getAllTriggerDescriptors() = triggerDescriptors.filter { it.deletedAt == null }
-
 }
