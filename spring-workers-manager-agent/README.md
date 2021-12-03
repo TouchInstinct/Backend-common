@@ -18,7 +18,7 @@ Used as manageable alternative for Spring's `@Scheduled`.
     class MyJob {
     
       @ScheduledAction
-      @DefaultTrigger(type = "CRON", expression = "0 15 * * * ?")
+      @InitTrigger(type = "CRON", expression = "0 15 * * * ?")
       fun sayHello(){
         println("Hello, world!")
       }
