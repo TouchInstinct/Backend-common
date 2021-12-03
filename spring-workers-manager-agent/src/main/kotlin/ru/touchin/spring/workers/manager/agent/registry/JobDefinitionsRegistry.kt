@@ -24,10 +24,7 @@ class JobDefinitionsRegistry(
     final val jobNames: Set<String>
 
     init {
-        val allJobs = providers.flatMap {
-            val job =it.getJobs()
-        job
-        }
+        val allJobs = providers.flatMap(JobProvider::getJobs)
 
         val name2jobsList = LinkedMultiValueMap<String, BaseJob>()
 

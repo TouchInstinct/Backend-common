@@ -1,7 +1,6 @@
 package ru.touchin.spring.workers.manager.core.trigger.dto
 
 import ru.touchin.spring.workers.manager.core.trigger.enums.TriggerType
-import ru.touchin.spring.workers.manager.core.trigger.models.TriggerDescriptorEntity
 import java.time.ZonedDateTime
 import java.util.*
 
@@ -17,9 +16,11 @@ data class TriggerDescriptor(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is TriggerDescriptorEntity) return false
+        if (other !is TriggerDescriptor) return false
 
-        if (id != other.id) return false
+        if (id != other.id || expression != other.expression || type != other.type) {
+            return false
+        }
 
         return true
     }

@@ -1,7 +1,6 @@
 package ru.touchin.spring.workers.manager.agent.scheduled
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers
@@ -10,12 +9,12 @@ import org.mockito.Mockito.anyString
 import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.verify
 import org.quartz.Scheduler
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
 import ru.touchin.spring.workers.manager.agent.common.base.BaseJob
 import ru.touchin.spring.workers.manager.agent.registry.JobDefinitionsRegistry
+import ru.touchin.spring.workers.manager.agent.registry.JobProvider
 import ru.touchin.spring.workers.manager.agent.registry.TriggersRegistry
 import ru.touchin.spring.workers.manager.agent.scheduled.services.SchedulerServiceImpl
+import ru.touchin.spring.workers.manager.agent.worker.executors.WorkerActionExecutorImpl
 import ru.touchin.spring.workers.manager.core.trigger.dto.TriggerDescriptor
 import ru.touchin.spring.workers.manager.core.trigger.enums.TriggerType
 import ru.touchin.spring.workers.manager.core.trigger.services.TriggerDescriptorCoreService
@@ -23,11 +22,20 @@ import ru.touchin.spring.workers.manager.core.worker.dto.Worker
 import ru.touchin.spring.workers.manager.core.worker.enums.WorkerStatus
 import java.util.*
 
-class WorkerManagerWatcherTest {
+internal class WorkerManagerWatcherTest {
 
-    private val testJob = Mockito.mock(BaseJob::class.java)
+    private val baseJob = mock<BaseJob> {
+        on(it.getName()).thenReturn(BASE_WORKER_NAME)
+    }
 
-    private val jobDefinitionsRegistry = Mockito.mock(JobDefinitionsRegistry::class.java)
+    private val simpleJobProvider = mock<JobProvider> {
+        on(it.getJobs()).thenReturn(listOf(baseJob))
+    }
+
+    private val workerActionExecutor = Mockito.mock(WorkerActionExecutorImpl::class.java)
+
+    private val jobDefinitionsRegistry = JobDefinitionsRegistry(setOf(BASE_WORKER_NAME), listOf(simpleJobProvider), workerActionExecutor)
+
     private val triggerRegistry = Mockito.mock(TriggersRegistry::class.java)
     private val watcherSyncInterval = 1000L
 
@@ -62,16 +70,13 @@ class WorkerManagerWatcherTest {
 
     @BeforeEach
     fun setUp() {
-        doReturn(currentTriggers)
+        doAnswer { currentTriggers }
             .`when`(triggerRegistry).getDescriptors()
-
-        doReturn(mapOf(BASE_WORKER_NAME to testJob))
-            .`when`(jobDefinitionsRegistry).jobs
     }
 
     @Test
-    fun check_onlyNewTriggersWithoutRemoving() {
-        doAnswer {setOf(currentTriggerDescriptor1, actualTriggerDescriptor1)}
+    fun checkSyncWithOnlyNewTriggersWithoutRemoving() {
+        doAnswer { listOf(currentTriggerDescriptor1, actualTriggerDescriptor1) }
             .`when`(triggerDescriptorCoreService).getByWorkerName(anyString())
 
         workerManagerWatcher.sync()
@@ -83,8 +88,8 @@ class WorkerManagerWatcherTest {
     }
 
     @Test
-    fun check_onlyRemoveIrrelevantTriggers() {
-        doAnswer { emptySet<TriggerDescriptor>() }
+    fun checkSyncWithOnlyRemoveIrrelevantTriggers() {
+        doAnswer { emptyList<TriggerDescriptor>() }
             .`when`(triggerDescriptorCoreService).getByWorkerName(ArgumentMatchers.anyString())
 
         workerManagerWatcher.sync()
@@ -96,8 +101,8 @@ class WorkerManagerWatcherTest {
     }
 
     @Test
-    fun check_saveNewAndRemoveIrrelevantTriggers() {
-        doAnswer { setOf(actualTriggerDescriptor2, actualTriggerDescriptor1) }
+    fun checkSyncWithSaveNewAndRemoveIrrelevantTriggers() {
+        doAnswer { listOf(actualTriggerDescriptor2, actualTriggerDescriptor1) }
             .`when`(triggerDescriptorCoreService).getByWorkerName(ArgumentMatchers.anyString())
 
         workerManagerWatcher.sync()
@@ -123,6 +128,7 @@ class WorkerManagerWatcherTest {
     companion object {
 
         private const val BASE_WORKER_NAME = "baseWorker"
+
     }
 
 }

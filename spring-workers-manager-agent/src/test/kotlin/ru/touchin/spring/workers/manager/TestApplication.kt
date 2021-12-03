@@ -1,10 +1,8 @@
-package ru.touchin.spring.workers.manager.agent
+package ru.touchin.spring.workers.manager
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.test.context.TestConfiguration
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
-import ru.touchin.spring.workers.manager.WorkersManagerConfiguration
 
 @SpringBootApplication
 @TestConfiguration

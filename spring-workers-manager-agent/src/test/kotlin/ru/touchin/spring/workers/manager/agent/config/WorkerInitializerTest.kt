@@ -1,20 +1,16 @@
 package ru.touchin.spring.workers.manager.agent.config
 
 import com.nhaarman.mockitokotlin2.doNothing
-import com.nhaarman.mockitokotlin2.doReturn
-import org.junit.jupiter.api.BeforeEach
+import com.nhaarman.mockitokotlin2.mock
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
-import org.springframework.test.util.ReflectionTestUtils
 import ru.touchin.spring.workers.manager.agent.common.base.BaseJob
 import ru.touchin.spring.workers.manager.agent.registry.JobDefinitionsRegistry
-import ru.touchin.spring.workers.manager.agent.registry.SimpleJobProvider
+import ru.touchin.spring.workers.manager.agent.registry.JobProvider
 import ru.touchin.spring.workers.manager.agent.trigger.services.TriggerDescriptorService
 import ru.touchin.spring.workers.manager.agent.worker.executors.WorkerActionExecutorImpl
 import ru.touchin.spring.workers.manager.core.worker.dto.Worker
@@ -23,12 +19,15 @@ import ru.touchin.spring.workers.manager.core.worker.services.WorkerCoreService
 import ru.touchin.spring.workers.manager.core.worker.services.WorkersStateService
 import ru.touchin.spring.workers.manager.utils.MockitoUtils.anyx
 
-class WorkerInitializerTest {
+internal class WorkerInitializerTest {
 
-    private val simpleJobProvider = Mockito.mock(SimpleJobProvider::class.java)
+    private val baseJob = mock<BaseJob> {
+        on(it.getName()).thenReturn(BASE_WORKER_NAME)
+    }
 
-    private val baseJob = Mockito.mock(BaseJob::class.java)
-
+    private val simpleJobProvider = mock<JobProvider> {
+        on(it.getJobs()).thenReturn(listOf(baseJob))
+    }
 
     private val workerActionExecutor = Mockito.mock(WorkerActionExecutorImpl::class.java)
 
@@ -54,29 +53,10 @@ class WorkerInitializerTest {
         parallelExecutionEnabled = false,
     )
 
-//    private val baseJob = object : BaseJob {
-//        override fun run(){}
-//
-//        override fun getName() = BASE_WORKER_NAME
-//    }
-
-    @BeforeEach
-    fun setUp() {
-        doAnswer { BASE_WORKER_NAME }.`when`(baseJob).getName()
-        `when`(simpleJobProvider.jobBeans).doReturn(listOf(baseJob))
-        doAnswer { listOf(baseJob) }.`when`(simpleJobProvider).getJobs()
-
-//        doAnswer { mapOf(BASE_WORKER_NAME to baseWorker) }
-//            .`when`(jobDefinitionsRegistry).jobs
-    }
-
     @Test
-    fun init_existingWorker() {
+    fun checkSyncWithExistingWorker() {
         doAnswer { baseWorker }.`when`(workerCoreService).getWithLock(BASE_WORKER_NAME)
         doNothing().`when`(workersStateService).start(anyx())
-//        val jobs =
-        doAnswer { listOf(baseJob) }.`when`(simpleJobProvider).getJobs()
-
 
         workerInitializer.init()
 
@@ -86,7 +66,7 @@ class WorkerInitializerTest {
     }
 
     @Test
-    fun init_newWorker() {
+    fun checkSyncAndCreateNewWorker() {
         doAnswer { null }.`when`(workerCoreService).getWithLock(BASE_WORKER_NAME)
         doAnswer { baseWorker }.`when`(workerCoreService).create(BASE_WORKER_NAME)
 
@@ -99,6 +79,7 @@ class WorkerInitializerTest {
     companion object {
 
         private const val BASE_WORKER_NAME = "baseWorker"
+
     }
 
 }

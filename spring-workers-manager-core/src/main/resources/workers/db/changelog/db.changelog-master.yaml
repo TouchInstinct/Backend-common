@@ -126,7 +126,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: trigger_id
-                  type: VARCHAR(250)
+                  type: UUID
               - column:
                   constraints:
                     nullable: false
