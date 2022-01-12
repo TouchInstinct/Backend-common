@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import java.time.temporal.TemporalAmount
 import java.util.*
 
 object DateUtils {
@@ -20,9 +21,9 @@ object DateUtils {
         currentDate: ZonedDateTime = ZonedDateTime.now()
     ) = !isExpired(currentDate)
 
-    fun ZonedDateTime.isExpired(duration: Duration) = isExpired(ZonedDateTime.now().minus(duration))
+    fun ZonedDateTime.isExpired(temporalAmount: TemporalAmount) = isExpired(ZonedDateTime.now().minus(temporalAmount))
 
-    fun ZonedDateTime.isNotExpired(duration: Duration) = !isExpired(duration)
+    fun ZonedDateTime.isNotExpired(temporalAmount: TemporalAmount) = !isExpired(temporalAmount)
 
     fun ZonedDateTime.equals(arg: ZonedDateTime, maxDiff: Duration) =
         Duration.between(this, arg) <= maxDiff
