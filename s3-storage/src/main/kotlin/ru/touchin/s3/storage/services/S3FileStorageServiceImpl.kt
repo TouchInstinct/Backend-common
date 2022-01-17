@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service
 import ru.touchin.s3.storage.properties.S3Properties
 import ru.touchin.s3.storage.services.dto.GetUrl
 import ru.touchin.s3.storage.services.dto.UploadBytes
+import ru.touchin.s3.storage.services.dto.UploadData
 import ru.touchin.s3.storage.services.dto.UploadFile
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
@@ -23,24 +24,19 @@ class S3FileStorageServiceImpl(
 
     private val folder = normalizeDirectoryPath(s3Properties.folder)
 
-    override fun upload(uploadFile: UploadFile) {
+    override fun upload(uploadFile: UploadData) {
         val putObjectRequest = PutObjectRequest.builder()
             .bucket(s3Properties.bucket)
             .key(keyOf(uploadFile.id))
             .contentType(uploadFile.contentType ?: DEFAULT_CONTENT_TYPE)
             .build()
 
-        s3Client.putObject(putObjectRequest, RequestBody.fromFile(uploadFile.file))
-    }
+        val requestBody = when (uploadFile) {
+            is UploadFile -> RequestBody.fromFile(uploadFile.file)
+            is UploadBytes -> RequestBody.fromBytes(uploadFile.bytes)
+        }
 
-    override fun upload(uploadBytes: UploadBytes) {
-        val putObjectRequest = PutObjectRequest.builder()
-            .bucket(s3Properties.bucket)
-            .key(keyOf(uploadBytes.id))
-            .contentType(uploadBytes.contentType ?: DEFAULT_CONTENT_TYPE)
-            .build()
-
-        s3Client.putObject(putObjectRequest, RequestBody.fromBytes(uploadBytes.bytes))
+        s3Client.putObject(putObjectRequest, requestBody)
     }
 
     override fun getUrl(getUrl: GetUrl): URL? {
