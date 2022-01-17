@@ -7,6 +7,7 @@ import ru.touchin.s3.storage.properties.S3Properties
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3Client
+import software.amazon.awssdk.services.s3.presigner.S3Presigner
 
 @ComponentScan("ru.touchin.s3.storage")
 @ConfigurationPropertiesScan("ru.touchin.s3.storage")
@@ -17,6 +18,14 @@ class S3Configuration(private val s3Properties: S3Properties) {
     @Bean
     fun s3Client(): S3Client {
         return S3Client.builder()
+            .region(region)
+            .credentialsProvider { getCredentialsProvider() }
+            .build()
+    }
+
+    @Bean
+    fun s3Presigner(s3Properties: S3Properties): S3Presigner {
+        return S3Presigner.builder()
             .region(region)
             .credentialsProvider { getCredentialsProvider() }
             .build()
