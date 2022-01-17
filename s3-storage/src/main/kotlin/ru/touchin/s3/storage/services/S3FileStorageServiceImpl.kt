@@ -27,6 +27,7 @@ class S3FileStorageServiceImpl(
         val putObjectRequest = PutObjectRequest.builder()
             .bucket(s3Properties.bucket)
             .key(keyOf(uploadFile.id))
+            .contentType(uploadFile.contentType ?: DEFAULT_CONTENT_TYPE)
             .build()
 
         s3Client.putObject(putObjectRequest, RequestBody.fromFile(uploadFile.file))
@@ -36,6 +37,7 @@ class S3FileStorageServiceImpl(
         val putObjectRequest = PutObjectRequest.builder()
             .bucket(s3Properties.bucket)
             .key(keyOf(uploadBytes.id))
+            .contentType(uploadBytes.contentType ?: DEFAULT_CONTENT_TYPE)
             .build()
 
         s3Client.putObject(putObjectRequest, RequestBody.fromBytes(uploadBytes.bytes))
@@ -67,6 +69,10 @@ class S3FileStorageServiceImpl(
             folder.endsWith("/") -> folder
             else -> "$folder/"
         }
+    }
+
+    companion object {
+        private const val DEFAULT_CONTENT_TYPE = "application/octet-stream"
     }
 
 }
