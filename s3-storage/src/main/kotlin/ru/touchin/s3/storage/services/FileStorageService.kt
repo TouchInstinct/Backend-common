@@ -6,7 +6,7 @@ import java.net.URL
 
 interface FileStorageService {
 
-    fun upload(uploadFile: UploadData)
+    fun upload(uploadData: UploadData)
     fun getUrl(getUrl: GetUrl): URL?
 
 }

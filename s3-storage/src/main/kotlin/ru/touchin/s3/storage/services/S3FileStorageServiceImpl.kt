@@ -24,16 +24,16 @@ class S3FileStorageServiceImpl(
 
     private val folder = normalizeDirectoryPath(s3Properties.folder)
 
-    override fun upload(uploadFile: UploadData) {
+    override fun upload(uploadData: UploadData) {
         val putObjectRequest = PutObjectRequest.builder()
             .bucket(s3Properties.bucket)
-            .key(keyOf(uploadFile.id))
-            .contentType(uploadFile.contentType ?: DEFAULT_CONTENT_TYPE)
+            .key(keyOf(uploadData.id))
+            .contentType(uploadData.contentType ?: DEFAULT_CONTENT_TYPE)
             .build()
 
-        val requestBody = when (uploadFile) {
-            is UploadFile -> RequestBody.fromFile(uploadFile.file)
-            is UploadBytes -> RequestBody.fromBytes(uploadFile.bytes)
+        val requestBody = when (uploadData) {
+            is UploadFile -> RequestBody.fromFile(uploadData.file)
+            is UploadBytes -> RequestBody.fromBytes(uploadData.bytes)
         }
 
         s3Client.putObject(putObjectRequest, requestBody)
