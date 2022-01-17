@@ -1,9 +1,7 @@
 package ru.touchin.s3.storage.services.dto
 
-import java.io.File
-
-data class UploadFile(
+data class UploadBytes(
     override val id: String,
-    val file: File,
+    val bytes: ByteArray,
     override val contentType: String?
 ): UploadData
