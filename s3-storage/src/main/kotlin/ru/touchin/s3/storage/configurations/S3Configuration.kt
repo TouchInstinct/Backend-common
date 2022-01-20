@@ -12,7 +12,6 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner
 
 @ComponentScan("ru.touchin.s3.storage")
 @ConfigurationPropertiesScan("ru.touchin.s3.storage")
-@EnableSpringLogger
 class S3Configuration(private val s3Properties: S3Properties) {
 
     private val region = Region.of(s3Properties.region)
