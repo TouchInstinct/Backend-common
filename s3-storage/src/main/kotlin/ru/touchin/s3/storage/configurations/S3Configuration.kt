@@ -3,7 +3,6 @@ package ru.touchin.s3.storage.configurations
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
-import ru.touchin.logger.spring.EnableSpringLogger
 import ru.touchin.s3.storage.properties.S3Properties
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.regions.Region
