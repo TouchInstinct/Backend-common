@@ -81,6 +81,7 @@ class S3FileStorageServiceImpl(
     companion object {
 
         private const val DEFAULT_CONTENT_TYPE = "application/octet-stream"
+
     }
 
 }
