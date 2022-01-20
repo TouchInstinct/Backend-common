@@ -3,6 +3,7 @@ package ru.touchin.s3.storage.configurations
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
+import ru.touchin.logger.spring.EnableSpringLogger
 import ru.touchin.s3.storage.properties.S3Properties
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.regions.Region
@@ -11,6 +12,7 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner
 
 @ComponentScan("ru.touchin.s3.storage")
 @ConfigurationPropertiesScan("ru.touchin.s3.storage")
+@EnableSpringLogger
 class S3Configuration(private val s3Properties: S3Properties) {
 
     private val region = Region.of(s3Properties.region)

@@ -1,13 +1,18 @@
 package ru.touchin.s3.storage.services
 
 import org.springframework.stereotype.Service
+import ru.touchin.logger.builder.LogDataItem
+import ru.touchin.logger.dto.LogData
+import ru.touchin.logger.factory.LogBuilderFactory
 import ru.touchin.s3.storage.properties.S3Properties
+import ru.touchin.s3.storage.services.dto.DeleteData
 import ru.touchin.s3.storage.services.dto.GetUrl
 import ru.touchin.s3.storage.services.dto.UploadBytes
 import ru.touchin.s3.storage.services.dto.UploadData
 import ru.touchin.s3.storage.services.dto.UploadFile
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest
 import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import software.amazon.awssdk.services.s3.presigner.S3Presigner
@@ -19,7 +24,8 @@ import java.net.URL
 class S3FileStorageServiceImpl(
     private val s3Properties: S3Properties,
     private val s3Client: S3Client,
-    private val s3Presigner: S3Presigner
+    private val s3Presigner: S3Presigner,
+    private val logBuilderFactory: LogBuilderFactory<LogData>
 ) : FileStorageService {
 
     private val folder = normalizeDirectoryPath(s3Properties.folder)
@@ -37,6 +43,29 @@ class S3FileStorageServiceImpl(
         }
 
         s3Client.putObject(putObjectRequest, requestBody)
+    }
+
+    override fun delete(deleteData: DeleteData) {
+        kotlin.runCatching {
+            val deleteObjectRequest = DeleteObjectRequest.builder()
+                .bucket(s3Properties.bucket)
+                .key(keyOf(deleteData.id))
+                .build()
+
+            s3Client.deleteObject(deleteObjectRequest)
+        }
+            .recover { exception ->
+                logBuilderFactory.create(this::class.java)
+                    .setMethod("delete")
+                    .setError(exception)
+                    .addData(
+                        LogDataItem("deleteObjectId", deleteData.id),
+                    )
+                    .build()
+                    .log()
+
+                null
+            }
     }
 
     override fun getUrl(getUrl: GetUrl): URL? {
@@ -68,6 +97,7 @@ class S3FileStorageServiceImpl(
     }
 
     companion object {
+
         private const val DEFAULT_CONTENT_TYPE = "application/octet-stream"
     }
 
