@@ -68,7 +68,7 @@ class S3FileStorageServiceImpl(
             .takeIf(PresignedGetObjectRequest::isBrowserExecutable)
 
         return presignedGetObjectRequest?.url()
-            ?: throw FileLocationNotFoundException(getUUID(getUrl.id))
+            ?: throw FileLocationNotFoundException(getUrl.id)
     }
 
     fun keyOf(fileId: String) = folder + fileId
@@ -80,8 +80,6 @@ class S3FileStorageServiceImpl(
             else -> "$folder/"
         }
     }
-
-    private fun getUUID(id: String) = UUID.fromString(id.substring(id.indexOf("/")))
 
     companion object {
 
