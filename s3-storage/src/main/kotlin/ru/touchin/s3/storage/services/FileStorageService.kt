@@ -9,6 +9,6 @@ interface FileStorageService {
 
     fun upload(uploadData: UploadData)
     fun delete(deleteData: DeleteData)
-    fun getUrl(getUrl: GetUrl): URL?
+    fun getUrl(getUrl: GetUrl): URL
 
 }
