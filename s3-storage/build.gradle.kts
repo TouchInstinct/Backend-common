@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+    api(project(":common"))
+
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("org.springframework.boot:spring-boot")

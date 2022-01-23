@@ -1,6 +1,7 @@
 package ru.touchin.s3.storage.services
 
 import org.springframework.stereotype.Service
+import ru.touchin.s3.storage.exceptions.FileLocationNotFoundException
 import ru.touchin.s3.storage.properties.S3Properties
 import ru.touchin.s3.storage.services.dto.DeleteData
 import ru.touchin.s3.storage.services.dto.GetUrl
@@ -16,6 +17,7 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest
 import java.net.URL
+import java.util.*
 
 @Service
 class S3FileStorageServiceImpl(
@@ -50,7 +52,7 @@ class S3FileStorageServiceImpl(
         s3Client.deleteObject(deleteObjectRequest)
     }
 
-    override fun getUrl(getUrl: GetUrl): URL? {
+    override fun getUrl(getUrl: GetUrl): URL {
         val getObjectRequest = GetObjectRequest.builder()
             .bucket(s3Properties.bucket)
             .key(keyOf(getUrl.id))
@@ -66,6 +68,7 @@ class S3FileStorageServiceImpl(
             .takeIf(PresignedGetObjectRequest::isBrowserExecutable)
 
         return presignedGetObjectRequest?.url()
+            ?: throw FileLocationNotFoundException(getUrl.id)
     }
 
     fun keyOf(fileId: String) = folder + fileId
