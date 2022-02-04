@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DataAccessException
-import ru.touchin.auth.core.device.models.DeviceEntity
 import ru.touchin.auth.core.device.dto.enums.DevicePlatform
+import ru.touchin.auth.core.device.models.DeviceEntity
 import ru.touchin.auth.core.device.repository.DeviceRepository
 import ru.touchin.auth.core.scope.models.ScopeEntity
 import ru.touchin.auth.core.scope.repositories.ScopeRepository
@@ -43,7 +43,7 @@ internal class UserRepositoryTest {
                 anonymous = false
                 confirmedAt = ZonedDateTime.now()
                 devices = emptySet()
-                scopes = emptySet()
+                scopes = mutableSetOf()
             }
         )
 
@@ -87,7 +87,7 @@ internal class UserRepositoryTest {
 
         val user = UserEntity()
             .apply {
-                scopes = setOf(scope)
+                scopes = mutableSetOf(scope)
             }
 
         userRepository.saveAndFlush(user)
@@ -117,7 +117,7 @@ internal class UserRepositoryTest {
     fun shouldBeErrorIfScopeNew() {
         val user = UserEntity()
             .apply {
-                scopes = setOf(ScopeEntity().apply { name = "admin" })
+                scopes = mutableSetOf(ScopeEntity().apply { name = "admin" })
             }
 
         assertThrows(DataAccessException::class.java) {

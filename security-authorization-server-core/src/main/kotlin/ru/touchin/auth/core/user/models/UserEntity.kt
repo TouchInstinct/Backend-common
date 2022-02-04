@@ -13,7 +13,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "users", schema = SCHEMA)
-class UserEntity: AuditableUuidIdEntity() {
+class UserEntity : AuditableUuidIdEntity() {
 
     var anonymous: Boolean = true
 
@@ -35,6 +35,11 @@ class UserEntity: AuditableUuidIdEntity() {
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "scope_name")]
     )
-    lateinit var scopes: Set<ScopeEntity>
+    lateinit var scopes: MutableSet<ScopeEntity>
+
+    fun addScopes(scopes: Collection<ScopeEntity>) {
+        this.scopes.addAll(scopes)
+        scopes.forEach { it.users.add(this) }
+    }
 
 }

@@ -57,7 +57,7 @@ class UserCoreServiceImpl(
         val user = UserEntity().apply {
             anonymous = true
             devices = hashSetOf(device)
-            scopes = emptySet()
+            scopes = mutableSetOf()
         }
 
         return userRepository.save(user)
@@ -79,7 +79,7 @@ class UserCoreServiceImpl(
             .apply {
                 anonymous = false
                 devices = hashSetOf(device)
-                scopes = defaultScopes.toSet()
+                scopes = defaultScopes.toMutableSet()
             }
             .also(userRepository::save)
 
@@ -148,20 +148,23 @@ class UserCoreServiceImpl(
 
     @Transactional
     override fun addScopes(addUserScopes: AddUserScopes) {
+        val user = userRepository.findByIdOrThrow(addUserScopes.userId)
+
         val newScopes = addUserScopes.scopes.map { scope ->
             scopeRepository.findByIdOrNull(scope)
                 ?: createNewScope(scope)
-        }.toSet()
+        }
 
-        userRepository.findByIdOrThrow(addUserScopes.userId)
-            .apply {
-                scopes = scopes + newScopes
-            }
-            .also(userRepository::save)
+        user.addScopes(newScopes)
+
+        userRepository.save(user)
     }
 
     private fun createNewScope(scope: String): ScopeEntity {
-        val newScope = ScopeEntity().apply { name = scope }
+        val newScope = ScopeEntity().apply {
+            name = scope
+            users = mutableSetOf()
+        }
 
         return scopeRepository.save(newScope)
     }
