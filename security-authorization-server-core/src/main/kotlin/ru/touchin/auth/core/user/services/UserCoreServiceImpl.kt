@@ -2,6 +2,7 @@
 
 package ru.touchin.auth.core.user.services
 
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -10,6 +11,7 @@ import ru.touchin.auth.core.device.exceptions.DeviceAlreadyLinkedException
 import ru.touchin.auth.core.device.models.DeviceEntity
 import ru.touchin.auth.core.device.repository.DeviceRepository
 import ru.touchin.auth.core.device.repository.findByIdWithLockOrThrow
+import ru.touchin.auth.core.scope.models.ScopeEntity
 import ru.touchin.auth.core.scope.models.ScopeGroupEntity
 import ru.touchin.auth.core.scope.repositories.ScopeRepository
 import ru.touchin.auth.core.user.converters.UserAccountConverter.toDto
@@ -27,6 +29,7 @@ import ru.touchin.auth.core.user.repositories.UserRepository
 import ru.touchin.auth.core.user.repositories.findByIdOrThrow
 import ru.touchin.auth.core.user.repositories.findByUserIdOrThrow
 import ru.touchin.auth.core.user.repositories.findByUsernameOrThrow
+import ru.touchin.auth.core.user.services.dto.AddUserScopes
 import ru.touchin.auth.core.user.services.dto.GetUserAccount
 import ru.touchin.auth.core.user.services.dto.NewAnonymousUser
 import ru.touchin.auth.core.user.services.dto.NewUser
@@ -141,6 +144,26 @@ class UserCoreServiceImpl(
         userAccount.apply {
             password = update.newPassword?.let(passwordEncoder::encode)
         }.also(userAccountRepository::save)
+    }
+
+    @Transactional
+    override fun addScopes(addUserScopes: AddUserScopes) {
+        val newScopes = addUserScopes.scopes.map { scope ->
+            scopeRepository.findByIdOrNull(scope)
+                ?: createNewScope(scope)
+        }.toSet()
+
+        userRepository.findByIdOrThrow(addUserScopes.userId)
+            .apply {
+                scopes = scopes + newScopes
+            }
+            .also(userRepository::save)
+    }
+
+    private fun createNewScope(scope: String): ScopeEntity {
+        val newScope = ScopeEntity().apply { name = scope }
+
+        return scopeRepository.save(newScope)
     }
 
     @Transactional(readOnly = true)
