@@ -28,7 +28,6 @@ class ScopeEntity : BaseEntity() {
 
     fun addUsers(users: Collection<UserEntity>) {
         this.users.addAll(users)
-        users.forEach { it.scopes.add(this) }
     }
 
 }
