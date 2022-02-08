@@ -15,6 +15,8 @@ import ru.touchin.auth.core.device.dto.enums.DevicePlatform
 import ru.touchin.auth.core.device.repository.DeviceRepository
 import ru.touchin.auth.core.device.repository.findByIdOrThrow
 import ru.touchin.auth.core.device.services.DeviceCoreService
+import ru.touchin.auth.core.scope.dto.Scope
+import ru.touchin.auth.core.scope.models.ScopeEntity
 import ru.touchin.auth.core.user.dto.User
 import ru.touchin.auth.core.user.dto.enums.IdentifierType
 import ru.touchin.auth.core.user.exceptions.UserAlreadyRegisteredException
@@ -22,13 +24,13 @@ import ru.touchin.auth.core.user.exceptions.WrongPasswordException
 import ru.touchin.auth.core.user.repositories.UserAccountRepository
 import ru.touchin.auth.core.user.repositories.UserRepository
 import ru.touchin.auth.core.user.repositories.findByIdOrThrow
+import ru.touchin.auth.core.user.services.dto.AddUserScopes
 import ru.touchin.auth.core.user.services.dto.NewAnonymousUser
 import ru.touchin.auth.core.user.services.dto.NewUser
 import ru.touchin.auth.core.user.services.dto.UserLogin
 import ru.touchin.auth.core.user.services.dto.UserLogout
 import ru.touchin.auth.core.user.services.dto.UserUpdatePassword
 import ru.touchin.common.spring.test.jpa.repository.RepositoryTest
-import java.lang.IllegalArgumentException
 import java.util.*
 import javax.persistence.EntityManager
 
@@ -380,6 +382,30 @@ internal class UserCoreServiceImplSlowTest {
         assertNotNull(actualUserAccount)
         assertFalse(passwordEncoder.matches(userAccount.password!!, actualUserAccount?.password!!))
         assertTrue(passwordEncoder.matches("QWERTY1234", actualUserAccount.password!!))
+    }
+
+    @Test
+    @DisplayName("Пользователю можно добавить скоупы")
+    fun userCanAddScope() {
+        val device = createDevice()
+
+        val regUser = createNewUser(deviceId = device.id, password = "qwerty", username = "employee1")
+
+        val newScopes = listOf("admin", "moderator", "robot")
+
+        userCoreService.addScopes(
+            AddUserScopes(
+                userId = regUser.id,
+                scopes = newScopes
+            )
+        )
+
+        val actualUser = userRepository.findByIdOrThrow(regUser.id)
+
+        val expectedScopes: List<String> = regUser.scopes.map(Scope::name) + newScopes
+
+        assertTrue(actualUser.scopes.map(ScopeEntity::name).containsAll(expectedScopes))
+        assertEquals(expectedScopes.size, actualUser.scopes.size)
     }
 
 }
