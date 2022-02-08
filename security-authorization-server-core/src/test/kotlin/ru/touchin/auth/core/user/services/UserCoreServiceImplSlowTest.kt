@@ -398,7 +398,10 @@ internal class UserCoreServiceImplSlowTest {
                 userId = regUser.id,
                 scopes = newScopes
             )
-        )
+        ).also {
+            entityManager.flush()
+            entityManager.clear()
+        }
 
         val actualUser = userRepository.findByIdOrThrow(regUser.id)
 

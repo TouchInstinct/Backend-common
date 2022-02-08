@@ -39,7 +39,6 @@ class UserEntity : AuditableUuidIdEntity() {
 
     fun addScopes(scopes: Collection<ScopeEntity>) {
         this.scopes.addAll(scopes)
-        scopes.forEach { it.users.add(this) }
     }
 
 }
