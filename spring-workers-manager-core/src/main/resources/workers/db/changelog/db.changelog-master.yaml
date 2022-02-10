@@ -1,0 +1,165 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-workers
+      author:  sonkate
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: workers
+      changes:
+        - createTable:
+            tableName: workers
+            columns:
+              - column:
+                  name: worker_name
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: PK_WORKERS
+              - column:
+                  name: status
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: parallel_execution_enabled
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValueDate: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: stopped_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: disabled_at
+                  type: TIMESTAMP WITH TIME ZONE
+  - changeSet:
+      id: create-table-triggers
+      author:  sonkate
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: triggers
+      changes:
+        - createTable:
+            tableName: triggers
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: PK_TRIGGERS
+              - column:
+                  name: worker_name
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_trigger_worker
+                    references: workers(worker_name)
+              - column:
+                  name: type
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: trigger_name
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expression
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValueDate: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: deleted_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: disabled_at
+                  type: TIMESTAMP WITH TIME ZONE
+  - changeSet:
+      id: create-table-executions
+      author:  sonkate
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: executions
+      changes:
+        - createTable:
+            tableName: executions
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: PK_EXECUTIONS
+              - column:
+                  name: worker_name
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: trigger_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: status
+                  type: VARCHAR(250)
+              - column:
+                  name: error_message
+                  type: VARCHAR(250)
+              - column:
+                  name: error_code
+                  type: int
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValueDate: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: started_at
+                  type: TIMESTAMP WITH TIME ZONE
+              - column:
+                  name: finished_at
+                  type: TIMESTAMP WITH TIME ZONE
+  - changeSet:
+      id: create-index-for-executions
+      author:  sonkate
+      changes:
+        - sql:
+            sql: |
+              CREATE INDEX fk_trigger_worker_idx
+              ON ${schemaName}.triggers (worker_name ASC)
+              WHERE deleted_at IS NULL;
+            endDelimeter: ;
