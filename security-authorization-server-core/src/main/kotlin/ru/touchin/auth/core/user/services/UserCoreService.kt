@@ -9,6 +9,7 @@ import ru.touchin.auth.core.user.services.dto.NewAnonymousUser
 import ru.touchin.auth.core.user.services.dto.NewUser
 import ru.touchin.auth.core.user.services.dto.UserLogin
 import ru.touchin.auth.core.user.services.dto.UserLogout
+import ru.touchin.auth.core.user.services.dto.UserSetPassword
 import ru.touchin.auth.core.user.services.dto.UserUpdatePassword
 
 interface UserCoreService {
@@ -21,6 +22,7 @@ interface UserCoreService {
     fun login(userLogin: UserLogin): User
     fun logout(userLogout: UserLogout)
     fun updatePassword(update: UserUpdatePassword)
+    fun setPassword(userSetPassword: UserSetPassword)
     fun addScopes(addUserScopes: AddUserScopes)
 
 }
