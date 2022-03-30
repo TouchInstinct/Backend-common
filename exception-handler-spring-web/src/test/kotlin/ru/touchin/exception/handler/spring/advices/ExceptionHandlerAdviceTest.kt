@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import ru.touchin.exception.handler.spring.creators.ExceptionResponseBodyCreator
 import ru.touchin.exception.handler.spring.logger.Logger
+import ru.touchin.exception.handler.spring.properties.ExceptionResolverProperties
 import ru.touchin.exception.handler.spring.resolvers.FallbackExceptionResolver
 import ru.touchin.exception.handler.spring.resolvers.IllegalStateExceptionResolver1
 import ru.touchin.exception.handler.spring.resolvers.IllegalStateExceptionResolver2
@@ -44,6 +45,7 @@ internal class ExceptionHandlerAdviceTest {
             exceptionResolversList = resolvers,
             exceptionResponseBodyCreator = exceptionResponseBodyCreator,
             logger = logger,
+            exceptionResolverProperties = ExceptionResolverProperties()
         )
     }
 
@@ -77,6 +79,7 @@ internal class ExceptionHandlerAdviceTest {
             exceptionResolversList = resolvers,
             exceptionResponseBodyCreator = exceptionResponseBodyCreator,
             logger = logger,
+            exceptionResolverProperties = ExceptionResolverProperties()
         )
 
         exceptionHandlerAdvice.handleException(RuntimeException("error"))
