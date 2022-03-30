@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.touchin.exception.handler.spring.creators.ExceptionResponseBodyCreator
 import ru.touchin.exception.handler.spring.logger.Logger
+import ru.touchin.exception.handler.spring.properties.ExceptionResolverProperties
 import ru.touchin.exception.handler.spring.resolvers.FallbackExceptionResolver
 import ru.touchin.exception.handler.spring.resolvers.IllegalStateExceptionResolver1
 import ru.touchin.exception.handler.spring.resolvers.IllegalStateExceptionResolver2
@@ -65,14 +66,14 @@ internal class ExceptionHandlerAdviceMvcTest {
     }
 
     @Test
-    @DisplayName("Должна вернуться ошибка InternalServerError с кодом -1")
+    @DisplayName("Должна вернуться ошибка InternalServerError с кодом -2")
     fun shouldGetInternalServerError() {
         mockMvc
             .perform(get("/api/errors/runtime"))
             .andDo(print())
             .andExpect(status().isInternalServerError)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.errorCode", `is`(-1)))
+            .andExpect(jsonPath("$.errorCode", `is`(-2)))
             .andExpect(jsonPath("$.errorMessage", `is`("my runtime error")))
     }
 
@@ -101,7 +102,8 @@ internal class ExceptionHandlerAdviceMvcTest {
         val exceptionHandlerAdvice = ExceptionHandlerAdvice(
             exceptionResolversList = resolvers,
             exceptionResponseBodyCreator = exceptionResponseBodyCreator,
-            logger = logger
+            logger = logger,
+            exceptionResolverProperties = ExceptionResolverProperties()
         )
 
         exceptionHandlerAdvice.handleException(IllegalStateException("error"))
