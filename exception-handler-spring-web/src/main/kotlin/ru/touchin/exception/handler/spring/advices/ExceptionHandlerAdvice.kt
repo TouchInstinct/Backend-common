@@ -1,5 +1,6 @@
 package ru.touchin.exception.handler.spring.advices
 
+import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -30,7 +31,12 @@ class ExceptionHandlerAdvice(
 
         val body = exceptionResponseBodyCreator(result.apiError)
 
-        return ResponseEntity(body, result.status)
+        val headers = HttpHeaders().apply {
+            set("X-Error-Code", result.apiError.errorCode.toString())
+            set("X-Error-Message", result.apiError.errorMessage)
+        }
+
+        return ResponseEntity(body, headers, result.status)
     }
 
 }
