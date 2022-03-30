@@ -8,6 +8,7 @@ data class ExceptionResolverResult(
     val apiError: ApiError,
     val status: HttpStatus,
     val exception: Exception?,
+    val includeHeaders: Boolean = false,
 ) {
 
     companion object {

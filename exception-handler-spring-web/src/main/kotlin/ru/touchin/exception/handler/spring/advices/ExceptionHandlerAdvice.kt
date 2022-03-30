@@ -31,10 +31,10 @@ class ExceptionHandlerAdvice(
 
         val body = exceptionResponseBodyCreator(result.apiError)
 
-        val headers = HttpHeaders().apply {
+        val headers = if (result.includeHeaders) HttpHeaders().apply {
             set("X-Error-Code", result.apiError.errorCode.toString())
             set("X-Error-Message", result.apiError.errorMessage)
-        }
+        } else null
 
         return ResponseEntity(body, headers, result.status)
     }
