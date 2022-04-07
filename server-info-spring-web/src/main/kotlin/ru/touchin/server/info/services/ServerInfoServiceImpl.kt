@@ -7,7 +7,7 @@ import ru.touchin.server.info.properties.ServerInfoProperties
 @Service
 class ServerInfoServiceImpl(
     private val serverInfoProperties: ServerInfoProperties
-) : ServerInfoService {
+) : ServerInfoService() {
 
     override fun addHeader(response: ServerHttpResponse): ServerHttpResponse {
         response
