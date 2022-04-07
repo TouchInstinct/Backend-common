@@ -1,4 +1,4 @@
-package ru.touchin.info.advices
+package ru.touchin.server.info.advices
 
 import org.springframework.core.MethodParameter
 import org.springframework.http.MediaType
@@ -7,7 +7,7 @@ import org.springframework.http.server.ServerHttpRequest
 import org.springframework.http.server.ServerHttpResponse
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice
-import ru.touchin.info.services.ServerInfoService
+import ru.touchin.server.info.services.ServerInfoService
 
 @RestControllerAdvice
 class ServerInfoAdvice(
@@ -18,7 +18,7 @@ class ServerInfoAdvice(
         returnType: MethodParameter,
         converterType: Class<out HttpMessageConverter<*>>
     ): Boolean {
-        return true //TODO(ADD CHECK)
+        return true
     }
 
     override fun beforeBodyWrite(
@@ -29,7 +29,9 @@ class ServerInfoAdvice(
         request: ServerHttpRequest,
         response: ServerHttpResponse
     ): Any? {
-        return serverInfoService.addHeader(response)
+        serverInfoService.addHeader(response)
+
+        return body
     }
 
 }

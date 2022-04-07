@@ -1,4 +1,4 @@
-package ru.touchin.info.properties
+package ru.touchin.server.info.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding

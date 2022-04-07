@@ -1,7 +1,7 @@
-package ru.touchin.info
+package ru.touchin.server.info
 
 import org.springframework.context.annotation.Import
-import ru.touchin.info.configurations.ServerInfo
+import ru.touchin.server.info.configurations.ServerInfo
 
 @Import(value = [ServerInfo::class])
 annotation class EnableServerInfo

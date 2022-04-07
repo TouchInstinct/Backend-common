@@ -1,4 +1,4 @@
-package ru.touchin.info.services
+package ru.touchin.server.info.services
 
 import org.springframework.http.server.ServerHttpResponse
 

@@ -1,8 +1,10 @@
-package ru.touchin.info.services
+package ru.touchin.server.info.services
 
 import org.springframework.http.server.ServerHttpResponse
-import ru.touchin.info.properties.ServerInfoProperties
+import org.springframework.stereotype.Service
+import ru.touchin.server.info.properties.ServerInfoProperties
 
+@Service
 class ServerInfoServiceImpl(
     private val serverInfoProperties: ServerInfoProperties
 ) : ServerInfoService {
