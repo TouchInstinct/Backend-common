@@ -4,4 +4,4 @@ import org.springframework.context.annotation.Import
 import ru.touchin.server.info.configurations.ServerInfo
 
 @Import(value = [ServerInfo::class])
-annotation class EnableServerInfo
+annotation class EnableServerInfoHeaders
