@@ -42,7 +42,6 @@ internal class ServerInfoHeaderMvcTest {
             .perform(MockMvcRequestBuilders.get("/test"))
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(MockMvcResultMatchers.header().exists("X-App-Build-Version"))
     }
 
