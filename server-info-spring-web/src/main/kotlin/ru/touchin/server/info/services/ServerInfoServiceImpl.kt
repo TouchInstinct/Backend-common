@@ -12,7 +12,7 @@ class ServerInfoServiceImpl(
     override fun addHeader(response: ServerHttpResponse): ServerHttpResponse {
         response
             .headers
-            .add("X-App-Build-Version", serverInfoProperties.buildNumber)
+            .add("X-App-Build-Version", serverInfoProperties.buildVersion)
 
         return response
     }
