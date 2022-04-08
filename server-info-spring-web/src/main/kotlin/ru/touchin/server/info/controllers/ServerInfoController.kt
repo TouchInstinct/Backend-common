@@ -1,24 +1,24 @@
 package ru.touchin.server.info.controllers
 
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.touchin.server.info.services.ServerInfoService
+import ru.touchin.server.info.services.ServerInfoHeader
 
 @RestController
 @RequestMapping("/info")
-class ServerInfoController {
-
-    @Autowired
-    private lateinit var serverInfoServices: List<ServerInfoService> //TODO(Move to constructor)
+class ServerInfoController(
+    private val serverInfoHeaders: List<ServerInfoHeader>
+) {
 
     @GetMapping
-    fun getServerInfo(): List<Map<String, String>> {
-        val serverInfoList = mutableListOf<Map<String, String>>() //TODO(Maybe return just map)
+    fun getServerInfo(): MultiValueMap<String, String> {
+        val serverInfoList = LinkedMultiValueMap<String, String>()
 
-        for (service in serverInfoServices) {
-            serverInfoList.add(service.getServerInfo())
+        for (service in serverInfoHeaders) {
+            serverInfoList.addAll(service.getHeaders())
         }
 
         return serverInfoList

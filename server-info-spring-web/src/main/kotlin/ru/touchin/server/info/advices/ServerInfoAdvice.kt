@@ -7,12 +7,12 @@ import org.springframework.http.server.ServerHttpRequest
 import org.springframework.http.server.ServerHttpResponse
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice
-import ru.touchin.server.info.services.ServerInfoService
+import ru.touchin.server.info.services.ServerInfoHeader
 
 @RestControllerAdvice
 class ServerInfoAdvice(
-    private val serverInfoService: ServerInfoService
-): ResponseBodyAdvice<Any> {
+    private val serverInfoHeaders: List<ServerInfoHeader>
+) : ResponseBodyAdvice<Any> {
 
     override fun supports(
         returnType: MethodParameter,
@@ -29,7 +29,13 @@ class ServerInfoAdvice(
         request: ServerHttpRequest,
         response: ServerHttpResponse
     ): Any? {
-        serverInfoService.addHeader(response)
+        for (service in serverInfoHeaders) {
+            response
+                .headers
+                .addAll(
+                    service.getHeaders()
+                )
+        }
 
         return body
     }

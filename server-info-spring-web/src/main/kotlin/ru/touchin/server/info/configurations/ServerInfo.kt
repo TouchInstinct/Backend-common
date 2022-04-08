@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Configuration
 
 @Suppress("SpringFacetCodeInspection")
 @Configuration
-@ComponentScan("ru.touchin.server.info")
+@ComponentScan("ru.touchin.server.info.advices")
 @ConfigurationPropertiesScan("ru.touchin.server.info")
 class ServerInfo
