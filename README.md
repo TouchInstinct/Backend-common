@@ -199,3 +199,15 @@ Disables Spring OAuth2 resource server for testing.
 ## s3-storage
 
 Amazon S3 support.
+
+## server-info-spring-web
+
+Allow include headers with information about the server in responses
+
+To get started you need:
+1) Add annotation to configuration
+2) Add property to yml/properties file:
+```
+server.info:
+    buildVersion: ${buildVersion}
+```
