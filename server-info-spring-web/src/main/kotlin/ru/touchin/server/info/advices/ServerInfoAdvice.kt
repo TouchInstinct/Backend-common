@@ -30,11 +30,13 @@ class ServerInfoAdvice(
         response: ServerHttpResponse
     ): Any? {
         for (service in serverInfoHeaders) {
-            response
-                .headers
-                .addAll(
-                    service.getHeaders()
-                )
+            val serverInfo = service.getHeaders()
+
+            serverInfo.map {
+                response
+                    .headers
+                    .add(it.first, it.second)
+            }
         }
 
         return body

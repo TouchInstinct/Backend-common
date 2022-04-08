@@ -4,6 +4,6 @@ import org.springframework.util.MultiValueMap
 
 interface ServerInfoHeader {
 
-    fun getHeaders(): MultiValueMap<String, String>
+    fun getHeaders(): List<Pair<String, String>>
 
 }

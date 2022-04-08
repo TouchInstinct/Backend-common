@@ -11,11 +11,10 @@ class BuildVersionHeader(
     private val serverInfoProperties: ServerInfoProperties
 ) : ServerInfoHeader {
 
-    override fun getHeaders(): MultiValueMap<String, String> {
-        return LinkedMultiValueMap<String, String>()
-            .apply {
-                this.add("X-App-Build-Version", serverInfoProperties.buildVersion)
-            }
+    override fun getHeaders(): List<Pair<String, String>> {
+        return listOf(
+            "X-App-Build-Version" to serverInfoProperties.buildVersion
+        )
     }
 
 }
