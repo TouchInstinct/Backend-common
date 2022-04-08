@@ -211,3 +211,5 @@ To get started you need:
 server.info:
     buildVersion: ${buildVersion}
 ```
+3) Implement ServerInfoService (optional. If you want to add other headers)
+4) Add dir with impl ServerInfoService in ComponentScan annotation 
