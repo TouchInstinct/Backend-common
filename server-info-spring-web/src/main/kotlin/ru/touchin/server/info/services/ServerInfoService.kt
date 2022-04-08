@@ -1,9 +1,9 @@
 package ru.touchin.server.info.services
 
-import org.springframework.http.server.ServerHttpResponse
+import org.springframework.util.MultiValueMap
 
 interface ServerInfoService {
 
-    fun addHeader(response: ServerHttpResponse): ServerHttpResponse
+    fun getHeaders(): MultiValueMap<String, String>
 
 }

@@ -11,8 +11,8 @@ import ru.touchin.server.info.services.ServerInfoService
 
 @RestControllerAdvice
 class ServerInfoAdvice(
-    private val serverInfoService: ServerInfoService
-): ResponseBodyAdvice<Any> {
+    private val serverInfoService: List<ServerInfoService>
+) : ResponseBodyAdvice<Any> {
 
     override fun supports(
         returnType: MethodParameter,
@@ -29,7 +29,13 @@ class ServerInfoAdvice(
         request: ServerHttpRequest,
         response: ServerHttpResponse
     ): Any? {
-        serverInfoService.addHeader(response)
+        for (service in serverInfoService) {
+            response
+                .headers
+                .addAll(
+                    service.getHeaders()
+                )
+        }
 
         return body
     }
