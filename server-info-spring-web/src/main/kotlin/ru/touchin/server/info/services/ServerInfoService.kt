@@ -2,12 +2,10 @@ package ru.touchin.server.info.services
 
 import org.springframework.http.server.ServerHttpResponse
 
-abstract class ServerInfoService {
+interface ServerInfoService {
 
-    abstract fun addHeader(response: ServerHttpResponse): ServerHttpResponse
+    fun addHeader(response: ServerHttpResponse): ServerHttpResponse
 
-    fun getServerInfo() {
-
-    }
+    fun getServerInfo(): Map<String, String>
 
 }

@@ -7,7 +7,7 @@ import ru.touchin.server.info.properties.ServerInfoProperties
 @Service
 class ServerInfoServiceImpl(
     private val serverInfoProperties: ServerInfoProperties
-) : ServerInfoService() {
+) : ServerInfoService {
 
     override fun addHeader(response: ServerHttpResponse): ServerHttpResponse {
         response
@@ -15,6 +15,10 @@ class ServerInfoServiceImpl(
             .add("X-App-Build-Version", serverInfoProperties.buildVersion)
 
         return response
+    }
+
+    override fun getServerInfo(): Map<String, String> {
+        return mapOf("X-App-Build-Version" to "123")
     }
 
 }
