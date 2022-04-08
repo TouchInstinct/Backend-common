@@ -18,7 +18,7 @@ class ServerInfoServiceImpl(
     }
 
     override fun getServerInfo(): Map<String, String> {
-        return mapOf("X-App-Build-Version" to "123")
+        return mapOf("X-App-Build-Version" to serverInfoProperties.buildVersion)
     }
 
 }
