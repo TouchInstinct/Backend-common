@@ -1,2 +1,3 @@
-server.info:
-  buildVersion: 1
+server:
+  info:
+    buildVersion: 1
