@@ -30,7 +30,7 @@ class ServerInfoControllerMvcTest {
                     {
                         "serverInfo": [
                             {
-                                "X-App-Build-Version": "11"
+                                "X-App-Build-Version": "1"
                             }
                         ]
                     }
