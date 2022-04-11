@@ -11,8 +11,8 @@ class BuildVersionHeader(
     private val serverInfoProperties: ServerInfoProperties
 ) : ServerInfoHeader {
 
-    override fun getHeaders(): List<Pair<String, String>> {
-        return listOf(
+    override fun getHeaders(): Map<String, String> {
+        return mapOf(
             "X-App-Build-Version" to serverInfoProperties.buildVersion
         )
     }

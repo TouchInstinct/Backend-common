@@ -35,7 +35,7 @@ class ServerInfoAdvice(
             serverInfo.map {
                 response
                     .headers
-                    .add(it.first, it.second)
+                    .add(it.key, it.value)
             }
         }
 

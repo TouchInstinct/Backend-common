@@ -14,20 +14,12 @@ class ServerInfoController(
 
     @GetMapping
     fun getServerInfo(): ServerInfoResponse {
-        val serverInfoList = mutableListOf<Map<String, String>>()
-
-        for (service in serverInfoHeaders) {
-            val headers = service.getHeaders()
-
-            headers.map {
-                serverInfoList.add(
-                    mapOf(it)
-                )
-            }
-        }
+        val serverInfo = serverInfoHeaders.map { it.getHeaders() }
+            .flatMap { it.entries }
+            .groupBy({ it.key }, { it.value })
 
         return ServerInfoResponse(
-            serverInfo = serverInfoList
+            serverInfo = serverInfo
         )
     }
 
