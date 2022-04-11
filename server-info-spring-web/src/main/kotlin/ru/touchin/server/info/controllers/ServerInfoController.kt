@@ -17,6 +17,7 @@ class ServerInfoController(
         val serverInfo = serverInfoHeaders.map { it.getHeaders() }
             .flatMap { it.entries }
             .groupBy({ it.key }, { it.value })
+            .mapValues { it.value.first() }
 
         return ServerInfoResponse(
             serverInfo = serverInfo

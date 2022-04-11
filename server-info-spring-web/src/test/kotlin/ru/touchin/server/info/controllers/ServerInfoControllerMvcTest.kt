@@ -28,11 +28,9 @@ class ServerInfoControllerMvcTest {
             .andExpect(MockMvcResultMatchers.content().json(
                 """
                     {
-                        "serverInfo": [
-                            {
-                                "X-App-Build-Version": "1"
-                            }
-                        ]
+                        "serverInfo": {
+                            "X-App-Build-Version": "1"
+                        }
                     }
                 """.trimIndent()
             ))
