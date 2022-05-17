@@ -16,21 +16,25 @@ import javax.sql.DataSource
 @Component
 class LiquibaseStart(
     private val dataSource: DataSource,
-    private val liquibaseParams: LiquibaseParams,
+    private val liquibaseParams: List<LiquibaseParams>,
 ) {
 
     @RunOnceOnStartup
     fun runLiquibase() {
-        dataSource.connection.use { connection ->
-            val database: Database = DatabaseFactory.getInstance()
-                .findCorrectDatabaseImplementation(JdbcConnection(connection))
-                .apply { defaultSchemaName = liquibaseParams.schema }
+        liquibaseParams.forEach { params ->
+            dataSource.connection.use { connection ->
+                val database: Database = DatabaseFactory.getInstance()
+                    .findCorrectDatabaseImplementation(JdbcConnection(connection))
+                    .apply {
+                        defaultSchemaName = params.schema
+                    }
 
-            val resourceAccessor = SpringResourceAccessor(DefaultResourceLoader())
+                val resourceAccessor = SpringResourceAccessor(DefaultResourceLoader())
 
-            val liquibase = Liquibase(liquibaseParams.changeLogPath, resourceAccessor, database)
+                val liquibase = Liquibase(params.changeLogPath, resourceAccessor, database)
 
-            liquibase.update(Contexts())
+                liquibase.update(Contexts())
+            }
         }
     }
 
