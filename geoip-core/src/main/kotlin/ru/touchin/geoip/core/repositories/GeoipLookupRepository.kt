@@ -4,6 +4,7 @@ import ru.touchin.geoip.core.exceptions.GeoipLookupFailedException
 import ru.touchin.geoip.core.models.GeoipLookupEntity
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
+import ru.touchin.geoip.core.configurations.GeoipCoreDatabaseConfiguration.Companion.SCHEMA
 
 interface GeoipLookupRepository : CrudRepository<GeoipLookupEntity, Long> {
 
@@ -11,8 +12,8 @@ interface GeoipLookupRepository : CrudRepository<GeoipLookupEntity, Long> {
         """
             SELECT "location"."geoname_id" AS "geoname_id",
                    "location"."country_iso_code" AS "territory_code"
-            FROM "geoip"."geoip2_network" "network"
-            JOIN "geoip"."geoip2_location" "location"
+            FROM "$SCHEMA"."geoip2_network" "network"
+            JOIN "$SCHEMA"."geoip2_location" "location"
               ON "network"."geoname_id" = "location"."geoname_id"
              AND "location"."locale_code" = 'en'
             WHERE "network"."network" >> CAST(:ipAddress AS inet)
