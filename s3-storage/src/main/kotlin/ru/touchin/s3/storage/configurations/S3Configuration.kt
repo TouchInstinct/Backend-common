@@ -20,8 +20,8 @@ class S3Configuration(private val s3Properties: S3Properties) {
     fun s3Client(): S3Client {
         return S3Client.builder()
             .region(region)
-            .apply { if (s3Properties.endpoint != null) endpointOverride(URI.create(s3Properties.endpoint)) }
             .credentialsProvider { getCredentialsProvider() }
+            .apply { if (s3Properties.endpoint != null) endpointOverride(URI.create(s3Properties.endpoint)) }
             .build()
     }
 
@@ -29,8 +29,8 @@ class S3Configuration(private val s3Properties: S3Properties) {
     fun s3Presigner(s3Properties: S3Properties): S3Presigner {
         return S3Presigner.builder()
             .region(region)
-            .apply { if (s3Properties.endpoint != null) endpointOverride(URI.create(s3Properties.endpoint)) }
             .credentialsProvider { getCredentialsProvider() }
+            .apply { if (s3Properties.endpoint != null) endpointOverride(URI.create(s3Properties.endpoint)) }
             .build()
     }
 
