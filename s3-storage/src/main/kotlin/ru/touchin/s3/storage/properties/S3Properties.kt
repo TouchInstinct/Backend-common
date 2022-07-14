@@ -11,5 +11,6 @@ data class S3Properties(
     val region: String,
     val bucket: String,
     val folder: String,
+    val endpoint: String?,
 )
 
