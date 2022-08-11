@@ -1,0 +1,13 @@
+push-message-provider:
+  platformProviders:
+    ANDROID_GOOGLE:
+      - FCM
+    IOS:
+      - FCM
+  fcm:
+    appName: testAppName
+    auth:
+      resourcePath: credentials/firebase-admin.json
+    client:
+      readTimeout: 5s
+      connectionTimeout: 5s
