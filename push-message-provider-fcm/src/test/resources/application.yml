@@ -9,5 +9,5 @@ push-message-provider:
     auth:
       resourcePath: credentials/firebase-admin.json
     client:
-      readTimeout: 5s
-      connectionTimeout: 5s
+      readTimeout: 10s
+      connectionTimeout: 1s

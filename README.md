@@ -213,3 +213,29 @@ server.info:
 ```
 3) Implement ServerInfoService (optional. If you want to add other headers)
 4) Add dir with impl ServerInfoService in ComponentScan annotation 
+
+## push-message-provider
+
+Интерфейсы и компоненты для модулей по обеспечению интеграции с сервисами отправки пуш-уведомлений.
+
+## push-message-provider-fcm
+
+Модуль по обеспечению интеграции с Firebase Cloud Messaging. 
+1) Подключение компонентов Spring осуществляется при помощи аннотации `@EnablePushMessageProviderFcm`.
+2) Необходимо добавление конфигурации для модуля. Пример файла конфигурации в формате yaml:
+``` yaml
+push-message-provider:
+  platformProviders:
+    ANDROID_GOOGLE:
+      - FCM
+    IOS:
+      - FCM
+  fcm:
+    appName: ${appName}
+    auth:
+      resourcePath: credentials/firebase-admin.json
+    client:
+      readTimeout: 10s
+      connectionTimeout: 1s
+```
+3) По обозначенному пути `push-message-provider-fcm.auth.resourcePath` добавляется json файл с настройками и доступами из консоли Firebase.

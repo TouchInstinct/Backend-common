@@ -12,11 +12,9 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.context.ContextConfiguration
 import ru.touchin.push.message.provider.fcm.configurations.PushMessageProviderFcmConfiguration
 
-@SpringBootConfiguration
-@ContextConfiguration(classes = [PushMessageProviderFcmConfiguration::class])
 @TestConfiguration
-@Import(PushMessageProviderFcmConfiguration::class)
-@ConfigurationPropertiesScan(basePackages = ["ru.touchin.push.message.provider.fcm"])
+@SpringBootConfiguration
+@EnablePushMessageProviderFcm
 class PushMessageProviderFcmTestApplication {
 
     @Bean
