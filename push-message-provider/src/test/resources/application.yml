@@ -1,0 +1,6 @@
+push-message-provider:
+  platformProviders:
+    ANDROID_GOOGLE:
+      - FCM
+    IOS:
+      - FCM
