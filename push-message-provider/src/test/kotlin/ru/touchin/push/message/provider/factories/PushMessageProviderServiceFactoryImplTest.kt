@@ -12,7 +12,7 @@ import ru.touchin.push.message.provider.enums.PushMessageProviderType
 import ru.touchin.push.message.provider.properties.PushMessageProviderProperties
 import ru.touchin.push.message.provider.services.PushMessageProviderService
 
-class PushMessageProviderServiceFactoryTest {
+class PushMessageProviderServiceFactoryImplTest {
 
     private val pushMessageProviderServiceFcm = object : PushMessageProviderService {
 
@@ -24,7 +24,7 @@ class PushMessageProviderServiceFactoryTest {
     @Test
     @DisplayName("При отсутствии поддерживаемых платформ выбрасывается исключение")
     fun get_platformNotFound() {
-        val pushMessageProviderServiceFactory = PushMessageProviderServiceFactory(
+        val pushMessageProviderServiceFactory = PushMessageProviderServiceFactoryImpl(
             pushMessageProviderProperties = PushMessageProviderProperties(
                 platformProviders = emptyMap()
             ),
@@ -42,7 +42,7 @@ class PushMessageProviderServiceFactoryTest {
     @Test
     @DisplayName("При отсутствии назначенного провайдера у поддерживаемой платформы выбрасывается исключение")
     fun get_providerServiceForPlatformNotFound() {
-        val pushMessageProviderServiceFactory = PushMessageProviderServiceFactory(
+        val pushMessageProviderServiceFactory = PushMessageProviderServiceFactoryImpl(
             pushMessageProviderProperties = PushMessageProviderProperties(
                 platformProviders = mapOf(
                     PlatformType.IOS to emptyList()
@@ -62,7 +62,7 @@ class PushMessageProviderServiceFactoryTest {
     @Test
     @DisplayName("Настроенной платформе назначается первый сервис из доступных")
     fun get_firstSupportedProviderService() {
-        val pushMessageProviderServiceFactory = PushMessageProviderServiceFactory(
+        val pushMessageProviderServiceFactory = PushMessageProviderServiceFactoryImpl(
             pushMessageProviderProperties = PushMessageProviderProperties(
                 platformProviders = mapOf(PlatformType.IOS to listOf(PushMessageProviderType.FCM))
             ),
