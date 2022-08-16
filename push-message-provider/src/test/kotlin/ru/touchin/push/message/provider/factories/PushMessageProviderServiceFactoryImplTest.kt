@@ -4,8 +4,9 @@ import org.junit.Assert
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import ru.touchin.common.exceptions.CommonException
-
+import ru.touchin.push.message.provider.dto.request.PushTokenCheck
 import ru.touchin.push.message.provider.dto.request.SendPushRequest
+import ru.touchin.push.message.provider.dto.result.CheckPushTokenResult
 import ru.touchin.push.message.provider.dto.result.SendPushResult
 import ru.touchin.push.message.provider.enums.PlatformType
 import ru.touchin.push.message.provider.enums.PushMessageProviderType
@@ -19,6 +20,9 @@ class PushMessageProviderServiceFactoryImplTest {
         override val type: PushMessageProviderType = PushMessageProviderType.FCM
 
         override fun send(request: SendPushRequest): SendPushResult = throw NotImplementedError()
+
+        override fun check(request: PushTokenCheck): CheckPushTokenResult = throw NotImplementedError()
+
     }
 
     @Test
@@ -73,6 +77,9 @@ class PushMessageProviderServiceFactoryImplTest {
                     override val type: PushMessageProviderType = PushMessageProviderType.FCM
 
                     override fun send(request: SendPushRequest): SendPushResult = throw NotImplementedError()
+
+                    override fun check(request: PushTokenCheck): CheckPushTokenResult = throw NotImplementedError()
+
                 }
             )
         )
