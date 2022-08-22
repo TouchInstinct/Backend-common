@@ -7,7 +7,9 @@ push-message-provider:
   fcm:
     appName: testAppName
     auth:
-      resourcePath: credentials/firebase-admin.json
+      token:
+        value: testValue
+        expiresAt: 2023-01-01 23:59:59 +00:00
     client:
       readTimeout: 10s
       connectionTimeout: 1s
