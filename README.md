@@ -222,7 +222,7 @@ server.info:
 
 Модуль по обеспечению интеграции с Firebase Cloud Messaging. 
 1) Подключение компонентов Spring осуществляется при помощи аннотации `@EnablePushMessageProviderFcm`.
-2) Необходимо добавление конфигурации для модуля. Пример файла конфигурации в формате yaml:
+2) Необходимо добавление конфигурации для модуля с выбранным способом хранения данных для авторизации. Пример файла конфигурации в формате yaml:
 ``` yaml
 push-message-provider:
   platformProviders:
@@ -231,11 +231,43 @@ push-message-provider:
     IOS:
       - FCM
   fcm:
-    appName: ${appName}
+    appName: # Название приложения
     auth:
-      resourcePath: credentials/firebase-admin.json
+      # Выбранный тип авторизации
     client:
       readTimeout: 10s
       connectionTimeout: 1s
 ```
-3) По обозначенному пути `push-message-provider-fcm.auth.resourcePath` добавляется json файл с настройками и доступами из консоли Firebase.
+3) Настраивается способ предоставления авторизации для Firebase Cloud Messaging.
+
+А) Токен доступа из консоли Google, добавляемый в конфигурацию настроек:
+``` yaml
+    auth:
+      token:
+        value: testValue
+        expiresAt: 2023-01-01 23:59:59 +00:00
+```
+B) Данные в файле из консоли Firebase, добавляемые в resources с обозначением пути в конфигурации настроек:
+``` yaml
+    auth:
+      credentialsFile:
+        path: credentials/firebase-admin.json
+```
+C) Данные из файла консоли Firebase, добавляемые в конфигурацию настроек:
+``` yaml
+    auth:
+      credentialsData:
+        type: service_account
+        projectId: testProjectId
+        privateKeyId: testPrivateKeyId
+        privateKey: |
+          -----BEGIN PRIVATE KEY-----
+          MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALfBshaLMW2yddmAZJRNXTZzcSbwvY93Dnjj6naWgoBJoB3mOM5bcoyWwBw12A4rwecorz74OUOc6zdqX3j8hwsSyzgAUStKM5PkOvPNRKsI4eXAWU0fmb8h1jyXwftl7EzeBjEMBTpyXkgDk3wLfHN6ciCZrnQndOvS+mMl3b0hAgMBAAECgYEAmIQZByMSrITR0ewCDyFDO52HjhWEkF310hsBkNoNiOMTFZ3vCj/WjJ/W5dM+90wUTYN0KOSnytmkVUNh6K5Yekn+yRg/mBRTwwn88hU6umB8tUqoNz7AyUltAOGyQMWqAAcVgxV+mAp/Y018j69poEHgrW4qKol65/NRZyV7/J0CQQD4rCDjmxGEuA1yMzL2i8NyNl/5vvLVfLcEnVqpHbc1+KfUHZuY7iv38xpzfmErqhCxAXfQ52edq5rXmMIVSbFrAkEAvSvfSSK9XQDJl3NEyfR3BGbsoqKIYOuJAnv4OQPSODZfTNWhc11S8y914qaSWB+Iid9HoLvAIgPH5mrzPzjSowJBAJcw4FZCI+aTmOlEI8ous8gvMy8/X5lZWFUf7s0/2fKgmjmnPsE+ndEFJ6HsxturbLaR8+05pJAClARdRjN3OL0CQGoF+8gmw1ErztCmVyiFbms2MGxagesoN4r/5jg2Tw0YVENg/HMHHCWWNREJ4L2pNsJnNOL+N4oY6mHXEWwesdcCQCUYTfLYxi+Wg/5BSC7fgl/gu0mlx07AzMoMQLDOXdisV5rpxrOoT3BOLBqyccv37AZ3e2gqb8JYyNzO6C0zswQ=
+          -----END PRIVATE KEY-----
+        clientEmail: testClientEmail
+        clientId: testClientId
+        authUri: testAuthUri
+        tokenUri: testTokenUri
+        authProviderX509CertUrl: testAuthProviderX509CertUrl
+        clientX509CertUrl: testClientX509CertUrl
+```
