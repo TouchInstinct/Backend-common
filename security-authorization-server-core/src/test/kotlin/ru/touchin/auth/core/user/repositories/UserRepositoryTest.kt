@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DataAccessException
-import ru.touchin.auth.core.device.dto.enums.DevicePlatform
 import ru.touchin.auth.core.device.models.DeviceEntity
 import ru.touchin.auth.core.device.repository.DeviceRepository
 import ru.touchin.auth.core.scope.models.ScopeEntity
 import ru.touchin.auth.core.scope.repositories.ScopeRepository
 import ru.touchin.auth.core.user.exceptions.UserNotFoundException
 import ru.touchin.auth.core.user.models.UserEntity
+import ru.touchin.common.devices.enums.DevicePlatform
 import ru.touchin.common.spring.test.jpa.repository.RepositoryTest
 import java.time.ZonedDateTime
 import java.util.*

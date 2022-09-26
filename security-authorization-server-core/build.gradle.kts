@@ -8,6 +8,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     api(project(":common"))
+    api(project(":common-device"))
 
     api(project(":common-spring-jpa"))
 

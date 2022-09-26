@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DataAccessException
 import ru.touchin.auth.core.device.exceptions.DeviceNotFoundException
 import ru.touchin.auth.core.device.models.DeviceEntity
-import ru.touchin.auth.core.device.dto.enums.DevicePlatform
 import ru.touchin.auth.core.device.repository.DeviceRepository
 import ru.touchin.auth.core.device.repository.findByIdOrThrow
 import ru.touchin.auth.core.device.repository.findByIdWithLockOrThrow
 import ru.touchin.auth.core.user.models.UserEntity
 import ru.touchin.auth.core.user.repositories.UserRepository
+import ru.touchin.common.devices.enums.DevicePlatform
 import ru.touchin.common.spring.test.jpa.repository.RepositoryTest
 import java.time.Duration
 import java.util.*

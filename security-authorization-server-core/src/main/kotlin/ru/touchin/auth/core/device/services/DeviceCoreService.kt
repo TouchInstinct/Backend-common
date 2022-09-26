@@ -1,7 +1,7 @@
 package ru.touchin.auth.core.device.services
 
 import ru.touchin.auth.core.device.dto.Device
-import ru.touchin.auth.core.device.dto.enums.DevicePlatform
+import ru.touchin.common.devices.enums.DevicePlatform
 import java.util.UUID
 
 interface DeviceCoreService {

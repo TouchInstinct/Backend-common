@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.test.context.ActiveProfiles
 import ru.touchin.auth.core.device.converters.DeviceConverter.toDto
-import ru.touchin.auth.core.device.dto.enums.DevicePlatform
 import ru.touchin.auth.core.device.exceptions.DeviceAlreadyLinkedException
 import ru.touchin.auth.core.device.models.DeviceEntity
 import ru.touchin.auth.core.device.repository.DeviceRepository
@@ -30,6 +29,7 @@ import ru.touchin.auth.core.user.repositories.UserAccountRepository
 import ru.touchin.auth.core.user.repositories.UserRepository
 import ru.touchin.auth.core.user.services.dto.NewAnonymousUser
 import ru.touchin.auth.core.user.services.dto.NewUser
+import ru.touchin.common.devices.enums.DevicePlatform
 import java.util.*
 
 @ActiveProfiles("test")

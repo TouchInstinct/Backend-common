@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional
 import ru.touchin.auth.core.device.converters.DeviceConverter.toDto
 import ru.touchin.auth.core.device.dto.Device
 import ru.touchin.auth.core.device.models.DeviceEntity
-import ru.touchin.auth.core.device.dto.enums.DevicePlatform
 import ru.touchin.auth.core.device.repository.DeviceRepository
 import ru.touchin.auth.core.device.repository.findByIdOrThrow
+import ru.touchin.common.devices.enums.DevicePlatform
 import java.util.*
 
 @Service
