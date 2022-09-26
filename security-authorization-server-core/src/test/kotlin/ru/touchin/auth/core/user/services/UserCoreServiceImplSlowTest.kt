@@ -11,7 +11,6 @@ import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import ru.touchin.auth.core.device.dto.Device
-import ru.touchin.auth.core.device.dto.enums.DevicePlatform
 import ru.touchin.auth.core.device.repository.DeviceRepository
 import ru.touchin.auth.core.device.repository.findByIdOrThrow
 import ru.touchin.auth.core.device.services.DeviceCoreService
@@ -30,6 +29,7 @@ import ru.touchin.auth.core.user.services.dto.NewUser
 import ru.touchin.auth.core.user.services.dto.UserLogin
 import ru.touchin.auth.core.user.services.dto.UserLogout
 import ru.touchin.auth.core.user.services.dto.UserUpdatePassword
+import ru.touchin.common.devices.enums.DevicePlatform
 import ru.touchin.common.spring.test.jpa.repository.RepositoryTest
 import java.util.*
 import javax.persistence.EntityManager

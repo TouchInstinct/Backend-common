@@ -1,8 +1,8 @@
 package ru.touchin.auth.core.device.models
 
 import ru.touchin.auth.core.configurations.AuthCoreDatabaseConfiguration.Companion.SCHEMA
-import ru.touchin.auth.core.device.dto.enums.DevicePlatform
 import ru.touchin.auth.core.user.models.UserEntity
+import ru.touchin.common.devices.enums.DevicePlatform
 import ru.touchin.common.spring.jpa.models.AuditableUuidIdEntity
 import javax.persistence.Entity
 import javax.persistence.JoinColumn

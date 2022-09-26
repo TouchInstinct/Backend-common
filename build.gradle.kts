@@ -74,6 +74,8 @@ subprojects {
             dependency("software.amazon.awssdk:s3:2.10.11")
 
             dependency("com.google.firebase:firebase-admin:9.0.0")
+
+            dependency("com.github.ua-parser:uap-java:1.5.3")
         }
     }
 

@@ -1,4 +1,4 @@
-package ru.touchin.auth.core.device.dto.enums
+package ru.touchin.common.devices.enums
 
 enum class DevicePlatform {
     Android, Huawei, Apple, Web
