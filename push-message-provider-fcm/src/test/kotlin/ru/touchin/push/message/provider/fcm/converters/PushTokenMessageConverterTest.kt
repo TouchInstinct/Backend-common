@@ -1,6 +1,10 @@
 package ru.touchin.push.message.provider.fcm.converters
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.firebase.messaging.AndroidConfig
+import com.google.firebase.messaging.AndroidNotification
+import com.google.firebase.messaging.ApnsConfig
+import com.google.firebase.messaging.Aps
 import com.google.firebase.messaging.Message
 import org.junit.Assert
 import org.junit.jupiter.api.DisplayName
@@ -43,6 +47,8 @@ class PushTokenMessageConverterTest {
             .setToken(pushTokenMessage.token)
             .setNotification(notificationConverter(notification))
             .putAllData(pushTokenMessage.data)
+            .setupApns()
+            .setupAndroid()
             .build()
 
         val expectedResultJson = objectMapper.writeValueAsString(expectedResult)
@@ -69,6 +75,8 @@ class PushTokenMessageConverterTest {
         val expectedResult = Message.builder()
             .setToken(pushTokenMessage.token)
             .putAllData(pushTokenMessage.data)
+            .setupApns()
+            .setupAndroid()
             .build()
 
         val expectedResultJson = objectMapper.writeValueAsString(expectedResult)
@@ -77,6 +85,31 @@ class PushTokenMessageConverterTest {
             "Конвертация некорректна",
             realResultJson,
             expectedResultJson
+        )
+    }
+
+    private fun Message.Builder.setupApns(): Message.Builder {
+        return setApnsConfig(
+            ApnsConfig.builder()
+                .setAps(
+                    Aps.builder()
+                        .setSound("default")
+                        .setContentAvailable(true)
+                        .build()
+                )
+                .build()
+        )
+    }
+
+    private fun Message.Builder.setupAndroid(): Message.Builder {
+        return setAndroidConfig(
+            AndroidConfig.builder()
+                .setNotification(
+                    AndroidNotification.builder()
+                        .setSound("default")
+                        .build()
+                )
+                .build()
         )
     }
 
