@@ -17,6 +17,7 @@ class PushTokenMessageConverter(
     private companion object {
 
         const val PLATFORMS_KEY_SOUND_ON = "default"
+        const val IOS_ENABLE_BACKGROUND_UPDATE = true
 
     }
 
@@ -44,6 +45,7 @@ class PushTokenMessageConverter(
                 .setAps(
                     Aps.builder()
                         .setSound(PLATFORMS_KEY_SOUND_ON)
+                        .setContentAvailable(IOS_ENABLE_BACKGROUND_UPDATE)
                         .build()
                 )
                 .build()
