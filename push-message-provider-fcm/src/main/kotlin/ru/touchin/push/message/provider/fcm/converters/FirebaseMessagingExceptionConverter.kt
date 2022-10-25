@@ -13,11 +13,17 @@ class FirebaseMessagingExceptionConverter {
     operator fun invoke(exception: FirebaseMessagingException): CommonException {
         return when (exception.messagingErrorCode) {
             MessagingErrorCode.INVALID_ARGUMENT,
-            MessagingErrorCode.UNREGISTERED -> InvalidPushTokenException()
-            else -> PushMessageProviderException(
-                description = exception.message.orEmpty(),
-                cause = exception
-            )
+            MessagingErrorCode.UNREGISTERED,
+            MessagingErrorCode.SENDER_ID_MISMATCH -> {
+                InvalidPushTokenException()
+            }
+
+            else -> {
+                PushMessageProviderException(
+                    description = exception.message.orEmpty(),
+                    cause = exception
+                )
+            }
         }
     }
 
