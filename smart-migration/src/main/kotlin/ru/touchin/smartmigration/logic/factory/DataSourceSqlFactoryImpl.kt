@@ -8,7 +8,7 @@ class DataSourceSqlFactoryImpl: DataSourceSqlFactory {
 
     override fun getDataSourceSql(driverName: String): DataSourceSQL {
         return when(driverName){
-           "sql" -> SqlDatasourceImpl()
+            "Microsoft SQL Server" -> SqlDatasourceImpl()
             "PostgresSQL" -> PostgresDataSourceImpl()
             else -> {
                 PostgresDataSourceImpl()
