@@ -10,42 +10,41 @@ import java.text.SimpleDateFormat
 import javax.annotation.PostConstruct
 import javax.sql.DataSource
 
-val CURRENT_TIME_SQL: String
-    get() = Date(System.currentTimeMillis()).let { date ->
-        SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(date)
-    }
+private val SQL_DATE_FORMAT = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+
+private val CURRENT_TIME_SQL: String
+    get() = SQL_DATE_FORMAT.format(Date(System.currentTimeMillis()))
 
 @Component
 @RequiredBy("liquibase")
 class BeforeLiquibase(
     private val dataSource: DataSource
 ) {
+
     val dataSourceSql: DataSourceSQL = DataSourceSqlFactoryImpl()
         .getDataSourceSql(dataSource.connection.metaData.databaseProductName)
 
     @PostConstruct
     fun doAction() {
-
         val buildNumber = System.getenv("BUILD_NUMBER")
-        if (buildNumber != null) {
-            checkMigrationTable()
-            if (checkBuildMigrationExecuted(buildNumber)) {
-                System.setProperty("spring.liquibase.enabled", "false")
-            } else {
-                insertMigration(buildNumber)
-            }
+        ?: return
+
+        checkMigrationTable()
+
+        if (checkBuildMigrationExecuted(buildNumber)) {
+            System.setProperty("spring.liquibase.enabled", "false")
+        } else {
+            insertMigration(buildNumber)
         }
     }
 
     private fun checkBuildMigrationExecuted(buildNumber: String): Boolean {
 
         val checkBuildNumber = dataSourceSql.getMigrationCheckSQL(buildNumber)
+
         val result: ResultSet = dataSource.connection.createStatement().executeQuery(checkBuildNumber)
-        var rowCount = 0
-        while (result.next()) {
-            rowCount += 1;
-        }
-        return rowCount != 0
+
+        return result.next() != null
     }
 
     private fun checkMigrationTable() {
@@ -59,4 +58,5 @@ class BeforeLiquibase(
         dataSource.connection.createStatement()
             .execute(insertMigration)
     }
+
 }
