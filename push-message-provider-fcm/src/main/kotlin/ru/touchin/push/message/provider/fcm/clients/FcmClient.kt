@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 import ru.touchin.push.message.provider.dto.request.PushTokenCheck
 import ru.touchin.push.message.provider.dto.request.PushTokenMessage
 import ru.touchin.push.message.provider.dto.result.SendPushResult
-import ru.touchin.push.message.provider.dto.result.SendPushTokenMessageResult
+import ru.touchin.push.message.provider.dto.result.SendPushTokenMessageTraceableResult
 import ru.touchin.push.message.provider.enums.PushTokenStatus
 import ru.touchin.push.message.provider.exceptions.InvalidPushTokenException
 import ru.touchin.push.message.provider.exceptions.PushMessageProviderException
@@ -32,7 +32,7 @@ class FcmClient(
     fun check(request: PushTokenCheck): PushTokenStatus {
         val validationRequest = PushTokenMessage(
             token = request.pushToken,
-            notification = null,
+            pushMessageNotification = null,
             data = emptyMap()
         )
 
@@ -54,7 +54,7 @@ class FcmClient(
         return try {
             val messageId = firebaseMessaging.send(message, dryRun)
 
-            SendPushTokenMessageResult(messageId)
+            SendPushTokenMessageTraceableResult(messageId)
         } catch (e: FirebaseMessagingException) {
             throw firebaseMessagingExceptionConverter(e)
         }
