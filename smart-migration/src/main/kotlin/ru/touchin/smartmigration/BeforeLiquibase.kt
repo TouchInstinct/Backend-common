@@ -43,8 +43,11 @@ class BeforeLiquibase(
         val checkBuildNumber = dataSourceSql.getMigrationCheckSQL(buildNumber)
 
         val result: ResultSet = dataSource.connection.createStatement().executeQuery(checkBuildNumber)
-
-        return result.next() != null
+        var rowCount = 0
+        while (result.next()) {
+            rowCount += 1;
+        }
+        return rowCount != 0
     }
 
     private fun checkMigrationTable() {

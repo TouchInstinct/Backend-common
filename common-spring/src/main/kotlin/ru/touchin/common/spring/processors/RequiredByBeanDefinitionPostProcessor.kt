@@ -13,26 +13,27 @@ class RequiredByBeanDefinitionPostProcessor : BeanDefinitionRegistryPostProcesso
     @Throws(BeansException::class)
     override fun postProcessBeanDefinitionRegistry(registry: BeanDefinitionRegistry) {
         for (beanName in registry.beanDefinitionNames) {
-            val beanDefinition = registry.getBeanDefinition(beanName)
-            if (beanDefinition.beanClassName == null) {
-                continue
-            }
-            try {
-                val beanClass = Class.forName(beanDefinition.beanClassName)
-                if (beanClass.isAnnotationPresent(RequiredBy::class.java)) {
-                    val dependantBeanNames = beanClass.getAnnotation(RequiredBy::class.java).value
-                    for (dependantBeanName in dependantBeanNames) {
-                        val dependantBeanDefinition = registry.getBeanDefinition(dependantBeanName)
-                        dependantBeanDefinition.setDependsOn(beanName)
-                    }
-                }
-            } catch (e: ClassNotFoundException) {
-                throw RuntimeException(e)
+            val beanClassName = registry.getBeanDefinition(beanName).beanClassName?:continue
+
+            getDependantBeanNames(beanClassName).forEach { dependantBeanName ->
+                val dependantBeanDefinition = registry.getBeanDefinition(dependantBeanName)
+                dependantBeanDefinition.setDependsOn(beanName)
             }
         }
     }
 
     @Throws(BeansException::class)
     override fun postProcessBeanFactory(beanFactory: ConfigurableListableBeanFactory) {
+    }
+
+    private fun getDependantBeanNames(beanClassName: String): List<String> {
+        val beanClass = Class.forName(beanClassName)
+        var dependantBeans = emptyList<String>()
+
+        if (beanClass.isAnnotationPresent(RequiredBy::class.java)) {
+            dependantBeans = beanClass.getAnnotation(RequiredBy::class.java).value.toList()
+        }
+
+        return dependantBeans
     }
 }
