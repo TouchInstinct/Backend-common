@@ -15,6 +15,8 @@ plugins {
     // A Gradle plugin that provides Maven-like dependency management and exclusions
     // https://docs.spring.io/dependency-management-plugin/docs/current/reference/html/
     id("io.spring.dependency-management")
+
+    id("io.gitlab.arturbosch.detekt").version("1.18.0")
 }
 
 allprojects {
@@ -39,6 +41,22 @@ subprojects {
 
     println("Enabling Spring Boot Dependency Management in project ${project.name}...")
     apply(plugin = "io.spring.dependency-management")
+
+    println("Enabling Detekt support in project ${project.name}...")
+    apply(plugin = "io.gitlab.arturbosch.detekt")
+
+    detekt {
+        config = files("$rootDir/detekt-config.yml")
+        reports {
+            txt.enabled = false
+            xml.enabled = false
+            html{
+                enabled = true
+                destination = file("${project.buildDir}/reports/kotlin-detekt-${project.name}.html")
+            }
+
+        }
+    }
 
     configure<DependencyManagementExtension> {
         imports {
