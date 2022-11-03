@@ -1,3 +1,4 @@
+@file:Suppress("unused")
 package ru.touchin.smartmigration
 
 import org.springframework.stereotype.Component
@@ -5,7 +6,6 @@ import ru.touchin.common.spring.annotations.RequiredBy
 import ru.touchin.smartmigration.logic.DataSourceSQL
 import ru.touchin.smartmigration.logic.factory.DataSourceSqlFactoryImpl
 import java.sql.Date
-import java.sql.ResultSet
 import java.text.SimpleDateFormat
 import javax.annotation.PostConstruct
 import javax.sql.DataSource
@@ -39,27 +39,21 @@ class BeforeLiquibase(
     }
 
     private fun checkBuildMigrationExecuted(buildNumber: String): Boolean {
-
-        val checkBuildNumber = dataSourceSql.getMigrationCheckSQL(buildNumber)
-
-        val result: ResultSet = dataSource.connection.createStatement().executeQuery(checkBuildNumber)
-        var rowCount = 0
-        while (result.next()) {
-            rowCount += 1;
+        return dataSourceSql.getMigrationCheckSQL(buildNumber).let {
+            dataSource.connection.createStatement().executeQuery(it).next()
         }
-        return rowCount != 0
     }
 
     private fun checkMigrationTable() {
-        val createTable = dataSourceSql.getTableCheckSQL()
-        dataSource.connection.createStatement()
-            .execute(createTable)
+        dataSourceSql.getTableCheckSQL().let {
+            dataSource.connection.createStatement().execute(it)
+        }
     }
 
     private fun insertMigration(buildNumber: String) {
-        val insertMigration =dataSourceSql.getInsertMigrationSQL(buildNumber, CURRENT_TIME_SQL)
-        dataSource.connection.createStatement()
-            .execute(insertMigration)
+        dataSourceSql.getInsertMigrationSQL(buildNumber, CURRENT_TIME_SQL).let {
+            dataSource.connection.createStatement().execute(it)
+        }
     }
 
 }
