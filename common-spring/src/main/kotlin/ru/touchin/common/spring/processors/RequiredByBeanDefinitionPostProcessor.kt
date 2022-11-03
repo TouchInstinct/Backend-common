@@ -16,8 +16,7 @@ class RequiredByBeanDefinitionPostProcessor : BeanDefinitionRegistryPostProcesso
             val beanClassName = registry.getBeanDefinition(beanName).beanClassName?:continue
 
             getDependantBeanNames(beanClassName).forEach { dependantBeanName ->
-                val dependantBeanDefinition = registry.getBeanDefinition(dependantBeanName)
-                dependantBeanDefinition.setDependsOn(beanName)
+                registry.getBeanDefinition(dependantBeanName).setDependsOn(beanName)
             }
         }
     }
