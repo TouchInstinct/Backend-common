@@ -51,7 +51,7 @@ internal class UserRepositoryTest {
 
         val savedUser = userRepository.findByIdOrThrow(user.id!!)
 
-        assertTrue(ReflectionEquals(user, "createdAt").matches(savedUser))
+        assertTrue(ReflectionEquals(user, "createdAt", "confirmedAt").matches(savedUser))
 
     }
 

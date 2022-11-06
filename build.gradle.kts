@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 
 plugins {
     kotlin("jvm")
@@ -47,6 +48,10 @@ subprojects {
 
     detekt {
         config = files("$rootDir/detekt-config.yml")
+        source = files(
+            DetektExtension.Companion.DEFAULT_SRC_DIR_JAVA,
+            DetektExtension.Companion.DEFAULT_SRC_DIR_KOTLIN,
+        )
         reports {
             txt.enabled = false
             xml.enabled = false

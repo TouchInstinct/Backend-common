@@ -48,7 +48,7 @@ internal class ScopeRepositoryTest {
         val savedScope = scopeRepository.findByIdOrThrow(scope.name)
 
         assertTrue(
-            ReflectionEquals(scope, "createdAt").matches(savedScope)
+            ReflectionEquals(scope, "createdAt", "users").matches(savedScope)
         )
     }
 
