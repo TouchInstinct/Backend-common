@@ -218,6 +218,46 @@ server.info:
 
 Интерфейсы и компоненты для модулей по обеспечению интеграции с сервисами отправки пуш-уведомлений.
 
+Далее рассматривается пример использования подключаемых модулей-провайдеров.
+``` kotlin
+@Service
+class PushSendingService(
+    private val pushMessageProviderServiceFactory: PushMessageProviderServiceFactory
+) {
+
+    fun sendPushMessage() {
+        val yourPushToken = "pushTokenForChecking"
+        val platform = PlatformType.ANDROID_GOOGLE
+
+        val pushMessageProvider: PushMessageProviderService = pushMessageProviderServiceFactory.get(platform)
+
+        val result = pushMessageProvider.check( // Проверка валидности токена для обозначения целесообразности отправки
+            PushTokenCheck(
+                pushToken = yourPushToken
+            )
+        )
+
+        if (result.status == PushTokenStatus.VALID) { // Токен валиден, PushMessageProviderService интегрирован в систему
+            // Отправка пуш-уведомления
+            pushMessageProvider.send(
+                PushTokenMessage(
+                    token = yourPushToken,
+                    pushMessageNotification = PushMessageNotification(
+                        title = "Your PushMessage",
+                        description = "Provided by PushMessageProviderService",
+                        imageUrl = null
+                    ),
+                    data = mapOf(
+                        "customKey" to "customData"
+                    )
+                )
+            )
+        }
+    }
+
+}
+```
+
 ## push-message-provider-fcm
 
 Модуль по обеспечению интеграции с Firebase Cloud Messaging. 
