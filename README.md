@@ -271,3 +271,32 @@ C) Данные из файла консоли Firebase, добавляемые 
         authProviderX509CertUrl: testAuthProviderX509CertUrl
         clientX509CertUrl: testClientX509CertUrl
 ```
+
+## push-message-provider-hpk
+
+Модуль по обеспечению интеграции с Huawei Push Kit. 
+
+1) Подключение компонентов Spring осуществляется при помощи аннотации `@EnablePushMessageProviderHpk`.
+2) Необходимо добавление конфигурации для модуля. Пример файла конфигурации в формате yaml:
+``` yaml
+push-message-provider:
+  platformProviders:
+    ANDROID_HUAWEI:
+      - HPK
+  hpk:
+    web-services:
+      client-id: testClientId
+      oauth:
+        client-secret: testClientSecret
+        url: https://oauth-login.cloud.huawei.com/oauth2/v3/
+        http:
+          connection-timeout: 1s
+          read-timeout: 10s
+          write-timeout: 10s
+      hpk:
+        url: https://push-api.cloud.huawei.com/v1/
+        http:
+          connection-timeout: 1s
+          read-timeout: 10s
+          write-timeout: 10s
+```
