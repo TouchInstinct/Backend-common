@@ -28,6 +28,11 @@ internal data class WebHmsOptions private constructor(
 
         private var link: String? = null
 
+        fun setLink(link: String): Builder {
+            this.link = link
+            return this
+        }
+
         fun build(): WebHmsOptions {
             return WebHmsOptions(
                 link = link,

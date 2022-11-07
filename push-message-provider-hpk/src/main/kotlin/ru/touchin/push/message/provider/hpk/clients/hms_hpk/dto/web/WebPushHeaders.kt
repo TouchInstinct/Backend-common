@@ -1,11 +1,14 @@
 package ru.touchin.push.message.provider.hpk.clients.hms_hpk.dto.web
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import ru.touchin.push.message.provider.hpk.base.builders.Buildable
+import ru.touchin.push.message.provider.hpk.clients.hms_hpk.enums.web.WebUrgency
 
 internal data class WebPushHeaders private constructor(
     val ttl: String?,
     val topic: String?,
-    val urgency: String?,
+    @JsonProperty("urgency")
+    val urgency: WebUrgency?,
 ) {
 
     class Validator {
@@ -15,18 +18,12 @@ internal data class WebPushHeaders private constructor(
                 if (ttl != null) {
                     require(ttl.matches(TTL_PATTERN)) { "Invalid ttl format" }
                 }
-                if (urgency != null) {
-                    require(
-                        URGENCY_VALUE.all { it == urgency }
-                    ) { "Invalid urgency" }
-                }
             }
         }
 
         private companion object {
 
             val TTL_PATTERN: Regex = Regex("[0-9]+|[0-9]+[sS]")
-            val URGENCY_VALUE: Array<String> = arrayOf("very-low", "low", "normal", "high")
 
         }
 
@@ -36,7 +33,7 @@ internal data class WebPushHeaders private constructor(
 
         private var ttl: String? = null
         private var topic: String? = null
-        private var urgency: String? = null
+        private var urgency: WebUrgency? = null
 
         fun setTtl(ttl: String): Builder {
             this.ttl = ttl
@@ -48,7 +45,7 @@ internal data class WebPushHeaders private constructor(
             return this
         }
 
-        fun setUrgency(urgency: String): Builder {
+        fun setUrgency(urgency: WebUrgency): Builder {
             this.urgency = urgency
             return this
         }

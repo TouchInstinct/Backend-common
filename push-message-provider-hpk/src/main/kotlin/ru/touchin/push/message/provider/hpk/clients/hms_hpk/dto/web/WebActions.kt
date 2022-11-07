@@ -22,6 +22,21 @@ internal data class WebActions private constructor(
         private var icon: String? = null
         private var title: String? = null
 
+        fun setAction(action: String): Builder {
+            this.action = action
+            return this
+        }
+
+        fun setIcon(icon: String): Builder {
+            this.icon = icon
+            return this
+        }
+
+        fun setTitle(title: String): Builder {
+            this.title = title
+            return this
+        }
+
         fun build(): WebActions {
             return WebActions(
                 action = action,
