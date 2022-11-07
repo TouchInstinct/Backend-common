@@ -57,13 +57,8 @@ internal data class ApnsAlert private constructor(
             return this
         }
 
-        fun setAddAllTitleLocArgs(titleLocArgs: Collection<String>): Builder {
-            this.titleLocArgs.addAll(titleLocArgs)
-            return this
-        }
-
-        fun setAddTitleLocArg(titleLocArg: String): Builder {
-            titleLocArgs.add(titleLocArg)
+        fun setAddTitleLocArg(vararg titleLocArg: String): Builder {
+            titleLocArgs.addAll(titleLocArg)
             return this
         }
 
@@ -77,13 +72,8 @@ internal data class ApnsAlert private constructor(
             return this
         }
 
-        fun addAllLocArgs(locArgs: Collection<String>): Builder {
+        fun addAllLocArgs(vararg locArgs: String): Builder {
             this.locArgs.addAll(locArgs)
-            return this
-        }
-
-        fun addLocArg(locArg: String): Builder {
-            locArgs.add(locArg)
             return this
         }
 

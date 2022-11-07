@@ -23,7 +23,7 @@ internal data class ApnsHeaders private constructor(
             with(apnsHeaders) {
                 if (authorization != null) {
                     require(
-                        authorization.matches(AUTHORIZATION_PATTERN)
+                        authorization.startsWith(AUTHORIZATION_PATTERN)
                     ) { "authorization must start with bearer" }
                 }
                 if (apnsId != null) {
@@ -31,16 +31,17 @@ internal data class ApnsHeaders private constructor(
                 }
                 if (apnsCollapseId != null) {
                     require(
-                        apnsCollapseId.toByteArray().size < 64
-                    ) { "Number of apnsCollapseId bytes should be less than 64" }
+                        apnsCollapseId.toByteArray().size < APNS_COLLAPSE_ID_MAX_SIZE
+                    ) { "Number of apnsCollapseId bytes must be less than $APNS_COLLAPSE_ID_MAX_SIZE" }
                 }
             }
         }
 
         private companion object {
 
-            private val AUTHORIZATION_PATTERN: Regex = Regex("^bearer*")
-            private val APN_ID_PATTERN: Regex = Regex("[0-9a-z]{8}(-[0-9a-z]{4}){3}-[0-9a-z]{12}")
+            const val AUTHORIZATION_PATTERN: String = "bearer"
+            val APN_ID_PATTERN: Regex = Regex("[0-9a-z]{8}(-[0-9a-z]{4}){3}-[0-9a-z]{12}")
+            const val APNS_COLLAPSE_ID_MAX_SIZE: Byte = 64
 
         }
 
