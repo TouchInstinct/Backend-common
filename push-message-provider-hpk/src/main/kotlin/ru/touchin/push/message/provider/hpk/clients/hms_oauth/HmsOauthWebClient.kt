@@ -15,6 +15,10 @@ import ru.touchin.push.message.provider.hpk.clients.hms_oauth.response.HmsOauthE
 import ru.touchin.push.message.provider.hpk.clients.hms_oauth.response.HmsOauthTokenResponse
 import ru.touchin.push.message.provider.hpk.properties.HpkProperties
 
+/**
+ * Client for Huawei Oauth service.
+ * @see <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/open-platform-oauth-0000001053629189">Documentation</a>
+ */
 @Component
 class HmsOauthWebClient(
     webClientLogger: WebClientLogger,
