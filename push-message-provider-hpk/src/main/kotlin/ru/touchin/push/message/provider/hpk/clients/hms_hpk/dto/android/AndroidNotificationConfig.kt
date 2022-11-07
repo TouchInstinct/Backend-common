@@ -165,7 +165,7 @@ internal data class AndroidNotificationConfig private constructor(
     class Builder : Buildable {
 
         private var title: String? = null
-        private val body: String? = null
+        private var body: String? = null
         private var icon: String? = null
         private var color: String? = null
         private var sound: String? = null
