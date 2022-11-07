@@ -24,14 +24,21 @@ internal data class AndroidButton private constructor(
         fun check(androidButton: AndroidButton) {
             with(androidButton) {
                 require(
-                    name.length < 40
-                ) { "Button name length cannot exceed 40" }
+                    name.length <= NAME_MAX_LENGTH
+                ) { "Button name length cannot exceed $NAME_MAX_LENGTH" }
 
                 if (androidActionType == AndroidActionType.SHARE_NOTIFICATION_MESSAGE) {
                     require(!data.isNullOrEmpty()) { "Data is needed when actionType is $androidActionType" }
-                    require(data.length < 1024) { "Data length cannot exceed 1024 chars" }
+                    require(data.length <= DATA_MAX_LENGTH) { "Data length cannot exceed $DATA_MAX_LENGTH chars" }
                 }
             }
+        }
+
+        private companion object {
+
+            const val NAME_MAX_LENGTH: Byte = 40
+            const val DATA_MAX_LENGTH: Short = 1024
+
         }
 
     }

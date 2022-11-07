@@ -26,7 +26,7 @@ internal data class AndroidClickAction private constructor(
 
                     AndroidClickActionType.OPEN_URL -> {
                         require(!url.isNullOrBlank()) { "url is required when click type is $androidClickActionType" }
-                        require(url.matches(HTTPS_PATTERN)) { "url must start with https" }
+                        require(url.startsWith(HTTPS_PATTERN_START)) { "url must start with $HTTPS_PATTERN_START" }
                     }
 
                     AndroidClickActionType.OPEN_APP -> {
@@ -38,7 +38,7 @@ internal data class AndroidClickAction private constructor(
 
         private companion object {
 
-            val HTTPS_PATTERN: Regex = Regex("^https.*")
+            const val HTTPS_PATTERN_START = "https"
 
         }
 

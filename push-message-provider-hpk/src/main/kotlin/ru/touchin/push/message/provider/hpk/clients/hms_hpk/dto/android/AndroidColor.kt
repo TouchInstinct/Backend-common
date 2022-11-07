@@ -17,17 +17,18 @@ internal data class AndroidColor private constructor(
 
         fun check(androidColor: AndroidColor) {
             with(androidColor) {
-                require(alpha > ZERO && alpha < ONE) { "Alpha must be locate between [0,1]" }
-                require(red > ZERO && red < ONE) { "Red must be locate between [0,1]" }
-                require(green > ZERO && green < ONE) { "Green must be locate between [0,1]" }
-                require(blue > ZERO && blue < ONE) { "Blue must be locate between [0,1]" }
+                require(alpha in COLOR_RANGE_CONSTRAINT) { "Alpha must be locate between [0,1]" }
+                require(red in COLOR_RANGE_CONSTRAINT) { "Red must be locate between [0,1]" }
+                require(green in COLOR_RANGE_CONSTRAINT) { "Green must be locate between [0,1]" }
+                require(blue in COLOR_RANGE_CONSTRAINT) { "Blue must be locate between [0,1]" }
             }
         }
 
         private companion object {
 
-            private const val ZERO: Float = -0.000001f
-            private const val ONE: Float = 1.000001f
+            private const val ZERO: Float = 0.0f
+            private const val ONE: Float = 1.0f
+            val COLOR_RANGE_CONSTRAINT = ZERO..ONE
 
         }
 

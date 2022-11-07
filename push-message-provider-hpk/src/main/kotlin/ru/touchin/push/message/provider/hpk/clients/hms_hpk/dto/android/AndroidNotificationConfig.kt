@@ -119,7 +119,7 @@ internal data class AndroidNotificationConfig private constructor(
                     require(color.matches(COLOR_PATTERN)) { "Wrong color format, color must be in the form #RRGGBB" }
                 }
                 if (!image.isNullOrBlank()) {
-                    require(image.matches(HTTPS_URL_PATTERN)) { "notifyIcon must start with https" }
+                    require(image.startsWith(HTTPS_URL_PATTERN)) { "notifyIcon must start with $HTTPS_URL_PATTERN" }
                 }
                 if (androidStyleType != null) {
                     when (androidStyleType) {
@@ -135,13 +135,18 @@ internal data class AndroidNotificationConfig private constructor(
 
                         AndroidStyleType.INBOX -> {
                             require(
-                                !inboxContent.isNullOrEmpty() && inboxContent.orEmpty().size <= 5
-                            ) { "inboxContent is required when style is $androidStyleType and at most 5 inbox content allowed" }
+                                !inboxContent.isNullOrEmpty()
+                            ) { "inboxContent is required when style is $androidStyleType" }
+                            require(
+                                inboxContent.size <= INBOX_CONTENT_MAX_ITEMS
+                            ) { "inboxContent must have at most $INBOX_CONTENT_MAX_ITEMS items" }
                         }
                     }
                 }
                 if (profileId != null) {
-                    require(profileId.length <= 64) { "profileId length cannot exceed 64 characters" }
+                    require(
+                        profileId.length <= PROFILE_ID_MAX_LENGTH
+                    ) { "profileId length cannot exceed $PROFILE_ID_MAX_LENGTH characters" }
                 }
             }
         }
@@ -149,7 +154,9 @@ internal data class AndroidNotificationConfig private constructor(
         private companion object {
 
             val COLOR_PATTERN: Regex = Regex("^#[0-9a-fA-F]{6}$")
-            val HTTPS_URL_PATTERN: Regex = Regex("^https.*")
+            const val HTTPS_URL_PATTERN: String = "https"
+            const val INBOX_CONTENT_MAX_ITEMS: Byte = 5
+            const val PROFILE_ID_MAX_LENGTH: Byte = 64
 
         }
 

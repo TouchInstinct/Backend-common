@@ -19,16 +19,27 @@ internal data class AndroidBadgeNotification private constructor(
             with(androidBadgeNotification) {
                 if (addNum != null) {
                     require(
-                        addNum in 1..99
-                    ) { "add_num must locate between 0 and 100" }
+                        addNum in ADD_NUM_MIN_VALUE..ADD_NUM_MAX_VALUE
+                    ) { "add_num must locate in $ADD_NUM_MIN_VALUE and $ADD_NUM_MAX_VALUE" }
                 }
 
                 if (setNum != null) {
                     require(
-                        setNum in 0..99
-                    ) { "set_num must locate between -1 and 100" }
+                        setNum in SET_NUM_RANGE_CONSTRAINT
+                    ) { "set_num must locate between $SET_NUM_MIN_VALUE and $SET_NUM_MAX_VALUE" }
                 }
             }
+        }
+
+        private companion object {
+
+            const val ADD_NUM_MIN_VALUE: Byte = 1
+            const val ADD_NUM_MAX_VALUE: Byte = 99
+            val ADD_NUM_RANGE_CONSTRAINT: IntRange = ADD_NUM_MIN_VALUE..ADD_NUM_MAX_VALUE
+            const val SET_NUM_MIN_VALUE: Byte = 0
+            const val SET_NUM_MAX_VALUE: Byte = 99
+            val SET_NUM_RANGE_CONSTRAINT: IntRange = SET_NUM_MIN_VALUE..SET_NUM_MAX_VALUE
+
         }
 
     }

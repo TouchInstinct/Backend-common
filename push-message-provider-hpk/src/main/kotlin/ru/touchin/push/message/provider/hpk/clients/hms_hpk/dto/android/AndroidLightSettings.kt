@@ -21,10 +21,10 @@ internal data class AndroidLightSettings private constructor(
 
                 require(
                     lightOnDuration.matches(LIGHT_DURATION_PATTERN)
-                ) { "light_on_duration format is wrong" }
+                ) { "light_on_duration pattern is wrong" }
                 require(
                     lightOffDuration.matches(LIGHT_DURATION_PATTERN)
-                ) { "light_off_duration format is wrong" }
+                ) { "light_off_duration pattern is wrong" }
             }
         }
 
