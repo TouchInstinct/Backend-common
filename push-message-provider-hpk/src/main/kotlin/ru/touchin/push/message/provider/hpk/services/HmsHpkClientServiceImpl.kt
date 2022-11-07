@@ -56,6 +56,10 @@ class HmsHpkClientServiceImpl(
         )
 
         when (HmsResponseCode.fromCode(result.code)) {
+            HmsResponseCode.SUCCESS -> {
+                // pass result
+            }
+
             HmsResponseCode.INVALID_TOKEN,
             HmsResponseCode.PERMISSION_DENIED -> {
                 throw InvalidPushTokenException()
