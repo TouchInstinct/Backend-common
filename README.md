@@ -258,18 +258,17 @@ C) Данные из файла консоли Firebase, добавляемые 
     auth:
       credentialsData:
         type: service_account
-        projectId: testProjectId
-        privateKeyId: testPrivateKeyId
+        projectId: yourProjectId
+        privateKeyId: yourPrivateKeyId
         privateKey: |
           -----BEGIN PRIVATE KEY-----
-          MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALfBshaLMW2yddmAZJRNXTZzcSbwvY93Dnjj6naWgoBJoB3mOM5bcoyWwBw12A4rwecorz74OUOc6zdqX3j8hwsSyzgAUStKM5PkOvPNRKsI4eXAWU0fmb8h1jyXwftl7EzeBjEMBTpyXkgDk3wLfHN6ciCZrnQndOvS+mMl3b0hAgMBAAECgYEAmIQZByMSrITR0ewCDyFDO52HjhWEkF310hsBkNoNiOMTFZ3vCj/WjJ/W5dM+90wUTYN0KOSnytmkVUNh6K5Yekn+yRg/mBRTwwn88hU6umB8tUqoNz7AyUltAOGyQMWqAAcVgxV+mAp/Y018j69poEHgrW4qKol65/NRZyV7/J0CQQD4rCDjmxGEuA1yMzL2i8NyNl/5vvLVfLcEnVqpHbc1+KfUHZuY7iv38xpzfmErqhCxAXfQ52edq5rXmMIVSbFrAkEAvSvfSSK9XQDJl3NEyfR3BGbsoqKIYOuJAnv4OQPSODZfTNWhc11S8y914qaSWB+Iid9HoLvAIgPH5mrzPzjSowJBAJcw4FZCI+aTmOlEI8ous8gvMy8/X5lZWFUf7s0/2fKgmjmnPsE+ndEFJ6HsxturbLaR8+05pJAClARdRjN3OL0CQGoF+8gmw1ErztCmVyiFbms2MGxagesoN4r/5jg2Tw0YVENg/HMHHCWWNREJ4L2pNsJnNOL+N4oY6mHXEWwesdcCQCUYTfLYxi+Wg/5BSC7fgl/gu0mlx07AzMoMQLDOXdisV5rpxrOoT3BOLBqyccv37AZ3e2gqb8JYyNzO6C0zswQ=
           -----END PRIVATE KEY-----
-        clientEmail: testClientEmail
-        clientId: testClientId
-        authUri: testAuthUri
-        tokenUri: testTokenUri
-        authProviderX509CertUrl: testAuthProviderX509CertUrl
-        clientX509CertUrl: testClientX509CertUrl
+        clientEmail: yourClientEmail
+        clientId: yourClientId
+        authUri: yourAuthUri
+        tokenUri: yourTokenUri
+        authProviderX509CertUrl: yourAuthProviderX509CertUrl
+        clientX509CertUrl: yourClientX509CertUrl
 ```
 
 ## push-message-provider-hpk
@@ -285,9 +284,9 @@ push-message-provider:
       - HPK
   hpk:
     web-services:
-      client-id: testClientId
+      client-id: yourClientId
       oauth:
-        client-secret: testClientSecret
+        client-secret: yourClientSecret
         url: https://oauth-login.cloud.huawei.com/oauth2/v3/
         http:
           connection-timeout: 1s
