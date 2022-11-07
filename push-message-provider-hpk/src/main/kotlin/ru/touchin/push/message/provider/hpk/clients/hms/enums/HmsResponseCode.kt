@@ -8,7 +8,7 @@ internal enum class HmsResponseCode(
 ) : ValueableSerializableEnum<Int> {
 
     UNKNOWN(-1, "Unknown"),
-    INVALID_CLIENT_SECRET(1101, "Invalid client_secret"),
+    INVALID_CLIENT_SECRET(1101, "Invalid client_secret: app or server has mismatching credentials"),
     SUCCESS(80000000, "Success"),
     SOME_TOKENS_ARE_INVALID(80100000, "Some tokens are right, the others are illegal"),
     PARAMETERS_ARE_INVALID(80100001, "Parameters check error"),
