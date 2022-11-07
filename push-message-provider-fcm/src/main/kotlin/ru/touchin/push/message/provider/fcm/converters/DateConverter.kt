@@ -1,4 +1,4 @@
-package ru.touchin.push.message.provider.fcm.configurations
+package ru.touchin.push.message.provider.fcm.converters
 
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding
@@ -14,8 +14,8 @@ class DateConverter(
     private val simpleDateFormat: SimpleDateFormat
 ) : Converter<String, Date> {
 
-    override fun convert(source: String?): Date? {
-        return source?.let(simpleDateFormat::parse)
+    override fun convert(source: String): Date {
+        return source.let(simpleDateFormat::parse)
     }
 
 }
