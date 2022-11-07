@@ -15,9 +15,6 @@ import ru.touchin.push.message.provider.hpk.clients.hms_oauth.response.HmsOauthE
 import ru.touchin.push.message.provider.hpk.clients.hms_oauth.response.HmsOauthTokenResponse
 import ru.touchin.push.message.provider.hpk.properties.HpkProperties
 
-private const val GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials"
-private const val METHOD_TOKEN = "token"
-
 @Component
 class HmsOauthWebClient(
     webClientLogger: WebClientLogger,
@@ -48,9 +45,9 @@ class HmsOauthWebClient(
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .body(
                 BodyInserters
-                    .fromFormData("grant_type", GRANT_TYPE_CLIENT_CREDENTIALS)
-                    .with("client_id", hpkProperties.webServices.clientId)
-                    .with("client_secret", hpkProperties.webServices.oauth.clientSecret)
+                    .fromFormData(TOKEN_KEY_GRANT_TYPE, GRANT_TYPE_CLIENT_CREDENTIALS)
+                    .with(TOKEN_KEY_CLIENT_ID, hpkProperties.webServices.clientId)
+                    .with(TOKEN_KEY_CLIENT_SECRET, hpkProperties.webServices.oauth.clientSecret)
             )
             .exchangeWithWrap<HmsOauthTokenResponse, HmsOauthErrorResponse>(
                 requestLogData = RequestLogData(
@@ -60,6 +57,17 @@ class HmsOauthWebClient(
                 ),
             )
             .block() ?: throw IllegalStateException("No response")
+    }
+
+
+    private companion object {
+
+        const val GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials"
+        const val METHOD_TOKEN = "token"
+        const val TOKEN_KEY_GRANT_TYPE = "grant_type"
+        const val TOKEN_KEY_CLIENT_ID = "client_id"
+        const val TOKEN_KEY_CLIENT_SECRET = "client_secret"
+
     }
 
 }

@@ -15,8 +15,6 @@ import ru.touchin.push.message.provider.hpk.clients.hms_hpk.requests.HmsHpkMessa
 import ru.touchin.push.message.provider.hpk.clients.hms_hpk.responses.HmsHpkResponse
 import ru.touchin.push.message.provider.hpk.properties.HpkProperties
 
-private const val METHOD_MESSAGES_SEND = "messages:send"
-
 /**
  * Client for Huawei Push Kit.
  * @see <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-References/https-send-api-0000001050986197">Documentation</a>
@@ -61,6 +59,12 @@ class HmsHpkWebClient(
                 )
             )
             .block() ?: throw IllegalStateException("No response")
+    }
+
+    private companion object {
+
+        const val METHOD_MESSAGES_SEND = "messages:send"
+
     }
 
 }
