@@ -15,7 +15,7 @@ class DateConverter(
 ) : Converter<String, Date> {
 
     override fun convert(source: String): Date {
-        return source.let(simpleDateFormat::parse)
+        return simpleDateFormat.parse(source)
     }
 
 }
