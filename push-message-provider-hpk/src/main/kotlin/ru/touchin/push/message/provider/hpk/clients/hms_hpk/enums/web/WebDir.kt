@@ -5,4 +5,9 @@ import ru.touchin.push.message.provider.hpk.base.enums.ValueableSerializableEnum
 enum class WebDir(
     override val value: String
 ) : ValueableSerializableEnum<String> {
+
+    AUTO("auto"),
+    RTL("rtl"),
+    LTR("ltr"),
+
 }
