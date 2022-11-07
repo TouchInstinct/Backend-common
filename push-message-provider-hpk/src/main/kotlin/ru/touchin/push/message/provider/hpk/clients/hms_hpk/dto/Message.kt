@@ -32,7 +32,7 @@ internal data class Message private constructor(
                         !token.isNullOrEmpty(),
                         !topic.isNullOrBlank(),
                         !condition.isNullOrBlank(),
-                    ).count { it } == 1
+                    ).count { it } == MAX_TYPES_OF_DELIVERY
                 ) { "Exactly one of token, topic or condition must be specified" }
 
                 if (token != null) {
@@ -50,6 +50,7 @@ internal data class Message private constructor(
 
         private companion object {
 
+            const val MAX_TYPES_OF_DELIVERY: Int = 1
             const val TOKENS_SIZE_MIN: Byte = 1
             const val TOKENS_SIZE_MAX: Short = 1000
             val TOKENS_SIZE_RANGE_CONSTRAINT: IntRange = TOKENS_SIZE_MIN..TOKENS_SIZE_MAX
