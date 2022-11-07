@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cache.Cache
 import org.springframework.cache.CacheManager
 import org.springframework.stereotype.Service
+import ru.touchin.logger.dto.LogData
+import ru.touchin.logger.factory.LogBuilderFactory
 import ru.touchin.push.message.provider.hpk.properties.HpkProperties
 import ru.touchin.push.message.provider.hpk.services.dto.AccessToken
 import java.time.Instant
 
 @Service
 class HmsOauthAccessTokenCacheServiceImpl(
+    private val logBuilderFactory: LogBuilderFactory<LogData>,
     @Qualifier("push-message-provider.hpk.webclient-cachemanager")
     private val cacheManager: CacheManager,
     @Qualifier("push-message-provider.hpk.client-objectmapper")
@@ -47,7 +50,12 @@ class HmsOauthAccessTokenCacheServiceImpl(
         return try {
             objectMapper.convertValue(item, typeReference)
         } catch (e: Exception) {
-            print(e.message)
+            logBuilderFactory.create(this::class.java)
+                .setMethod("safeCast")
+                .setError(e)
+                .build()
+                .error()
+
             null
         }
     }
