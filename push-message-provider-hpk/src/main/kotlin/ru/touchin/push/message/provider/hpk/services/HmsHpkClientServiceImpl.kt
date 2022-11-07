@@ -61,7 +61,7 @@ class HmsHpkClientServiceImpl(
             }
 
             HmsResponseCode.INVALID_TOKEN,
-            HmsResponseCode.PERMISSION_DENIED -> {
+            HmsResponseCode.INVALID_CLIENT_SECRET -> {
                 throw InvalidPushTokenException()
             }
 

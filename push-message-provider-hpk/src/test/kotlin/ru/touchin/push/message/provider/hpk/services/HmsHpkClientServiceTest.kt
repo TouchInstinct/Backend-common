@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import ru.touchin.push.message.provider.dto.PushMessageNotification
 import ru.touchin.push.message.provider.dto.request.PushTokenMessage
 import ru.touchin.push.message.provider.exceptions.InvalidPushTokenException
+import ru.touchin.push.message.provider.exceptions.PushMessageProviderException
 import ru.touchin.push.message.provider.hpk.clients.hms_hpk.HmsHpkWebClient
 import ru.touchin.push.message.provider.hpk.clients.hms.enums.HmsResponseCode
 import ru.touchin.push.message.provider.hpk.clients.hms_hpk.responses.HmsHpkResponse
@@ -27,8 +28,10 @@ class HmsHpkClientServiceTest {
     lateinit var hmsHpkClientService: HmsHpkClientService
 
     @Test
-    fun getAccessToken_throwsInvalidPushTokenExceptionForKnownErrors() {
-        Mockito.`when`(hmsOauthClientService.getAccessToken()).then { "accessToken" }
+    fun send_throwsInvalidPushTokenExceptionForKnownErrors() {
+        Mockito.`when`(
+            hmsOauthClientService.getAccessToken()
+        ).then { "accessToken" }
 
         Mockito.`when`(
             hmsHpkWebClient.messagesSend(any())
@@ -53,6 +56,68 @@ class HmsHpkClientServiceTest {
         Assertions.assertThrows(
             InvalidPushTokenException::class.java
         ) { hmsHpkClientService.send(pushTokenMessage) }
+    }
+
+    @Test
+    fun send_throwsPushMessageProviderExceptionOnOtherExceptions() {
+        Mockito.`when`(
+            hmsOauthClientService.getAccessToken()
+        ).then { "accessToken" }
+
+        Mockito.`when`(
+            hmsHpkWebClient.messagesSend(any())
+        ).then {
+            HmsHpkResponse(
+                code = HmsResponseCode.OAUTH_TOKEN_EXPIRED.value.toString(),
+                msg = "0",
+                requestId = "requestId"
+            )
+        }
+
+        val pushTokenMessage = PushTokenMessage(
+            token = "token",
+            pushMessageNotification = PushMessageNotification(
+                title = "title",
+                description = "description",
+                imageUrl = null
+            ),
+            data = emptyMap()
+        )
+
+        Assertions.assertThrows(
+            PushMessageProviderException::class.java
+        ) { hmsHpkClientService.send(pushTokenMessage) }
+    }
+
+    @Test
+    fun send_passesSuccess() {
+        Mockito.`when`(
+            hmsOauthClientService.getAccessToken()
+        ).then { "accessToken" }
+
+        Mockito.`when`(
+            hmsHpkWebClient.messagesSend(any())
+        ).then {
+            HmsHpkResponse(
+                code = HmsResponseCode.SUCCESS.value.toString(),
+                msg = "0",
+                requestId = "requestId"
+            )
+        }
+
+        val pushTokenMessage = PushTokenMessage(
+            token = "token",
+            pushMessageNotification = PushMessageNotification(
+                title = "title",
+                description = "description",
+                imageUrl = null
+            ),
+            data = emptyMap()
+        )
+
+        Assertions.assertDoesNotThrow {
+            hmsHpkClientService.send(pushTokenMessage)
+        }
     }
 
 }

@@ -23,4 +23,5 @@ class HmsOauthWebClientTest {
             HmsResponseCode.INVALID_CLIENT_SECRET.value
         )
     }
+
 }
