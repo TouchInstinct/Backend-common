@@ -4,9 +4,9 @@ push-message-provider:
       - HPK
   hpk:
     web-services:
-      client-id: 1
+      client-id: testClientId
       oauth:
-        client-secret: 2
+        client-secret: testClientSecret
         url: https://oauth-login.cloud.huawei.com/oauth2/v3/
         http:
           connection-timeout: 5s
