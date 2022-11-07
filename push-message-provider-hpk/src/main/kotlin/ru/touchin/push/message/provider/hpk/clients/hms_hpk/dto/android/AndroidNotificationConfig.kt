@@ -204,7 +204,7 @@ internal data class AndroidNotificationConfig private constructor(
         }
 
         fun setBody(body: String): Builder {
-            this.body
+            this.body = body
             return this
         }
 

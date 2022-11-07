@@ -49,7 +49,7 @@ internal data class AndroidButton private constructor(
         private var data: String? = null
 
         fun setIntent(intent: String): Builder {
-            this.intent
+            this.intent = intent
             return this
         }
 
