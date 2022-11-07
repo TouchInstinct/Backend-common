@@ -271,7 +271,7 @@ push-message-provider:
     IOS:
       - FCM
   fcm:
-    appName: # Название приложения
+    appName: yourAppName
     auth:
       # Выбранный тип авторизации
     client:
