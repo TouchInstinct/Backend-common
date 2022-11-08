@@ -35,8 +35,8 @@ class HmsHpkWebClientTest {
         }
 
         Assertions.assertEquals(
-            result.exceptionOrNull()?.cause?.let { it::class.java },
-            JsonParseException::class.java
+            JsonParseException::class.java,
+            result.exceptionOrNull()?.cause?.let { it::class.java }
         )
     }
 
