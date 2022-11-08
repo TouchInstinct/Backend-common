@@ -12,7 +12,7 @@ import ru.touchin.push.message.provider.hpk.clients.hms_hpk.dto.android.AndroidN
 import ru.touchin.push.message.provider.hpk.clients.hms_hpk.enums.android.AndroidClickActionType
 import kotlin.jvm.Throws
 
-@Component
+@Component("push-message-provider.hpk.push-token-message-converter")
 class PushTokenMessageConverter(
     private val notificationConverter: NotificationConverter,
     @Qualifier("push-message-provider.hpk.client-objectmapper")
