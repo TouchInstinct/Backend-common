@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import ru.touchin.push.message.provider.dto.Notification
+import ru.touchin.push.message.provider.dto.PushMessageNotification
 import ru.touchin.push.message.provider.dto.request.PushTokenMessage
 
 @SpringBootTest
@@ -21,7 +21,7 @@ class PushTokenMessageConverterTest {
     lateinit var pushTokenMessageConverter: PushTokenMessageConverter
 
     @Autowired
-    lateinit var notificationConverter: NotificationConverter
+    lateinit var pushMessageNotificationConverter: PushMessageNotificationConverter
 
     @Autowired
     lateinit var objectMapper: ObjectMapper
@@ -29,14 +29,14 @@ class PushTokenMessageConverterTest {
     @Test
     @DisplayName("Конвертация сообщения с уведомлением происходит корректно")
     fun invoke_withNotification() {
-        val notification = Notification(
+        val pushMessageNotification = PushMessageNotification(
             title = "title",
             description = "description",
             imageUrl = "imageUrl"
         )
         val pushTokenMessage = PushTokenMessage(
             token = "token",
-            notification = notification,
+            pushMessageNotification = pushMessageNotification,
             data = mapOf("testKey" to "testvalue")
         )
 
@@ -45,7 +45,7 @@ class PushTokenMessageConverterTest {
 
         val expectedResult = Message.builder()
             .setToken(pushTokenMessage.token)
-            .setNotification(notificationConverter(notification))
+            .setNotification(pushMessageNotificationConverter(pushMessageNotification))
             .putAllData(pushTokenMessage.data)
             .setupApns()
             .setupAndroid()
@@ -65,7 +65,7 @@ class PushTokenMessageConverterTest {
     fun invoke_withoutNotification() {
         val pushTokenMessage = PushTokenMessage(
             token = "token",
-            notification = null,
+            pushMessageNotification = null,
             data = mapOf("testKey" to "testvalue")
         )
 

@@ -1,0 +1,20 @@
+push-message-provider:
+  platformProviders:
+    ANDROID_HUAWEI:
+      - HPK
+  hpk:
+    web-services:
+      client-id: testClientId
+      oauth:
+        client-secret: testClientSecret
+        url: https://oauth-login.cloud.huawei.com/oauth2/v3/
+        http:
+          connection-timeout: 5s
+          read-timeout: 10s
+          write-timeout: 10s
+      hpk:
+        url: https://push-api.cloud.huawei.com/v1/
+        http:
+          connection-timeout: 5s
+          read-timeout: 10s
+          write-timeout: 10s

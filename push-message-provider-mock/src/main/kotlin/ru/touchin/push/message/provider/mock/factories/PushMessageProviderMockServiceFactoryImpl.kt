@@ -9,7 +9,7 @@ import ru.touchin.push.message.provider.dto.request.PushTokenCheck
 import ru.touchin.push.message.provider.dto.request.SendPushRequest
 import ru.touchin.push.message.provider.dto.result.CheckPushTokenResult
 import ru.touchin.push.message.provider.dto.result.SendPushResult
-import ru.touchin.push.message.provider.dto.result.SendPushTokenMessageResult
+import ru.touchin.push.message.provider.dto.result.SendPushTokenMessageTraceableResult
 import ru.touchin.push.message.provider.enums.PlatformType
 import ru.touchin.push.message.provider.enums.PushMessageProviderType
 import ru.touchin.push.message.provider.factories.PushMessageProviderServiceFactory
@@ -42,7 +42,7 @@ class PushMessageProviderMockServiceFactoryImpl(
 
                 Thread.sleep(millis)
 
-                return SendPushTokenMessageResult(
+                return SendPushTokenMessageTraceableResult(
                     messageId = UUID.randomUUID().toString(),
                 )
             }

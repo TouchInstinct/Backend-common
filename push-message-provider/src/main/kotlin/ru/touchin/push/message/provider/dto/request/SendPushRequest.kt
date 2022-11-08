@@ -1,10 +1,10 @@
 package ru.touchin.push.message.provider.dto.request
 
-import ru.touchin.push.message.provider.dto.Notification
+import ru.touchin.push.message.provider.dto.PushMessageNotification
 
 sealed interface SendPushRequest {
 
-    val notification: Notification?
+    val pushMessageNotification: PushMessageNotification?
     val data: Map<String, String>
 
 }
