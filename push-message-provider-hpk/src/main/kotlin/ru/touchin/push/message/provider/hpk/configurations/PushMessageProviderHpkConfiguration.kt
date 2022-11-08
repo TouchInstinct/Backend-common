@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.cache.CacheManager
@@ -23,8 +22,7 @@ import ru.touchin.push.message.provider.hpk.services.HmsOauthAccessTokenCacheSer
 @Import(value = [PushMessageProviderConfiguration::class])
 class PushMessageProviderHpkConfiguration {
 
-    @Bean
-    @Qualifier("push-message-provider.hpk.webclient-objectmapper")
+    @Bean("push-message-provider.hpk.webclient-objectmapper")
     fun webclientObjectMapper(): ObjectMapper {
         return jacksonObjectMapper()
             .registerModule(JavaTimeModule())
@@ -34,8 +32,7 @@ class PushMessageProviderHpkConfiguration {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     }
 
-    @Bean
-    @Qualifier("push-message-provider.hpk.client-objectmapper")
+    @Bean("push-message-provider.hpk.client-objectmapper")
     fun clientObjectMapper(): ObjectMapper {
         return jacksonObjectMapper()
             .registerModule(JavaTimeModule())
@@ -43,9 +40,8 @@ class PushMessageProviderHpkConfiguration {
             .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
     }
 
-    @Bean
+    @Bean("push-message-provider.hpk.webclient-cachemanager")
     @ConditionalOnMissingBean
-    @Qualifier("push-message-provider.hpk.webclient-cachemanager")
     fun cacheManager(): CacheManager {
         return SimpleCacheManager().also {
             it.setCaches(

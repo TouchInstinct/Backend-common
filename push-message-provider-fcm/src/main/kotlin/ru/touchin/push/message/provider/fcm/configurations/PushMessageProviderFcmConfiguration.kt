@@ -25,6 +25,7 @@ class PushMessageProviderFcmConfiguration {
     @Bean
     fun firebaseMessaging(
         properties: PushMessageProviderFcmProperties,
+        @Qualifier("push-message-provider.fcm.credentials-object-mapper")
         objectMapper: ObjectMapper
     ): FirebaseMessaging {
         val credentials = when {
@@ -60,8 +61,7 @@ class PushMessageProviderFcmConfiguration {
         return FirebaseMessaging.getInstance(firebaseApp)
     }
 
-    @Bean
-    @Qualifier("push-message-provider.fcm.auth")
+    @Bean("push-message-provider.fcm.auth")
     fun simpleDateFormat(): SimpleDateFormat {
         return SimpleDateFormat("yyyy-MM-dd HH:mm:ss X", Locale.getDefault())
     }

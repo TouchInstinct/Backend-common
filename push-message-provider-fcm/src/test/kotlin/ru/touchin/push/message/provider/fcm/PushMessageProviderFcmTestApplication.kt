@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat
 @EnablePushMessageProviderFcm
 class PushMessageProviderFcmTestApplication : ApplicationListener<ContextRefreshedEvent> {
 
-    @Bean
+    @Bean("push-message-provider.fcm.credentials-object-mapper")
     fun objectMapper(
         @Qualifier("push-message-provider.fcm.auth")
         simpleDateFormat: SimpleDateFormat
