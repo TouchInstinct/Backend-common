@@ -216,7 +216,7 @@ server.info:
 
 ## push-message-provider
 
-Интерфейсы и компоненты для модулей по обеспечению интеграции с сервисами отправки пуш-уведомлений.
+Интерфейсы и компоненты для модулей по обеспечению интеграции с сервисами отправки пуш-уведомлений. Является необходимой зависимостью для использования провайдеров.
 
 Далее рассматривается пример использования подключаемых модулей-провайдеров.
 ``` kotlin
@@ -315,8 +315,16 @@ C) Данные из файла консоли Firebase, добавляемые 
 
 Модуль по обеспечению интеграции с Huawei Push Kit. 
 
-1) Подключение компонентов Spring осуществляется при помощи аннотации `@EnablePushMessageProviderHpk`.
-2) Необходимо добавление конфигурации для модуля. Пример файла конфигурации в формате yaml:
+1) Подключение нового провайдера осуществляется при помощи аннотации `@EnablePushMessageProviderHpk`.
+2) Для логирования запросов к сервису HPK нужно встроить в контейнер Spring собственный `WebClientLogger` из модуля `logger-spring-web` или же использовать стандартный посредством импорта конфигурации:
+``` kotlin
+@Import(
+    SpringLoggerConfiguration::class,
+    SpringLoggerWebConfiguration::class
+)
+class YourConfiguration
+```
+3) Нужно добавить конфигурацию для считывания модулем. Пример файла в формате yaml:
 ``` yaml
 push-message-provider:
   platformProviders:
@@ -332,10 +340,18 @@ push-message-provider:
           connection-timeout: 1s
           read-timeout: 10s
           write-timeout: 10s
+        ssl: # Опциональная структура
+          handshake-timeout: 1s
+          notify-read-timeout: 1s
+          notify-flush-timeout: 1s
       hpk:
         url: https://push-api.cloud.huawei.com/v1/
         http:
           connection-timeout: 1s
           read-timeout: 10s
           write-timeout: 10s
+        ssl: # Опциональная структура
+          handshake-timeout: 1s
+          notify-read-timeout: 1s
+          notify-flush-timeout: 1s
 ```
