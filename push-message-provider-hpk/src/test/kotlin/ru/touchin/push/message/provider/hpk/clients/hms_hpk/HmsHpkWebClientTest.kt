@@ -1,10 +1,10 @@
 package ru.touchin.push.message.provider.hpk.clients.hms_hpk
 
+import com.fasterxml.jackson.core.JsonParseException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import ru.touchin.push.message.provider.hpk.clients.hms.enums.HmsResponseCode
 import ru.touchin.push.message.provider.hpk.clients.hms_hpk.bodies.HmsHpkMessagesSendBody
 import ru.touchin.push.message.provider.hpk.clients.hms_hpk.dto.AndroidConfig
 import ru.touchin.push.message.provider.hpk.clients.hms_hpk.dto.Message
@@ -22,19 +22,21 @@ class HmsHpkWebClientTest {
     lateinit var hmsHpkWebClient: HmsHpkWebClient
 
     @Test
-    fun messagesSend_permissionDeniedOnIncorrectAccessToken() {
-        val result = hmsHpkWebClient.messagesSend(
-            HmsHpkMessagesSendRequest(
-                hmsHpkMessagesSendBody = buildHmsHpkMessagesSendBody(
-                    token = "pushTokenWithLongLength"
-                ),
-                accessToken = "testAccessToken"
+    fun messagesSend_returnsHtmlDocumentStringWith403CodeAtIncorrectAccessToken() {
+        val result = runCatching {
+            hmsHpkWebClient.messagesSend(
+                HmsHpkMessagesSendRequest(
+                    hmsHpkMessagesSendBody = buildHmsHpkMessagesSendBody(
+                        token = "pushTokenWithLongLength"
+                    ),
+                    accessToken = "testAccessToken"
+                )
             )
-        )
+        }
 
         Assertions.assertEquals(
-            HmsResponseCode.PERMISSION_DENIED.value.toString(),
-            result.code
+            JsonParseException::class.java,
+            result.exceptionOrNull()?.cause?.let { it::class.java }
         )
     }
 

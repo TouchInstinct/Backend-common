@@ -22,6 +22,7 @@ import ru.touchin.push.message.provider.hpk.properties.HpkProperties
 @Component
 class HmsHpkWebClient(
     webClientLogger: WebClientLogger,
+    @Qualifier("push-message-provider.hpk.hms-hpk-webclient-builder")
     webClientBuilder: WebClient.Builder,
     private val hpkProperties: HpkProperties,
     @Qualifier("push-message-provider.hpk.webclient-objectmapper")
