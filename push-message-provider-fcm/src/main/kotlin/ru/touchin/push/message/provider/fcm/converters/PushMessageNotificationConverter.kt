@@ -4,7 +4,7 @@ import com.google.firebase.messaging.Notification as FcmNotification
 import org.springframework.stereotype.Component
 import ru.touchin.push.message.provider.dto.PushMessageNotification
 
-@Component
+@Component("push-message-provider.fcm.push-message-notification-converter")
 class PushMessageNotificationConverter {
 
     operator fun invoke(pushMessageNotification: PushMessageNotification): FcmNotification {

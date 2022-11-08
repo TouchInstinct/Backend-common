@@ -5,8 +5,8 @@ import ru.touchin.push.message.provider.dto.PushMessageNotification
 import ru.touchin.push.message.provider.hpk.clients.hms_hpk.dto.Notification as HmsNotification
 import ru.touchin.push.message.provider.hpk.base.extensions.ifNotNull
 
-@Component
-class NotificationConverter {
+@Component("push-message-provider.hpk.push-message-notification-converter")
+class PushMessageNotificationConverter {
 
     internal operator fun invoke(pushMessageNotification: PushMessageNotification): HmsNotification {
         return HmsNotification.builder()

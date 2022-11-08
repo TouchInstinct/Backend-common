@@ -14,7 +14,7 @@ import kotlin.jvm.Throws
 
 @Component("push-message-provider.hpk.push-token-message-converter")
 class PushTokenMessageConverter(
-    private val notificationConverter: NotificationConverter,
+    private val pushMessageNotificationConverter: PushMessageNotificationConverter,
     @Qualifier("push-message-provider.hpk.client-objectmapper")
     private val objectMapper: ObjectMapper,
 ) {
@@ -27,7 +27,7 @@ class PushTokenMessageConverter(
                 setData(objectMapper.writeValueAsString(data))
             }
             .ifNotNull(request.pushMessageNotification) { notification ->
-                setNotification(notificationConverter(notification))
+                setNotification(pushMessageNotificationConverter(notification))
             }
             .setupAndroidConfig()
             .build()
