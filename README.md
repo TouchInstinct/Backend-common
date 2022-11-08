@@ -218,6 +218,46 @@ server.info:
 
 Интерфейсы и компоненты для модулей по обеспечению интеграции с сервисами отправки пуш-уведомлений.
 
+Далее рассматривается пример использования подключаемых модулей-провайдеров.
+``` kotlin
+@Service
+class PushSendingService(
+    private val pushMessageProviderServiceFactory: PushMessageProviderServiceFactory
+) {
+
+    fun sendPushMessage() {
+        val yourPushToken = "pushTokenForChecking"
+        val platform = PlatformType.ANDROID_GOOGLE
+
+        val pushMessageProvider: PushMessageProviderService = pushMessageProviderServiceFactory.get(platform)
+
+        val result = pushMessageProvider.check( // Проверка валидности токена для обозначения целесообразности отправки
+            PushTokenCheck(
+                pushToken = yourPushToken
+            )
+        )
+
+        if (result.status == PushTokenStatus.VALID) { // Токен валиден, PushMessageProviderService интегрирован в систему
+            // Отправка пуш-уведомления
+            pushMessageProvider.send(
+                PushTokenMessage(
+                    token = yourPushToken,
+                    pushMessageNotification = PushMessageNotification(
+                        title = "Your PushMessage",
+                        description = "Provided by PushMessageProviderService",
+                        imageUrl = null
+                    ),
+                    data = mapOf(
+                        "customKey" to "customData"
+                    )
+                )
+            )
+        }
+    }
+
+}
+```
+
 ## push-message-provider-fcm
 
 Модуль по обеспечению интеграции с Firebase Cloud Messaging. 
@@ -231,7 +271,7 @@ push-message-provider:
     IOS:
       - FCM
   fcm:
-    appName: # Название приложения
+    appName: yourAppName
     auth:
       # Выбранный тип авторизации
     client:
@@ -258,16 +298,44 @@ C) Данные из файла консоли Firebase, добавляемые 
     auth:
       credentialsData:
         type: service_account
-        projectId: testProjectId
-        privateKeyId: testPrivateKeyId
+        projectId: yourProjectId
+        privateKeyId: yourPrivateKeyId
         privateKey: |
           -----BEGIN PRIVATE KEY-----
-          MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALfBshaLMW2yddmAZJRNXTZzcSbwvY93Dnjj6naWgoBJoB3mOM5bcoyWwBw12A4rwecorz74OUOc6zdqX3j8hwsSyzgAUStKM5PkOvPNRKsI4eXAWU0fmb8h1jyXwftl7EzeBjEMBTpyXkgDk3wLfHN6ciCZrnQndOvS+mMl3b0hAgMBAAECgYEAmIQZByMSrITR0ewCDyFDO52HjhWEkF310hsBkNoNiOMTFZ3vCj/WjJ/W5dM+90wUTYN0KOSnytmkVUNh6K5Yekn+yRg/mBRTwwn88hU6umB8tUqoNz7AyUltAOGyQMWqAAcVgxV+mAp/Y018j69poEHgrW4qKol65/NRZyV7/J0CQQD4rCDjmxGEuA1yMzL2i8NyNl/5vvLVfLcEnVqpHbc1+KfUHZuY7iv38xpzfmErqhCxAXfQ52edq5rXmMIVSbFrAkEAvSvfSSK9XQDJl3NEyfR3BGbsoqKIYOuJAnv4OQPSODZfTNWhc11S8y914qaSWB+Iid9HoLvAIgPH5mrzPzjSowJBAJcw4FZCI+aTmOlEI8ous8gvMy8/X5lZWFUf7s0/2fKgmjmnPsE+ndEFJ6HsxturbLaR8+05pJAClARdRjN3OL0CQGoF+8gmw1ErztCmVyiFbms2MGxagesoN4r/5jg2Tw0YVENg/HMHHCWWNREJ4L2pNsJnNOL+N4oY6mHXEWwesdcCQCUYTfLYxi+Wg/5BSC7fgl/gu0mlx07AzMoMQLDOXdisV5rpxrOoT3BOLBqyccv37AZ3e2gqb8JYyNzO6C0zswQ=
           -----END PRIVATE KEY-----
-        clientEmail: testClientEmail
-        clientId: testClientId
-        authUri: testAuthUri
-        tokenUri: testTokenUri
-        authProviderX509CertUrl: testAuthProviderX509CertUrl
-        clientX509CertUrl: testClientX509CertUrl
+        clientEmail: yourClientEmail
+        clientId: yourClientId
+        authUri: yourAuthUri
+        tokenUri: yourTokenUri
+        authProviderX509CertUrl: yourAuthProviderX509CertUrl
+        clientX509CertUrl: yourClientX509CertUrl
+```
+
+## push-message-provider-hpk
+
+Модуль по обеспечению интеграции с Huawei Push Kit. 
+
+1) Подключение компонентов Spring осуществляется при помощи аннотации `@EnablePushMessageProviderHpk`.
+2) Необходимо добавление конфигурации для модуля. Пример файла конфигурации в формате yaml:
+``` yaml
+push-message-provider:
+  platformProviders:
+    ANDROID_HUAWEI:
+      - HPK
+  hpk:
+    web-services:
+      client-id: yourClientId
+      oauth:
+        client-secret: yourClientSecret
+        url: https://oauth-login.cloud.huawei.com/oauth2/v3/
+        http:
+          connection-timeout: 1s
+          read-timeout: 10s
+          write-timeout: 10s
+      hpk:
+        url: https://push-api.cloud.huawei.com/v1/
+        http:
+          connection-timeout: 1s
+          read-timeout: 10s
+          write-timeout: 10s
 ```
