@@ -14,6 +14,7 @@ import org.springframework.cache.support.SimpleCacheManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
+import org.springframework.web.reactive.function.client.WebClient
 import ru.touchin.push.message.provider.configurations.PushMessageProviderConfiguration
 import ru.touchin.push.message.provider.hpk.services.HmsOauthAccessTokenCacheServiceImpl.Companion.HMS_CLIENT_SERVICE_CACHE_KEY
 
@@ -51,5 +52,11 @@ class PushMessageProviderHpkConfiguration {
             )
         }
     }
+
+    @Bean("push-message-provider.hpk.hms-oauth-webclient-builder")
+    fun hmsOauthWebClientBuilder(): WebClient.Builder = WebClient.builder()
+
+    @Bean("push-message-provider.hpk.hms-hpk-webclient-builder")
+    fun hmsHpkWebClientBuilder(): WebClient.Builder = WebClient.builder()
 
 }
