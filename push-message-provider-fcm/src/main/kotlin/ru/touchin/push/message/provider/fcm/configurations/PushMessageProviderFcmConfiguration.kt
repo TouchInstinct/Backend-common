@@ -1,6 +1,9 @@
 package ru.touchin.push.message.provider.fcm.configurations
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect
+import com.fasterxml.jackson.annotation.PropertyAccessor
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.google.auth.oauth2.AccessToken
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
@@ -61,9 +64,22 @@ class PushMessageProviderFcmConfiguration {
         return FirebaseMessaging.getInstance(firebaseApp)
     }
 
-    @Bean("push-message-provider.fcm.auth")
+    @Bean("push-message-provider.fcm.credentials-date-format")
     fun simpleDateFormat(): SimpleDateFormat {
         return SimpleDateFormat("yyyy-MM-dd HH:mm:ss X", Locale.getDefault())
+    }
+
+    @Bean("push-message-provider.fcm.credentials-object-mapper")
+    fun objectMapper(
+        @Qualifier("push-message-provider.fcm.credentials-date-format")
+        simpleDateFormat: SimpleDateFormat
+    ): ObjectMapper {
+        return ObjectMapper().apply {
+            configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+            setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE)
+            setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
+            dateFormat = simpleDateFormat
+        }
     }
 
 }

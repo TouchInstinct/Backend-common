@@ -10,7 +10,7 @@ import java.util.*
 @ConfigurationPropertiesBinding
 @Component
 class DateConverter(
-    @Qualifier("push-message-provider.fcm.auth")
+    @Qualifier("push-message-provider.fcm.credentials-date-format")
     private val simpleDateFormat: SimpleDateFormat
 ) : Converter<String, Date> {
 
