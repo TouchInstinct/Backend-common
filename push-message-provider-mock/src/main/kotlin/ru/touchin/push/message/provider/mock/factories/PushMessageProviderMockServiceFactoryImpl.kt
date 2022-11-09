@@ -12,6 +12,7 @@ import ru.touchin.push.message.provider.dto.result.SendPushResult
 import ru.touchin.push.message.provider.dto.result.SendPushTokenMessageResult
 import ru.touchin.push.message.provider.enums.PlatformType
 import ru.touchin.push.message.provider.enums.PushMessageProviderType
+import ru.touchin.push.message.provider.enums.PushTokenStatus
 import ru.touchin.push.message.provider.factories.PushMessageProviderServiceFactory
 import ru.touchin.push.message.provider.mock.properties.PushMessageProviderMockProperties
 import ru.touchin.push.message.provider.services.PushMessageProviderService
@@ -48,7 +49,7 @@ class PushMessageProviderMockServiceFactoryImpl(
             }
 
             override fun check(request: PushTokenCheck): CheckPushTokenResult {
-                throw NotImplementedError()
+                return CheckPushTokenResult(PushTokenStatus.VALID)
             }
 
         }
