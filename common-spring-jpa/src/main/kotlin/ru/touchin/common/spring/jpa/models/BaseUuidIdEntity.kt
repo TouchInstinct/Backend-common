@@ -15,5 +15,9 @@ abstract class BaseUuidIdEntity : BaseEntity() {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     open var id: UUID? = null
+        @Suppress("RedundantSetter")
+        protected set(id) {
+            field = id
+        }
 
 }
