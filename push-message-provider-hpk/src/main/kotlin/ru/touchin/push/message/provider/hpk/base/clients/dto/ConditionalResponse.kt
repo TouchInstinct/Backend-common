@@ -7,7 +7,10 @@ internal open class ConditionalResponse<S, F>(
 
     init {
         // Only one value should be present
-        check((success == null) != (failure == null))
+        val hasSuccessValue = success != null
+        val hasFailureValue = failure != null
+
+        check(hasSuccessValue != hasFailureValue)
     }
 
     val isSuccess: Boolean = success != null

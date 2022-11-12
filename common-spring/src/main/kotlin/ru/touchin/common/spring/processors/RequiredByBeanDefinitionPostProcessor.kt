@@ -23,6 +23,7 @@ class RequiredByBeanDefinitionPostProcessor : BeanDefinitionRegistryPostProcesso
 
     @Throws(BeansException::class)
     override fun postProcessBeanFactory(beanFactory: ConfigurableListableBeanFactory) {
+        // do nothing
     }
 
     private fun getDependantBeanNames(beanClassName: String): List<String> {

@@ -18,7 +18,9 @@ internal data class AndroidConfig private constructor(
      *
      * 1-100: message cache group ID. Messages are cached by group. Each group can cache only one message for each app.
      *
-     * For example, if you send 10 messages and set collapse_key to 1 for the first five messages and to 2 for the rest, the latest message whose value of collapse_key is 1 and the latest message whose value of collapse_key is 2 are sent to the user after the user's device goes online.
+     * For example, if you send 10 messages and set collapse_key to 1 for the first five messages and to 2 for the rest,
+     * the latest message whose value of collapse_key is 1 and
+     * the latest message whose value of collapse_key is 2 are sent to the user after the user's device goes online.
      *
      * The default value is -1.
      * */

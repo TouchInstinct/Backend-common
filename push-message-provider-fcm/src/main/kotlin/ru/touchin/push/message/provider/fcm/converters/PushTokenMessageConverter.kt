@@ -5,7 +5,6 @@ import com.google.firebase.messaging.AndroidNotification
 import com.google.firebase.messaging.ApnsConfig
 import com.google.firebase.messaging.Aps
 import com.google.firebase.messaging.Message
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import ru.touchin.push.message.provider.dto.PushMessageNotification
 import ru.touchin.push.message.provider.dto.request.PushTokenMessage
