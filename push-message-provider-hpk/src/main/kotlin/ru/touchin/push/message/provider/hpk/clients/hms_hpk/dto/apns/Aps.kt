@@ -8,7 +8,7 @@ import ru.touchin.push.message.provider.hpk.base.builders.Buildable
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy::class)
 internal class Aps private constructor(
     @JsonProperty("alert")
-    val alert: ApnsAlert?,
+    val apnsAlert: ApnsAlert?,
     val badge: Int?,
     val sound: String?,
     val contentAvailable: Int?,
@@ -20,8 +20,8 @@ internal class Aps private constructor(
 
         fun check(aps: Aps) {
             with(aps) {
-                if (alert != null) {
-                    ApnsAlert.validator.check(alert)
+                if (apnsAlert != null) {
+                    ApnsAlert.validator.check(apnsAlert)
                 }
             }
         }
@@ -30,7 +30,7 @@ internal class Aps private constructor(
 
     class Builder : Buildable {
 
-        private var alert: ApnsAlert? = null
+        private var apnsAlert: ApnsAlert? = null
         private var badge: Int? = null
         private var sound: String? = null
         private var contentAvailable: Int? = null
@@ -38,7 +38,7 @@ internal class Aps private constructor(
         private var threadId: String? = null
 
         fun setAlert(alert: ApnsAlert): Builder {
-            this.alert = alert
+            this.apnsAlert = alert
             return this
         }
 
@@ -69,7 +69,7 @@ internal class Aps private constructor(
 
         fun build(): Aps {
             return Aps(
-                alert = alert,
+                apnsAlert = apnsAlert,
                 badge = badge,
                 sound = sound,
                 contentAvailable = contentAvailable,

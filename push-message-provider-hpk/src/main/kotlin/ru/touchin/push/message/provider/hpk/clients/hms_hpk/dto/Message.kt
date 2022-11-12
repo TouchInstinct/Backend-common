@@ -11,11 +11,11 @@ internal data class Message private constructor(
     val notification: Notification?,
     /** Android message push control. */
     @JsonProperty("android")
-    val android: AndroidConfig?,
+    val androidConfig: AndroidConfig?,
     @JsonProperty("apns")
-    val apns: ApnsConfig?,
+    val apnsConfig: ApnsConfig?,
     @JsonProperty("webpush")
-    val webpush: WebPushConfig?,
+    val webPushConfig: WebPushConfig?,
     /** Push token of the target user of a message. */
     val token: Collection<String>?,
     /** Topic subscribed by the target user of a message. */
@@ -42,9 +42,9 @@ internal data class Message private constructor(
                 }
 
                 notification?.also { Notification.validator.check(it) }
-                android?.also { AndroidConfig.validator.check(it, notification) }
-                apns?.also { ApnsConfig.validator.check(it) }
-                webpush?.also { WebPushConfig.validator.check(it) }
+                androidConfig?.also { AndroidConfig.validator.check(it, notification) }
+                apnsConfig?.also { ApnsConfig.validator.check(it) }
+                webPushConfig?.also { WebPushConfig.validator.check(it) }
             }
         }
 
@@ -64,8 +64,8 @@ internal data class Message private constructor(
         private var data: String? = null
         private var notification: Notification? = null
         private var androidConfig: AndroidConfig? = null
-        private var apns: ApnsConfig? = null
-        private var webpush: WebPushConfig? = null
+        private var apnsConfig: ApnsConfig? = null
+        private var webPushConfig: WebPushConfig? = null
         private val token: MutableList<String> = mutableListOf()
         private var topic: String? = null
         private var condition: String? = null
@@ -85,13 +85,13 @@ internal data class Message private constructor(
             return this
         }
 
-        fun setApns(apns: ApnsConfig): Builder {
-            this.apns = apns
+        fun setApns(apnsConfig: ApnsConfig): Builder {
+            this.apnsConfig = apnsConfig
             return this
         }
 
-        fun setWebpush(webpush: WebPushConfig): Builder {
-            this.webpush = webpush
+        fun setWebpush(webPushConfig: WebPushConfig): Builder {
+            this.webPushConfig = webPushConfig
             return this
         }
 
@@ -114,9 +114,9 @@ internal data class Message private constructor(
             return Message(
                 data = data,
                 notification = notification,
-                android = androidConfig,
-                apns = apns,
-                webpush = webpush,
+                androidConfig = androidConfig,
+                apnsConfig = apnsConfig,
+                webPushConfig = webPushConfig,
                 topic = topic,
                 condition = condition,
                 token = token.takeIf(Collection<*>::isNotEmpty),

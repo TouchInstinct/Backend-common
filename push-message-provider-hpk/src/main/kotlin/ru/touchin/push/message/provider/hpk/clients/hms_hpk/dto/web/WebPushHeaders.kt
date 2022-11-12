@@ -8,7 +8,7 @@ internal data class WebPushHeaders private constructor(
     val ttl: String?,
     val topic: String?,
     @JsonProperty("urgency")
-    val urgency: WebUrgency?,
+    val webUrgency: WebUrgency?,
 ) {
 
     class Validator {
@@ -54,7 +54,7 @@ internal data class WebPushHeaders private constructor(
             return WebPushHeaders(
                 ttl = ttl,
                 topic = topic,
-                urgency = urgency,
+                webUrgency = urgency,
             )
         }
     }

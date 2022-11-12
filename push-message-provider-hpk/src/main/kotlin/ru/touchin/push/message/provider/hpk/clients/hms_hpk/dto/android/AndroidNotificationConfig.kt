@@ -195,7 +195,7 @@ internal data class AndroidNotificationConfig private constructor(
         private var androidLightSettings: AndroidLightSettings? = null
         private var foregroundShow = false
         private val inboxContent: MutableList<String> = mutableListOf()
-        private val buttons: MutableList<AndroidButton> = mutableListOf()
+        private val androidButtons: MutableList<AndroidButton> = mutableListOf()
         private var profileId: String? = null
 
         fun setTitle(title: String): Builder {
@@ -353,8 +353,8 @@ internal data class AndroidNotificationConfig private constructor(
             return this
         }
 
-        fun addButton(vararg button: AndroidButton): Builder {
-            buttons.addAll(button)
+        fun addButton(vararg androidButton: AndroidButton): Builder {
+            androidButtons.addAll(androidButton)
             return this
         }
 
@@ -399,7 +399,7 @@ internal data class AndroidNotificationConfig private constructor(
                 androidLightSettings = androidLightSettings,
                 foregroundShow = foregroundShow,
                 inboxContent = inboxContent.takeIf(Collection<*>::isNotEmpty),
-                androidButtons = buttons.takeIf(Collection<*>::isNotEmpty),
+                androidButtons = androidButtons.takeIf(Collection<*>::isNotEmpty),
                 profileId = profileId,
             )
         }
