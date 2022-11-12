@@ -353,8 +353,8 @@ internal data class AndroidNotificationConfig private constructor(
             return this
         }
 
-        fun addButton(vararg button: AndroidButton): Builder {
-            buttons.addAll(button)
+        fun addButton(vararg androidButton: AndroidButton): Builder {
+            buttons.addAll(androidButton)
             return this
         }
 

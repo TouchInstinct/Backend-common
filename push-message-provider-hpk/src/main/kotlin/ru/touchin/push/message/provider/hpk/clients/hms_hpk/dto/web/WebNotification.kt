@@ -14,14 +14,14 @@ internal data class WebNotification private constructor(
     val tag: String?,
     val badge: String?,
     @JsonProperty("dir")
-    val dir: WebDir?,
+    val webDir: WebDir?,
     val vibrate: Collection<Int>?,
     val renotify: Boolean,
     val requireInteraction: Boolean,
     val silent: Boolean,
     val timestamp: Long?,
     @JsonProperty("actions")
-    val actions: Collection<WebActions>?,
+    val webActions: Collection<WebActions>?,
 ) {
 
     class Validator {
@@ -41,13 +41,13 @@ internal data class WebNotification private constructor(
         private var lang: String? = null
         private var tag: String? = null
         private var badge: String? = null
-        private var dir: WebDir? = null
+        private var webDir1: WebDir? = null
         private val vibrate: MutableList<Int> = mutableListOf()
         private var renotify = false
         private var requireInteraction = false
         private var silent = false
         private var timestamp: Long? = null
-        private val actions: MutableList<WebActions> = mutableListOf()
+        private val webActions: MutableList<WebActions> = mutableListOf()
 
         fun setTitle(title: String): Builder {
             this.title = title
@@ -84,8 +84,8 @@ internal data class WebNotification private constructor(
             return this
         }
 
-        fun setDir(dir: WebDir): Builder {
-            this.dir = dir
+        fun setDir(webDir: WebDir): Builder {
+            this.webDir1 = webDir
             return this
         }
 
@@ -115,7 +115,7 @@ internal data class WebNotification private constructor(
         }
 
         fun addActions(vararg webActions: WebActions): Builder {
-            this.actions.addAll(webActions)
+            this.webActions.addAll(webActions)
             return this
         }
 
@@ -128,13 +128,13 @@ internal data class WebNotification private constructor(
                 lang = lang,
                 tag = tag,
                 badge = badge,
-                dir = dir,
+                webDir = webDir1,
                 vibrate = vibrate.takeIf(Collection<*>::isNotEmpty),
                 renotify = renotify,
                 requireInteraction = requireInteraction,
                 silent = silent,
                 timestamp = timestamp,
-                actions = actions.takeIf(Collection<*>::isNotEmpty),
+                webActions = webActions.takeIf(Collection<*>::isNotEmpty),
             )
         }
     }
