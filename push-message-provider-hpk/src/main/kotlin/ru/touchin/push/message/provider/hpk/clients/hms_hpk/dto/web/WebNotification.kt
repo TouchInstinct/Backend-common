@@ -41,7 +41,7 @@ internal data class WebNotification private constructor(
         private var lang: String? = null
         private var tag: String? = null
         private var badge: String? = null
-        private var webDir1: WebDir? = null
+        private var webDir: WebDir? = null
         private val vibrate: MutableList<Int> = mutableListOf()
         private var renotify = false
         private var requireInteraction = false
@@ -85,7 +85,7 @@ internal data class WebNotification private constructor(
         }
 
         fun setDir(webDir: WebDir): Builder {
-            this.webDir1 = webDir
+            this.webDir = webDir
             return this
         }
 
@@ -128,7 +128,7 @@ internal data class WebNotification private constructor(
                 lang = lang,
                 tag = tag,
                 badge = badge,
-                webDir = webDir1,
+                webDir = webDir,
                 vibrate = vibrate.takeIf(Collection<*>::isNotEmpty),
                 renotify = renotify,
                 requireInteraction = requireInteraction,
