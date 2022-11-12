@@ -30,13 +30,13 @@ internal data class WebPushConfig private constructor(
 
     class Builder : Buildable {
 
-        private var headers: WebPushHeaders? = null
+        private var webPushHeaders: WebPushHeaders? = null
         private var data: String? = null
-        private var notification: WebNotification? = null
+        private var webNotification: WebNotification? = null
         private var webHmsOptions: WebHmsOptions? = null
 
         fun setHeaders(webPushHeaders: WebPushHeaders): Builder {
-            this.headers = webPushHeaders
+            this.webPushHeaders = webPushHeaders
             return this
         }
 
@@ -46,20 +46,20 @@ internal data class WebPushConfig private constructor(
         }
 
         fun setNotification(webNotification: WebNotification): Builder {
-            this.notification = notification
+            this.webNotification = webNotification
             return this
         }
 
         fun setWebHmsOptions(webHmsOptions: WebHmsOptions): Builder {
-            this.webHmsOptions
+            this.webHmsOptions = webHmsOptions
             return this
         }
 
         fun build(): WebPushConfig {
             return WebPushConfig(
-                webPushHeaders = headers,
+                webPushHeaders = webPushHeaders,
                 data = data,
-                webNotification = notification,
+                webNotification = webNotification,
                 webHmsOptions = webHmsOptions,
             )
         }
