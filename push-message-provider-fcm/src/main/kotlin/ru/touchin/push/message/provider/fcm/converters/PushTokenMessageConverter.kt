@@ -5,13 +5,14 @@ import com.google.firebase.messaging.AndroidNotification
 import com.google.firebase.messaging.ApnsConfig
 import com.google.firebase.messaging.Aps
 import com.google.firebase.messaging.Message
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
-import ru.touchin.push.message.provider.dto.Notification
+import ru.touchin.push.message.provider.dto.PushMessageNotification
 import ru.touchin.push.message.provider.dto.request.PushTokenMessage
 
-@Component
+@Component("push-message-provider.fcm.push-token-message-converter")
 class PushTokenMessageConverter(
-    private val notificationConverter: NotificationConverter
+    private val pushMessageNotificationConverter: PushMessageNotificationConverter
 ) {
 
     private companion object {
@@ -26,14 +27,14 @@ class PushTokenMessageConverter(
             .setToken(request.token)
             .setupApns()
             .setupAndroid()
-            .setIfExists(request.notification)
+            .setIfExists(request.pushMessageNotification)
             .putAllData(request.data)
             .build()
     }
 
-    private fun Message.Builder.setIfExists(notification: Notification?): Message.Builder {
-        return if (notification != null) {
-            setNotification(notificationConverter(notification))
+    private fun Message.Builder.setIfExists(pushMessageNotification: PushMessageNotification?): Message.Builder {
+        return if (pushMessageNotification != null) {
+            setNotification(pushMessageNotificationConverter(pushMessageNotification))
         } else {
             this
         }

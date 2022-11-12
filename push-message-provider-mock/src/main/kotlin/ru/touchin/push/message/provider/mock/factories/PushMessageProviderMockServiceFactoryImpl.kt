@@ -9,9 +9,10 @@ import ru.touchin.push.message.provider.dto.request.PushTokenCheck
 import ru.touchin.push.message.provider.dto.request.SendPushRequest
 import ru.touchin.push.message.provider.dto.result.CheckPushTokenResult
 import ru.touchin.push.message.provider.dto.result.SendPushResult
-import ru.touchin.push.message.provider.dto.result.SendPushTokenMessageResult
+import ru.touchin.push.message.provider.dto.result.SendPushTokenMessageTraceableResult
 import ru.touchin.push.message.provider.enums.PlatformType
 import ru.touchin.push.message.provider.enums.PushMessageProviderType
+import ru.touchin.push.message.provider.enums.PushTokenStatus
 import ru.touchin.push.message.provider.factories.PushMessageProviderServiceFactory
 import ru.touchin.push.message.provider.mock.properties.PushMessageProviderMockProperties
 import ru.touchin.push.message.provider.services.PushMessageProviderService
@@ -42,13 +43,13 @@ class PushMessageProviderMockServiceFactoryImpl(
 
                 Thread.sleep(millis)
 
-                return SendPushTokenMessageResult(
+                return SendPushTokenMessageTraceableResult(
                     messageId = UUID.randomUUID().toString(),
                 )
             }
 
             override fun check(request: PushTokenCheck): CheckPushTokenResult {
-                throw NotImplementedError()
+                return CheckPushTokenResult(PushTokenStatus.VALID)
             }
 
         }

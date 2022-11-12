@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import ru.touchin.push.message.provider.dto.request.PushTokenCheck
 import ru.touchin.push.message.provider.dto.request.PushTokenMessage
 import ru.touchin.push.message.provider.dto.result.CheckPushTokenResult
-import ru.touchin.push.message.provider.dto.result.SendPushTokenMessageResult
+import ru.touchin.push.message.provider.dto.result.SendPushTokenMessageTraceableResult
 import ru.touchin.push.message.provider.enums.PushTokenStatus
 import ru.touchin.push.message.provider.fcm.clients.FcmClient
 import ru.touchin.push.message.provider.services.PushMessageProviderService
@@ -29,11 +29,11 @@ class PushMessageProviderFcmServiceTest {
     fun send_basic() {
         val request = PushTokenMessage(
             token = "testToken",
-            notification = null,
+            pushMessageNotification = null,
             data = emptyMap()
         )
 
-        val expectedResult = SendPushTokenMessageResult("testMessageId")
+        val expectedResult = SendPushTokenMessageTraceableResult("testMessageId")
 
         Mockito.`when`(
             fcmClient.sendPushTokenMessage(request)
