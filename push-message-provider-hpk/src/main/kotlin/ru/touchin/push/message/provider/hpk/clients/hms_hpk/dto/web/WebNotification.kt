@@ -26,6 +26,7 @@ internal data class WebNotification private constructor(
 
     class Validator {
 
+        @Suppress("UNUSED_PARAMETER")
         fun check(webNotification: WebNotification) {
             // no verification required
         }
@@ -70,7 +71,7 @@ internal data class WebNotification private constructor(
         }
 
         fun setLang(lang: String): Builder {
-            this.lang
+            this.lang = lang
             return this
         }
 

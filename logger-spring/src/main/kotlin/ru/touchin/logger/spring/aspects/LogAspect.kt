@@ -4,6 +4,7 @@ import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.reflect.MethodSignature
+import org.slf4j.LoggerFactory
 import ru.touchin.logger.spring.annotations.AutoLogging
 import ru.touchin.logger.spring.annotations.LogValue
 import ru.touchin.logger.builder.LogDataItem
@@ -22,6 +23,7 @@ class LogAspect(
 ) {
 
     @Around("@annotation(autoLoggingAnnotation)")
+    @Suppress("TooGenericExceptionCaught")
     fun logInvocation(pjp: ProceedingJoinPoint, autoLoggingAnnotation: AutoLogging): Any? {
         val duration = LogDuration()
 
@@ -46,8 +48,11 @@ class LogAspect(
                     .build()
                     .error()
             } catch (logError: Throwable) {
-                error.printStackTrace()
-                logError.printStackTrace()
+                LoggerFactory.getLogger(this::class.java)
+                    .let { logger ->
+                        logger.error("Cannot build logger", error)
+                        logger.error("Cannot create logger", logError)
+                    }
             }
         }
 

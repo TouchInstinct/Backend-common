@@ -106,6 +106,7 @@ internal data class AndroidNotificationConfig private constructor(
 
     class Validator {
 
+        @Suppress("ComplexMethod")
         fun check(androidNotificationConfig: AndroidNotificationConfig, notification: Notification?) {
             with(androidNotificationConfig) {
                 androidBadgeNotification?.let { AndroidBadgeNotification.validator.check(it) }
@@ -118,9 +119,11 @@ internal data class AndroidNotificationConfig private constructor(
                 if (!color.isNullOrBlank()) {
                     require(color.matches(COLOR_PATTERN)) { "Wrong color format, color must be in the form #RRGGBB" }
                 }
+
                 if (!image.isNullOrBlank()) {
                     require(image.startsWith(HTTPS_URL_PATTERN)) { "notifyIcon must start with $HTTPS_URL_PATTERN" }
                 }
+
                 if (androidStyleType != null) {
                     when (androidStyleType) {
                         AndroidStyleType.DEFAULT -> {
@@ -137,12 +140,14 @@ internal data class AndroidNotificationConfig private constructor(
                             require(
                                 !inboxContent.isNullOrEmpty()
                             ) { "inboxContent is required when style is $androidStyleType" }
+
                             require(
                                 inboxContent.size <= INBOX_CONTENT_MAX_ITEMS
                             ) { "inboxContent must have at most $INBOX_CONTENT_MAX_ITEMS items" }
                         }
                     }
                 }
+
                 if (profileId != null) {
                     require(
                         profileId.length <= PROFILE_ID_MAX_LENGTH
@@ -162,6 +167,7 @@ internal data class AndroidNotificationConfig private constructor(
 
     }
 
+    @Suppress("TooManyFunctions")
     class Builder : Buildable {
 
         private var title: String? = null

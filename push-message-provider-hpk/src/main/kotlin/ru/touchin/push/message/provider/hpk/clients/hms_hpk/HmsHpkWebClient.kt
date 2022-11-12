@@ -10,7 +10,6 @@ import org.springframework.web.reactive.function.client.WebClient
 import ru.touchin.common.spring.web.webclient.dto.RequestLogData
 import ru.touchin.common.spring.web.webclient.logger.WebClientLogger
 import ru.touchin.push.message.provider.hpk.base.clients.ConfigurableWebClient
-import ru.touchin.push.message.provider.hpk.clients.hms_hpk.bodies.HmsHpkMessagesSendBody
 import ru.touchin.push.message.provider.hpk.clients.hms_hpk.requests.HmsHpkMessagesSendRequest
 import ru.touchin.push.message.provider.hpk.clients.hms_hpk.responses.HmsHpkResponse
 import ru.touchin.push.message.provider.hpk.properties.HpkProperties
@@ -19,6 +18,7 @@ import ru.touchin.push.message.provider.hpk.properties.HpkProperties
  * Client for Huawei Push Kit.
  * @see <a href="https://developer.huawei.com/consumer/en/doc/development/HMSCore-References/https-send-api-0000001050986197">Documentation</a>
  */
+@Suppress("LongLine")
 @Component
 class HmsHpkWebClient(
     webClientLogger: WebClientLogger,
