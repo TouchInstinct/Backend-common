@@ -11,6 +11,7 @@ internal data class ApnsHmsOptions private constructor(
 
     class Validator {
 
+        @Suppress("UNUSED_PARAMETER")
         fun check(apnsHmsOptions: ApnsHmsOptions) {
             // no validation
         }
