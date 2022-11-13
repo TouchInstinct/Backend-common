@@ -19,12 +19,12 @@ object StringUtils {
                     }
 
                     nextUpperCase -> {
-                        this.append(char.toUpperCase())
+                        this.append(char.uppercase())
                         nextUpperCase = false
                     }
 
-                    !nextUpperCase -> {
-                        this.append(char.toLowerCase())
+                    else -> {
+                        this.append(char.lowercase())
                     }
                 }
             }
@@ -34,8 +34,8 @@ object StringUtils {
     fun String.removeNonPrintableCharacters(): String {
         return this
             .transliterateCyrillic()
-            .replace("[\\p{Cntrl}&&[^\r\n\t]]".toRegex(), "")// erases all the ASCII control characters
-            .replace("\\p{C}".toRegex(), "")// removes non-printable characters from Unicode
+            .replace("\\p{Cntrl}&&[^\r\n\t]".toRegex(), "") // erases all the ASCII control characters
+            .replace("\\p{C}".toRegex(), "") // removes non-printable characters from Unicode
             .trim()
     }
 

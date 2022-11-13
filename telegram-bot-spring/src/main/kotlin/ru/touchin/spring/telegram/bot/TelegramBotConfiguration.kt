@@ -1,0 +1,12 @@
+package ru.touchin.spring.telegram.bot
+
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
+import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.Configuration
+
+@Configuration
+@EnableConfigurationProperties
+@ConfigurationPropertiesScan
+@ComponentScan
+class TelegramBotConfiguration
