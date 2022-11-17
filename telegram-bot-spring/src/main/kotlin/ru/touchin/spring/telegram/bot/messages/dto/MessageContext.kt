@@ -9,6 +9,8 @@ open class MessageContext<U, S>(
     val state: S
 ) {
 
+    fun hasCommand(command: String) = messageCommand.command == command
+
     val chatId: String
         get() = origin.message?.chatId?.toString()
             ?: origin.callbackQuery.message.chatId.toString()
