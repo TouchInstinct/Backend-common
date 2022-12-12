@@ -16,7 +16,6 @@ internal class TelegramMessageCommandResolverImplTest {
 
     @Test
     fun shouldBeEmptyCommand() {
-
         telegramMessageCommandResolver.resolve("hello").also {
             assertFalse(it.hasCommand())
             assertEquals("hello", it.message)
@@ -36,12 +35,10 @@ internal class TelegramMessageCommandResolverImplTest {
             assertFalse(it.hasCommand())
             assertEquals("hello world", it.message)
         }
-
     }
 
     @Test
     fun shouldResolveCommand() {
-
         telegramMessageCommandResolver.resolve("/hello").also {
             assertTrue(it.hasCommand())
             assertEquals("/hello", it.command)
@@ -65,7 +62,6 @@ internal class TelegramMessageCommandResolverImplTest {
             assertEquals("/hello", it.command)
             assertEquals(" /world", it.message)
         }
-
     }
 
 }
