@@ -16,6 +16,7 @@ interface LogBuilder<T> {
     fun addData(vararg items: LogDataItem): LogBuilder<T>
     fun setMethod(method: String): LogBuilder<T>
     fun setContext(context: LogExecutionContextData): LogBuilder<LogData>
+    fun setContext(): LogBuilder<LogData>
     fun build(): Log<T>
     fun isEnabled(logLevel: LogLevel): Boolean
 

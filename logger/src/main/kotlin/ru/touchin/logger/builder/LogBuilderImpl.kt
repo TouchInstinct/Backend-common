@@ -38,8 +38,12 @@ class LogBuilderImpl(
         logData.method = method
     }
 
-    override fun setContext(context: LogExecutionContextData): LogBuilder<LogData> = also {
+    override fun setContext(): LogBuilder<LogData> = also {
         logData.ctx = LoggerExecutionContext.current.get()
+    }
+
+    override fun setContext(context: LogExecutionContextData): LogBuilder<LogData> = also {
+        logData.ctx = context
     }
 
     override fun build(): Log<LogData> {

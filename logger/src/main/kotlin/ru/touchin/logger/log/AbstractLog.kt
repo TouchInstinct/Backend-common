@@ -1,5 +1,10 @@
 package ru.touchin.logger.log
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.json.JsonMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import org.slf4j.LoggerFactory
 import ru.touchin.logger.dto.LogLevel
 import ru.touchin.logger.dto.LogData
@@ -56,6 +61,16 @@ abstract class AbstractLog(clazz: Class<*>) : Log<LogData> {
             LogLevel.Info -> logger.isInfoEnabled
             LogLevel.Error -> logger.isErrorEnabled
         }
+    }
+
+    fun objectMapper() = objectMapper
+
+    companion object {
+        val objectMapper: ObjectMapper = JsonMapper.builder()
+            .addModule(JavaTimeModule())
+            .build()
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
     }
 
 }

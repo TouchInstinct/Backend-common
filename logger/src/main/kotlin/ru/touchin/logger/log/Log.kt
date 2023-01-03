@@ -5,7 +5,6 @@ import ru.touchin.logger.dto.LogLevel
 interface Log<T> {
 
     var logData: T
-
     fun trace()
     fun info()
     fun error()
