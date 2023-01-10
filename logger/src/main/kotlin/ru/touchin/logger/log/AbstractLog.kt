@@ -31,6 +31,14 @@ abstract class AbstractLog(clazz: Class<*>) : Log<LogData> {
         }
     }
 
+    override fun debug() {
+        if (logger.isDebugEnabled) {
+            val logMessage = getMessage()
+
+            logger.debug(logMessage.message, logMessage.error)
+        }
+    }
+
     override fun info() {
         if (logger.isInfoEnabled) {
             val logMessage = getMessage()
@@ -58,6 +66,7 @@ abstract class AbstractLog(clazz: Class<*>) : Log<LogData> {
     override fun isEnabled(level: LogLevel): Boolean {
         return when(level) {
             LogLevel.Trace -> logger.isTraceEnabled
+            LogLevel.Debug -> logger.isDebugEnabled
             LogLevel.Info -> logger.isInfoEnabled
             LogLevel.Error -> logger.isErrorEnabled
         }

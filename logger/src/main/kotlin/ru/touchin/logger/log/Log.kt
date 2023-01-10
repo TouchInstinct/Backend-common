@@ -6,6 +6,7 @@ interface Log<T> {
 
     var logData: T
     fun trace()
+    fun debug()
     fun info()
     fun error()
 
