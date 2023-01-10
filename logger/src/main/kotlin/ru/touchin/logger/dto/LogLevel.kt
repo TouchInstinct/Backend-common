@@ -1,5 +1,5 @@
 package ru.touchin.logger.dto
 
 enum class LogLevel {
-    Trace, Info, Error
+    Trace, Debug, Info, Error
 }
