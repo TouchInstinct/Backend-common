@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass
 @MappedSuperclass
 abstract class BaseEntity : Serializable {
 
-    @CreatedDate
+    @CreatedDate(updatable = false)
     lateinit var createdAt: ZonedDateTime
 
     @LastModifiedDate
