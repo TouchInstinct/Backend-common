@@ -4,6 +4,7 @@ package ru.touchin.common.spring.test.jpa.repository
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -18,6 +19,7 @@ import javax.sql.DataSource
 @TestConfiguration
 @EnableJpaAuditingExtra
 @ComponentScan
+@ConditionalOnProperty(name = ["tests.slow.enabled"], matchIfMissing = true)
 class RepositoryTestConfiguration {
 
     // запуск и остановка контейнера по lifecycle-событиями компонента (1)

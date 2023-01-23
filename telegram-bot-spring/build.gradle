@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    api 'org.telegram:telegrambots-spring-boot-starter:6.3.0'
+    api 'org.telegram:telegrambots-spring-boot-starter'
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'com.fasterxml.jackson.core:jackson-databind'

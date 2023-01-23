@@ -29,21 +29,13 @@ allprojects {
         mavenCentral()
     }
 
-    println("Enabling IDEA plugin in project ${project.name}...")
     apply(plugin = "idea")
 }
 
 subprojects {
-    println("Enabling Kotlin JVM plugin in project ${project.name}...")
     apply(plugin = "org.jetbrains.kotlin.jvm")
-
-    println("Enabling Kotlin Spring plugin in project ${project.name}...")
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
-
-    println("Enabling Spring Boot Dependency Management in project ${project.name}...")
     apply(plugin = "io.spring.dependency-management")
-
-    println("Enabling Detekt support in project ${project.name}...")
     apply(plugin = "io.gitlab.arturbosch.detekt")
 
     detekt {
@@ -81,6 +73,7 @@ subprojects {
             dependency("org.junit.jupiter:junit-jupiter-engine:5.4.2")
 
             dependency("org.liquibase:liquibase-core:4.4.0")
+            dependency("org.telegram:telegrambots-spring-boot-starter:6.4.0")
 
             dependency("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
             dependency("org.mockito:mockito-inline:3.11.0")
