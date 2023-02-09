@@ -90,6 +90,9 @@ subprojects {
             dependency("software.amazon.awssdk:s3:2.10.11")
 
             dependency("com.google.firebase:firebase-admin:9.0.0")
+            dependency("com.google.api-client:google-api-client:1.33.0")
+            dependency("com.google.apis:google-api-services-sheets:v4-rev20210629-1.32.1")
+            dependency("com.google.auth:google-auth-library-oauth2-http:1.3.0")
 
             dependency("com.github.ua-parser:uap-java:1.5.3")
         }
